@@ -24,7 +24,7 @@ public class Cpu {
         List<Temperature> temperatures = cpus.get(0).sensors.temperatures;
         List<Load> loads = cpus.get(0).sensors.loads;
 
-        if (cpus != null) {
+      /*  if (cpus != null) {
             for (final com.profesorfalken.jsensors.model.components.Cpu cpu : cpus) {
                 System.out.println("Found CPU component: " + cpu.name);
                 if (cpu.sensors != null) {
@@ -45,7 +45,7 @@ public class Cpu {
                     System.out.println("Nenhum sensor foi encontrado");
                 }
             }
-        }
+        }*/
 /*
         for (Temperature temp:
              temperatures) {
@@ -55,6 +55,7 @@ public class Cpu {
         for (Load load: loads) {
             System.out.println(load.name+" "+load.value+"%");
         }
+
 */
 
         String lastTemperatureName = temperatures.get(temperatures.size()-1).name;

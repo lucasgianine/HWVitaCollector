@@ -9,6 +9,7 @@ import com.profesorfalken.jsensors.model.components.Cpu;
 import com.profesorfalken.jsensors.model.components.Disk;
 import com.profesorfalken.jsensors.model.sensors.Fan;
 import com.profesorfalken.jsensors.model.sensors.Temperature;
+import com.sun.jna.Memory;
 import org.checkerframework.checker.units.qual.C;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
@@ -30,18 +31,12 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     public static void main(String[] args) {
         SystemInfo systemInfo = new SystemInfo();
-        Looca looca = new Looca();
         Processador processador = new Processador();
-        Components components = JSensors.get.components();
         Memoria memoria = new Memoria();
-        HWDiskStore desk = systemInfo.getHardware().getDiskStores().get(0);
-
-
-
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        List<HWDiskStore> discos = new ArrayList<>();
 
+        List<HWDiskStore> discos = new ArrayList<>();
         int qtdDiscos = systemInfo.getHardware().getDiskStores().size();
         List<String> paths = new ArrayList<>();
         for (int i = 0; i < qtdDiscos; i++) {
@@ -51,9 +46,13 @@ public class Main {
         }
 
 
-
         Runnable task = () -> {
 
+            verticalLinesSout();
+            textoFormatado("MÁQUINA");
+            System.out.println("UUID "+systemInfo.getHardware().getComputerSystem().getHardwareUUID());
+
+            verticalLinesSout();
 
             // Temperatura do núcleo do Processador
             verticalLinesSout();
@@ -62,7 +61,7 @@ public class Main {
             Double temperatura = cpu.getCpuTemperature();
             textoFormatado(String.format("Temperatura %.2f°C", temperatura));
 
-/*
+
             // Uso do processador
             Double usoProcessador = processador.getUso();
             textoFormatado(String.format("Uso do processador: %.2f%%", usoProcessador));
@@ -96,7 +95,7 @@ public class Main {
                 textoFormatado(String.format(disco.getModel().replaceAll("(Unidades de disco padrão)", "")));
                 verticalLinesSout();
             }
-            */
+
             // FIM - DISCO
             System.out.println();
             System.out.println();
@@ -104,7 +103,8 @@ public class Main {
 
         };
 
-        scheduler.scheduleAtFixedRate(task, 0, 8, TimeUnit.SECONDS);
+       scheduler.scheduleAtFixedRate(task, 0, 8, TimeUnit.SECONDS);
+
 
 
 
