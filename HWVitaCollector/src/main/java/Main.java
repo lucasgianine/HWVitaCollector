@@ -62,7 +62,7 @@ public class Main {
             Double temperatura = cpu.getCpuTemperature();
             textoFormatado(String.format("Temperatura %.2f°C", temperatura));
 
-
+/*
             // Uso do processador
             Double usoProcessador = processador.getUso();
             textoFormatado(String.format("Uso do processador: %.2f%%", usoProcessador));
@@ -75,9 +75,12 @@ public class Main {
             textoFormatado("MEMORIA");
             String usoMemoria = Conversor.formatarBytes(memoria.getEmUso()).replaceAll("GiB","").replace(',','.');
             Double usoMemoriaDouble = Double.valueOf(usoMemoria);
-            textoFormatado(String.format("Uso da memória: %.2f GB",usoMemoriaDouble));
+            Double usoMemoriaPorcentagem = cpu.getMemoryLoadPercentage();
+            Double totalMemoria = usoMemoriaDouble * 100 / usoMemoriaPorcentagem;
+            textoFormatado(String.format("Memória total: %.2fGB",totalMemoria));
+            textoFormatado(String.format("Uso da memória: %.2fGB",usoMemoriaDouble));
+            textoFormatado(String.format("Porcentagem de uso: %.2f%%",usoMemoriaPorcentagem));
             verticalLinesSout();
-
             //MEMORIA - FIM
 
             // DISCO
@@ -93,9 +96,12 @@ public class Main {
                 textoFormatado(String.format(disco.getModel().replaceAll("(Unidades de disco padrão)", "")));
                 verticalLinesSout();
             }
+            */
             // FIM - DISCO
             System.out.println();
             System.out.println();
+
+
         };
 
         scheduler.scheduleAtFixedRate(task, 0, 8, TimeUnit.SECONDS);
