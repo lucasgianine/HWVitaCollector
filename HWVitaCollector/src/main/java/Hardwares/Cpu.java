@@ -21,6 +21,14 @@ public class Cpu {
         List<com.profesorfalken.jsensors.model.components.Cpu> cpus = components.cpus;
         List<Temperature> temperatures = cpus.get(0).sensors.temperatures;
 
+        /*
+        Pegando todas as temperaturas
+        for (Temperature temp:
+             temperatures) {
+            System.out.println(temp.name+ " " + temp.value);
+        }
+        */
+
         String lastTemperatureName = temperatures.get(temperatures.size()-1).name;
         Double packageTemperature = temperatures.get(temperatures.size()-1).value;
        // System.out.printf("%s %.2f\n",lastTemperatureName,packageTemperature);
