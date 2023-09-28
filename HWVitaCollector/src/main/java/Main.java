@@ -89,7 +89,7 @@ public class Main {
 
         };
 
-      // scheduler.scheduleAtFixedRate(task, 0, 8, TimeUnit.SECONDS);
+       scheduler.scheduleAtFixedRate(task, 0, 8, TimeUnit.SECONDS);
     }
 
 

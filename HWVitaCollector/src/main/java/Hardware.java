@@ -60,10 +60,10 @@ public class Hardware {
         List<Temperature> temperatures = cpus.get(0).sensors.temperatures;
         List<Load> loads = cpus.get(0).sensors.loads;
 
-        /*  if (cpus != null) {
+          if (cpus != null) {
             for (final com.profesorfalken.jsensors.model.components.Cpu cpu : cpus) {
-                System.out.println("Found CPU component: " + cpu.name);
-                if (cpu.sensors != null) {
+                //System.out.println("Found CPU component: " + cpu.name);
+                if (!cpu.sensors.temperatures.isEmpty()) {
                     System.out.println("Sensors: ");
 
                     //Print temperatures
@@ -78,10 +78,11 @@ public class Hardware {
                         System.out.println(fan.name + ": " + fan.value + " RPM");
                     }
                 }else {
-                    System.out.println("Nenhum sensor foi encontrado");
+                    System.out.println("Nenhum sensor de temperatura foi encontrado");
+                    return 0.0;
                 }
             }
-        }*/
+        }
         /*
         for (Temperature temp:
              temperatures) {
