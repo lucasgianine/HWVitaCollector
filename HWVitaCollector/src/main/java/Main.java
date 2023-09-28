@@ -1,28 +1,13 @@
-import com.github.britooo.looca.api.core.Looca;
-import com.github.britooo.looca.api.group.discos.Disco;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
 import com.github.britooo.looca.api.util.Conversor;
-import com.profesorfalken.jsensors.JSensors;
-import com.profesorfalken.jsensors.model.components.Components;
 import com.profesorfalken.jsensors.model.components.Cpu;
-import com.profesorfalken.jsensors.model.components.Disk;
-import com.profesorfalken.jsensors.model.sensors.Fan;
-import com.profesorfalken.jsensors.model.sensors.Temperature;
-import com.sun.jna.Memory;
-import org.checkerframework.checker.units.qual.C;
+import componentes.Disco;
 import oshi.SystemInfo;
-import oshi.hardware.CentralProcessor;
-import oshi.hardware.GlobalMemory;
 import oshi.hardware.HWDiskStore;
-import oshi.hardware.HWPartition;
 
-import java.awt.*;
-import java.awt.image.DirectColorModel;
 import java.io.File;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -36,15 +21,14 @@ public class Main {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 
-        List<HWDiskStore> discos = new ArrayList<>();
-        int qtdDiscos = systemInfo.getHardware().getDiskStores().size();
-        List<String> paths = new ArrayList<>();
-        for (int i = 0; i < qtdDiscos; i++) {
-            HWDiskStore disco = systemInfo.getHardware().getDiskStores().get(i);
-            discos.add(disco);
-            paths.add(disco.getPartitions().get(0).getMountPoint());
-        }
+        Hardware hardware = new Hardware();
+        hardware.getDiskInformation();
 
+        for (Disco disco: hardware.discos) {
+           // System.out.println(disco.getModel());
+           // System.out.println(disco.getTotalSpace());
+           // System.out.println(disco.getFreeSpace());
+        }
 
         Runnable task = () -> {
 
@@ -57,8 +41,7 @@ public class Main {
             // Temperatura do núcleo do Processador
             verticalLinesSout();
             textoFormatado("PROCESSADOR");
-            Hardwares.Cpu cpu = new Hardwares.Cpu();
-            Double temperatura = cpu.getCpuTemperature();
+            Double temperatura = hardware.getCpuTemperature();
             textoFormatado(String.format("Temperatura %.2f°C", temperatura));
 
 
@@ -74,7 +57,7 @@ public class Main {
             textoFormatado("MEMORIA");
             String usoMemoria = Conversor.formatarBytes(memoria.getEmUso()).replaceAll("GiB","").replace(',','.');
             Double usoMemoriaDouble = Double.valueOf(usoMemoria);
-            Double usoMemoriaPorcentagem = cpu.getMemoryLoadPercentage();
+            Double usoMemoriaPorcentagem = hardware.getMemoryLoadPercentage();
             Double totalMemoria = usoMemoriaDouble * 100 / usoMemoriaPorcentagem;
             textoFormatado(String.format("Memória total: %.2fGB",totalMemoria));
             textoFormatado(String.format("Uso da memória: %.2fGB",usoMemoriaDouble));
@@ -83,11 +66,15 @@ public class Main {
             //MEMORIA - FIM
 
             // DISCO
-            for (int i = 0; i < discos.size(); i++) {
-                textoFormatado("DISCO");
-                HWDiskStore disco = systemInfo.getHardware().getDiskStores().get(i);
-                textoFormatado(String.format("Armazenamento %s",Conversor.formatarBytes(disco.getSize()).replaceAll("GiB","GB")));
 
+            List<String> paths = new ArrayList<>();
+            HWDiskStore disco ;
+            int qtdDiscos = systemInfo.getHardware().getDiskStores().size();
+            for (int i = 0; i < qtdDiscos; i++) {
+                disco = systemInfo.getHardware().getDiskStores().get(i);
+                textoFormatado("DISCO");
+                textoFormatado(String.format("Armazenamento %s",Conversor.formatarBytes(disco.getSize()).replaceAll("GiB","GB")));
+                paths.add(disco.getPartitions().get(0).getMountPoint());
                 File file = new File(paths.get(i));
                 double size = file.getFreeSpace() / (1024.0 * 1024 * 1024);
                 textoFormatado(String.format("Espaço livre %.2f GB", size));
@@ -100,17 +87,16 @@ public class Main {
             System.out.println();
             System.out.println();
 
-
         };
 
-       scheduler.scheduleAtFixedRate(task, 0, 8, TimeUnit.SECONDS);
-
-
-
-
+      // scheduler.scheduleAtFixedRate(task, 0, 8, TimeUnit.SECONDS);
     }
 
 
+
+
+
+    // Métodos apenas para formatação e embelezamento :)
     static void verticalLinesSout(){
         System.out.println("*-------------------------------*");
     }
