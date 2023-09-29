@@ -42,6 +42,7 @@ public class Hardware {
             Double totalSpace = Double.parseDouble(Conversor.formatarBytes(HWDisk.getSize()).replaceAll("TiB","").replaceAll("MiB","").replaceAll("GiB","").replace(',','.'));
             Double freeSpace = file.getFreeSpace() / (1024.0 * 1024 * 1024);
 
+
             disco.setFreeSpace(freeSpace);
             disco.setModel(diskModel);
             disco.setTotalSpace(totalSpace);
@@ -67,7 +68,7 @@ public class Hardware {
                     System.out.println("Sensors: ");
 
                     //Print temperatures
-                    List<Temperature> temps = cpu.sensors.temperatures;
+                   /* List<Temperature> temps = cpu.sensors.temperatures;
                     for (final Temperature temp : temps) {
                         System.out.println(temp.name + ": " + temp.value + " C");
                     }
@@ -76,7 +77,7 @@ public class Hardware {
                     List<Fan> fans = cpu.sensors.fans;
                     for (final Fan fan : fans) {
                         System.out.println(fan.name + ": " + fan.value + " RPM");
-                    }
+                    }*/
                 }else {
                     System.out.println("Nenhum sensor de temperatura foi encontrado");
                     return 0.0;

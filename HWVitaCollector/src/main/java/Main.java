@@ -4,7 +4,9 @@ import com.github.britooo.looca.api.util.Conversor;
 import com.profesorfalken.jsensors.model.components.Cpu;
 import componentes.Disco;
 import oshi.SystemInfo;
+import oshi.hardware.CentralProcessor;
 import oshi.hardware.HWDiskStore;
+import oshi.hardware.Sensors;
 
 import java.io.File;
 import java.util.ArrayList;
