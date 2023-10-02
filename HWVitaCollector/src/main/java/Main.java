@@ -92,10 +92,7 @@ public class Main {
             hardware.setFkMaquina(400);
             hardware.setUsoProcessador(String.format("%.2f%%", usoProcessador));
             hardware.setTempProcessador(String.format("%.2f°C", temperaturaProcessador));
-            hardware.setFreqProcessador("0.0");
             hardware.setUsoMemoria(String.format("%.2fGB",usoMemoriaDouble));
-            hardware.setTempMemoria("0.0");
-            hardware.setFreqMemoria("0.0");
             hardware.setArmazenamentoTotal(hardwareExtraction.discos.get(0).getTotalSpace());
             hardware.setArmazenamentoLivre(hardwareExtraction.discos.get(0).getFreeSpace());
             System.out.println("setei");

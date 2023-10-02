@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class HardwareDAO {
 
     public void inserirDadosHardware(Hardware hardware){
-        String sql = "INSERT INTO HARDWARE (FkMaquina,UsoProcessador,TempProcessador,FreqProcessador,UsoMemoria,TempMemoria,FreqMemoria,ArmazenamentoTotal,ArmazenamentoLivre) VALUES (?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO HARDWARE (FkMaquina,UsoProcessador,TempProcessador,UsoMemoria,ArmazenamentoTotal,ArmazenamentoLivre) VALUES (?,?,?,?,?,?)";
 
         PreparedStatement ps = null;
 
@@ -18,12 +18,9 @@ public class HardwareDAO {
         ps.setInt(1,hardware.getFkMaquina());
         ps.setString(2,hardware.getUsoProcessador());
         ps.setString(3,hardware.getTempProcessador());
-        ps.setString(4,hardware.getFreqProcessador());
-        ps.setString(5,hardware.getUsoMemoria());
-        ps.setString(6,hardware.getTempMemoria());
-        ps.setString(7,hardware.getFreqMemoria());
-        ps.setString(8,hardware.getArmazenamentoTotal());
-        ps.setString(9,hardware.getArmazenamentoLivre());
+        ps.setString(4,hardware.getUsoMemoria());
+        ps.setString(5,hardware.getArmazenamentoTotal());
+        ps.setString(6,hardware.getArmazenamentoLivre());
 
         ps.execute();
             System.out.println("Executando Instrução sql " + sql);

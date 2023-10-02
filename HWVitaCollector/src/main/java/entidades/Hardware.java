@@ -4,10 +4,7 @@ public class Hardware {
     private int FkMaquina;
     private String UsoProcessador;
     private String TempProcessador;
-    private String FreqProcessador;
     private String UsoMemoria;
-    private String TempMemoria;
-    private String FreqMemoria;
     private String ArmazenamentoTotal;
     private String ArmazenamentoLivre;
 
@@ -35,13 +32,7 @@ public class Hardware {
         TempProcessador = tempProcessador;
     }
 
-    public String getFreqProcessador() {
-        return FreqProcessador;
-    }
 
-    public void setFreqProcessador(String freqProcessador) {
-        FreqProcessador = freqProcessador;
-    }
 
     public String getUsoMemoria() {
         return UsoMemoria;
@@ -51,21 +42,6 @@ public class Hardware {
         UsoMemoria = usoMemoria;
     }
 
-    public String getTempMemoria() {
-        return TempMemoria;
-    }
-
-    public void setTempMemoria(String tempMemoria) {
-        TempMemoria = tempMemoria;
-    }
-
-    public String getFreqMemoria() {
-        return FreqMemoria;
-    }
-
-    public void setFreqMemoria(String freqMemoria) {
-        FreqMemoria = freqMemoria;
-    }
 
     public String getArmazenamentoTotal() {
         return ArmazenamentoTotal;
