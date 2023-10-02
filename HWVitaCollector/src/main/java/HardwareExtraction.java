@@ -1,26 +1,18 @@
 import com.github.britooo.looca.api.util.Conversor;
 import com.profesorfalken.jsensors.JSensors;
 import com.profesorfalken.jsensors.model.components.Components;
-import com.profesorfalken.jsensors.model.sensors.Fan;
 import com.profesorfalken.jsensors.model.sensors.Load;
 import com.profesorfalken.jsensors.model.sensors.Temperature;
 import componentes.Disco;
 import oshi.SystemInfo;
-import oshi.hardware.CentralProcessor;
 import oshi.hardware.HWDiskStore;
-import oshi.hardware.common.AbstractCentralProcessor;
-
-import com.sun.jna.Native;
-import com.sun.jna.platform.win32.Kernel32;
-import com.sun.jna.platform.win32.WinBase.SYSTEM_INFO;
-import com.sun.jna.platform.win32.WinNT.HANDLE;
 
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hardware {
+public class HardwareExtraction {
     SystemInfo systemInfo = new SystemInfo();
     Double cpuTemperature;
     Double memoryLoadPercentage;
@@ -65,7 +57,7 @@ public class Hardware {
             for (final com.profesorfalken.jsensors.model.components.Cpu cpu : cpus) {
                 //System.out.println("Found CPU component: " + cpu.name);
                 if (!cpu.sensors.temperatures.isEmpty()) {
-                    System.out.println("Sensors: ");
+                    //System.out.println("Sensors: ");
 
                     //Print temperatures
                    /* List<Temperature> temps = cpu.sensors.temperatures;

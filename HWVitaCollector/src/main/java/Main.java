@@ -1,12 +1,11 @@
+import DAO.HardwareDAO;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
 import com.github.britooo.looca.api.util.Conversor;
-import com.profesorfalken.jsensors.model.components.Cpu;
 import componentes.Disco;
+import entidades.Hardware;
 import oshi.SystemInfo;
-import oshi.hardware.CentralProcessor;
 import oshi.hardware.HWDiskStore;
-import oshi.hardware.Sensors;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,28 +22,24 @@ public class Main {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 
-        Hardware hardware = new Hardware();
-        hardware.getDiskInformation();
+        HardwareExtraction hardwareExtraction = new HardwareExtraction();
 
-        for (Disco disco: hardware.discos) {
-           // System.out.println(disco.getModel());
-           // System.out.println(disco.getTotalSpace());
-           // System.out.println(disco.getFreeSpace());
-        }
+
 
         Runnable task = () -> {
 
             verticalLinesSout();
             textoFormatado("MÁQUINA");
             System.out.println("UUID "+systemInfo.getHardware().getComputerSystem().getHardwareUUID());
+            System.out.println("Tamanho do uuid = " + systemInfo.getHardware().getComputerSystem().getHardwareUUID().length());
 
             verticalLinesSout();
 
             // Temperatura do núcleo do Processador
             verticalLinesSout();
             textoFormatado("PROCESSADOR");
-            Double temperatura = hardware.getCpuTemperature();
-            textoFormatado(String.format("Temperatura %.2f°C", temperatura));
+            Double temperaturaProcessador = hardwareExtraction.getCpuTemperature();
+            textoFormatado(String.format("Temperatura %.2f°C", temperaturaProcessador));
 
 
             // Uso do processador
@@ -59,7 +54,7 @@ public class Main {
             textoFormatado("MEMORIA");
             String usoMemoria = Conversor.formatarBytes(memoria.getEmUso()).replaceAll("GiB","").replace(',','.');
             Double usoMemoriaDouble = Double.valueOf(usoMemoria);
-            Double usoMemoriaPorcentagem = hardware.getMemoryLoadPercentage();
+            Double usoMemoriaPorcentagem = hardwareExtraction.getMemoryLoadPercentage();
             Double totalMemoria = usoMemoriaDouble * 100 / usoMemoriaPorcentagem;
             textoFormatado(String.format("Memória total: %.2fGB",totalMemoria));
             textoFormatado(String.format("Uso da memória: %.2fGB",usoMemoriaDouble));
@@ -71,6 +66,7 @@ public class Main {
 
             List<String> paths = new ArrayList<>();
             HWDiskStore disco ;
+            Disco discoTesteEnquantoBancoNaoFicaPronto = new Disco();
             int qtdDiscos = systemInfo.getHardware().getDiskStores().size();
             for (int i = 0; i < qtdDiscos; i++) {
                 disco = systemInfo.getHardware().getDiskStores().get(i);
@@ -83,12 +79,29 @@ public class Main {
 
                 textoFormatado(String.format(disco.getModel().replaceAll("(Unidades de disco padrão)", "")));
                 verticalLinesSout();
+
+
             }
 
             // FIM - DISCO
             System.out.println();
             System.out.println();
 
+            hardwareExtraction.getDiskInformation();
+
+            Hardware hardware = new Hardware();
+            hardware.setFkMaquina(400);
+            hardware.setUsoProcessador(usoProcessador);
+            hardware.setTempProcessador(temperaturaProcessador);
+            hardware.setFreqProcessador(0.0);
+            hardware.setUsoMemoria(usoMemoriaDouble);
+            hardware.setTempMemoria(0.0);
+            hardware.setFreqMemoria(0.0);
+            hardware.setArmazenamentoTotal(hardwareExtraction.discos.get(0).getTotalSpace());
+            hardware.setArmazenamentoLivre(hardwareExtraction.discos.get(0).getFreeSpace());
+            System.out.println("setei");
+
+            new HardwareDAO().inserirDadosHardware(hardware);
         };
 
        scheduler.scheduleAtFixedRate(task, 0, 8, TimeUnit.SECONDS);
