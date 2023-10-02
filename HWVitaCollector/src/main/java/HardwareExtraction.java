@@ -31,8 +31,8 @@ public class HardwareExtraction {
             paths.add(HWDisk.getPartitions().get(0).getMountPoint());
             File file = new File(paths.get(i));
             String diskModel = HWDisk.getModel().replaceAll("[(Unidades de disco padrão)]", "");
-            Double totalSpace = Double.parseDouble(Conversor.formatarBytes(HWDisk.getSize()).replaceAll("TiB","").replaceAll("MiB","").replaceAll("GiB","").replace(',','.'));
-            Double freeSpace = file.getFreeSpace() / (1024.0 * 1024 * 1024);
+            String totalSpace = (Conversor.formatarBytes(HWDisk.getSize()).replaceAll("TiB","TB").replaceAll("MiB","MB").replaceAll("GiB","GB").replace(',','.'));
+            String freeSpace = Conversor.formatarBytes(file.getFreeSpace()).replaceAll("TiB","TB").replaceAll("MiB","MB").replaceAll("GiB","GB").replace(',','.');
 
 
             disco.setFreeSpace(freeSpace);
@@ -108,6 +108,8 @@ public class HardwareExtraction {
         }
         return 0.0;
     }
+
+
 
 
 }

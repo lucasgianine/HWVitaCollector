@@ -66,7 +66,6 @@ public class Main {
 
             List<String> paths = new ArrayList<>();
             HWDiskStore disco ;
-            Disco discoTesteEnquantoBancoNaoFicaPronto = new Disco();
             int qtdDiscos = systemInfo.getHardware().getDiskStores().size();
             for (int i = 0; i < qtdDiscos; i++) {
                 disco = systemInfo.getHardware().getDiskStores().get(i);
@@ -91,12 +90,12 @@ public class Main {
 
             Hardware hardware = new Hardware();
             hardware.setFkMaquina(400);
-            hardware.setUsoProcessador(usoProcessador);
-            hardware.setTempProcessador(temperaturaProcessador);
-            hardware.setFreqProcessador(0.0);
-            hardware.setUsoMemoria(usoMemoriaDouble);
-            hardware.setTempMemoria(0.0);
-            hardware.setFreqMemoria(0.0);
+            hardware.setUsoProcessador(String.format("%.2f%%", usoProcessador));
+            hardware.setTempProcessador(String.format("%.2f°C", temperaturaProcessador));
+            hardware.setFreqProcessador("0.0");
+            hardware.setUsoMemoria(String.format("%.2fGB",usoMemoriaDouble));
+            hardware.setTempMemoria("0.0");
+            hardware.setFreqMemoria("0.0");
             hardware.setArmazenamentoTotal(hardwareExtraction.discos.get(0).getTotalSpace());
             hardware.setArmazenamentoLivre(hardwareExtraction.discos.get(0).getFreeSpace());
             System.out.println("setei");

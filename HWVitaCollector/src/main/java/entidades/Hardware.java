@@ -2,14 +2,14 @@ package entidades;
 
 public class Hardware {
     private int FkMaquina;
-    private double UsoProcessador;
-    private double TempProcessador;
-    private double FreqProcessador;
-    private double UsoMemoria;
-    private double TempMemoria;
-    private double FreqMemoria;
-    private double ArmazenamentoTotal;
-    private double ArmazenamentoLivre;
+    private String UsoProcessador;
+    private String TempProcessador;
+    private String FreqProcessador;
+    private String UsoMemoria;
+    private String TempMemoria;
+    private String FreqMemoria;
+    private String ArmazenamentoTotal;
+    private String ArmazenamentoLivre;
 
     public int getFkMaquina() {
         return FkMaquina;
@@ -19,67 +19,67 @@ public class Hardware {
         FkMaquina = fkMaquina;
     }
 
-    public double getUsoProcessador() {
+    public String getUsoProcessador() {
         return UsoProcessador;
     }
 
-    public void setUsoProcessador(double usoProcessador) {
+    public void setUsoProcessador(String usoProcessador) {
         UsoProcessador = usoProcessador;
     }
 
-    public double getTempProcessador() {
+    public String getTempProcessador() {
         return TempProcessador;
     }
 
-    public void setTempProcessador(double tempProcessador) {
+    public void setTempProcessador(String tempProcessador) {
         TempProcessador = tempProcessador;
     }
 
-    public double getFreqProcessador() {
+    public String getFreqProcessador() {
         return FreqProcessador;
     }
 
-    public void setFreqProcessador(double freqProcessador) {
+    public void setFreqProcessador(String freqProcessador) {
         FreqProcessador = freqProcessador;
     }
 
-    public double getUsoMemoria() {
+    public String getUsoMemoria() {
         return UsoMemoria;
     }
 
-    public void setUsoMemoria(double usoMemoria) {
+    public void setUsoMemoria(String usoMemoria) {
         UsoMemoria = usoMemoria;
     }
 
-    public double getTempMemoria() {
+    public String getTempMemoria() {
         return TempMemoria;
     }
 
-    public void setTempMemoria(double tempMemoria) {
+    public void setTempMemoria(String tempMemoria) {
         TempMemoria = tempMemoria;
     }
 
-    public double getFreqMemoria() {
+    public String getFreqMemoria() {
         return FreqMemoria;
     }
 
-    public void setFreqMemoria(double freqMemoria) {
+    public void setFreqMemoria(String freqMemoria) {
         FreqMemoria = freqMemoria;
     }
 
-    public double getArmazenamentoTotal() {
+    public String getArmazenamentoTotal() {
         return ArmazenamentoTotal;
     }
 
-    public void setArmazenamentoTotal(double armazenamentoTotal) {
+    public void setArmazenamentoTotal(String armazenamentoTotal) {
         ArmazenamentoTotal = armazenamentoTotal;
     }
 
-    public double getArmazenamentoLivre() {
+    public String getArmazenamentoLivre() {
         return ArmazenamentoLivre;
     }
 
-    public void setArmazenamentoLivre(double armazenamentoLivre) {
+    public void setArmazenamentoLivre(String armazenamentoLivre) {
         ArmazenamentoLivre = armazenamentoLivre;
     }
 }
