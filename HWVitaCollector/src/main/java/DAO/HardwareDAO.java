@@ -4,6 +4,7 @@ import conexao.Conexao;
 import entidades.Hardware;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class HardwareDAO {
@@ -22,8 +23,7 @@ public class HardwareDAO {
         ps.setString(5,hardware.getArmazenamentoTotal());
         ps.setString(6,hardware.getArmazenamentoLivre());
 
-        ps.execute();
-            System.out.println("Executando Instrução sql " + sql);
+        System.out.println("Executando Instrução sql " + sql);
         ps.close();
         }catch (SQLException e){
             e.printStackTrace();
