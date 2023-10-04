@@ -1,33 +1,12 @@
-import com.github.britooo.looca.api.core.Looca;
-import com.github.britooo.looca.api.group.memoria.Memoria;
-import com.github.britooo.looca.api.group.processador.Processador;
-import com.github.britooo.looca.api.util.Conversor;
-import entidades.Processo;
-import oshi.SystemInfo;
-import oshi.hardware.platform.windows.WindowsPowerSource;
-import oshi.software.os.OSProcess;
-import oshi.software.os.OperatingSystem;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 public class ProcessosTop {
     public static void main(String[] args) {
-        SystemInfo systemInfo = new SystemInfo();
+        /*SystemInfo systemInfo = new SystemInfo();
         List<OSProcess> processos = systemInfo.getOperatingSystem().getProcesses();
-        List<Processo> listaProcessos = new ArrayList<>();
-
+        List<Processos> listaProcessos = new ArrayList<>();
         for (OSProcess processo : processos) {
             boolean processoJaFoiColhido = false;
 
-            for (Processo p : listaProcessos) {
+            for (Processos p : listaProcessos) {
                 if (processo.getName().contains(p.getNome())) {
                     p.incrementThreads(processo.getThreadCount());
                     p.incrementResidentSize(processo.getResidentSetSize());
@@ -39,15 +18,20 @@ public class ProcessosTop {
             }
 
             if (!processoJaFoiColhido) {
-                listaProcessos.add(new Processo(processo.getName(), processo.getThreadCount(), processo.getResidentSetSize(), processo.getVirtualSize()));
+                Date dataAtual = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                // Formata a data atual no formato desejado
+                String dataFormatada = dateFormat.format(dataAtual);
+                listaProcessos.add(new Processos(processo.getName(), processo.getThreadCount(), processo.getResidentSetSize(),dataFormatada));
             }
 
         }
 
-        List<Processo> processosOrdenadosPorMemoria = bubbleSort(listaProcessos);
+        List<Processos> processosOrdenadosPorMemoria = bubbleSort(listaProcessos);
         Integer threadsTotais = 0;
         long usoMemoriaTotal = 0;
-        for (Processo processo : processosOrdenadosPorMemoria) {
+        for (Processos processo : processosOrdenadosPorMemoria) {
             threadsTotais += processo.getThreads() ;
             usoMemoriaTotal += processo.getResidentMemory();
             System.out.println("Nome do processo: " + processo.getNome());
@@ -67,7 +51,7 @@ public class ProcessosTop {
     }
 
 
-    static List<Processo> bubbleSort(List<Processo> listaProcessos) {
+    static List<Processos> bubbleSort(List<Processos> listaProcessos) {
         int n = listaProcessos.size();
         long tempRM = 0;
         String tempNome = "";
@@ -95,6 +79,7 @@ public class ProcessosTop {
                 }
             }
             }
-        return listaProcessos;
+        return listaProcessos;*/
         }
     }
+

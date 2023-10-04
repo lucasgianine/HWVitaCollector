@@ -1,9 +1,10 @@
 import DAO.HardwareDAO;
+import DAO.ProcessoDAO;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
 import com.github.britooo.looca.api.util.Conversor;
-import componentes.Disco;
 import entidades.Hardware;
+import entidades.Processo;
 import oshi.SystemInfo;
 import oshi.hardware.HWDiskStore;
 
@@ -98,9 +99,17 @@ public class Main {
             System.out.println("setei");
 
             new HardwareDAO().inserirDadosHardware(hardware);
+
+            List<Processo> processos = Processo.getProcessos();
+            for (Processo processo: processos) {
+                processo.setFkMaquina(400);
+                new ProcessoDAO().inserirProcesso(processo);
+            }
         };
 
-       scheduler.scheduleAtFixedRate(task, 0, 8, TimeUnit.SECONDS);
+
+
+       scheduler.scheduleAtFixedRate(task, 0, 10, TimeUnit.SECONDS);
     }
 
 

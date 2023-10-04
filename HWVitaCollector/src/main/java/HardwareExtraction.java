@@ -56,41 +56,13 @@ public class HardwareExtraction {
           if (cpus != null) {
             for (final com.profesorfalken.jsensors.model.components.Cpu cpu : cpus) {
                 //System.out.println("Found CPU component: " + cpu.name);
-                if (!cpu.sensors.temperatures.isEmpty()) {
-                    //System.out.println("Sensors: ");
-
-                    //Print temperatures
-                   /* List<Temperature> temps = cpu.sensors.temperatures;
-                    for (final Temperature temp : temps) {
-                        System.out.println(temp.name + ": " + temp.value + " C");
-                    }
-
-                    //Print fan speed
-                    List<Fan> fans = cpu.sensors.fans;
-                    for (final Fan fan : fans) {
-                        System.out.println(fan.name + ": " + fan.value + " RPM");
-                    }*/
-                }else {
+                if (cpu.sensors.temperatures.isEmpty()) {
                     System.out.println("Nenhum sensor de temperatura foi encontrado");
                     return 0.0;
                 }
             }
         }
-        /*
-        for (Temperature temp:
-             temperatures) {
-            System.out.println(temp.name+ " " + temp.value);
-        }
-
-        for (Load load: loads) {
-            System.out.println(load.name+" "+load.value+"%");
-        }
-
-*/
-
-        String lastTemperatureName = temperatures.get(temperatures.size()-1).name;
         Double packageTemperature = temperatures.get(temperatures.size()-1).value;
-        // System.out.printf("%s %.2f\n",lastTemperatureName,packageTemperature);
 
         return packageTemperature;
     }

@@ -15,6 +15,7 @@ public class HardwareDAO {
         PreparedStatement ps = null;
 
         try{
+        Class.forName("com.mysql.cj.jdbc.Driver");
         ps = Conexao.getConexao().prepareStatement(sql);
         ps.setInt(1,hardware.getFkMaquina());
         ps.setString(2,hardware.getUsoProcessador());
@@ -22,12 +23,13 @@ public class HardwareDAO {
         ps.setString(4,hardware.getUsoMemoria());
         ps.setString(5,hardware.getArmazenamentoTotal());
         ps.setString(6,hardware.getArmazenamentoLivre());
-
+        ps.execute();
         System.out.println("Executando Instrução sql " + sql);
         ps.close();
         }catch (SQLException e){
-            e.printStackTrace();
             System.out.println(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 }
