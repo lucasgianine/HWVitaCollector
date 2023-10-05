@@ -12,18 +12,18 @@ public class Processo {
 
     private Integer FkMaquina;
     private String nome;
-    private String dataCaptura;
+    private String dtRegistro;
     private Integer threads;
 
     private long residentMemory;
 
     private long virtualMemory;
 
-    public Processo(String nome, Integer threads, long residentMemory, String dataCaptura) {
+    public Processo(String nome, Integer threads, long residentMemory, String dtRegistro) {
         this.nome = nome;
         this.threads = threads;
         this.residentMemory = residentMemory;
-        this.dataCaptura = dataCaptura;
+        this.dtRegistro = dtRegistro;
     }
 
     public Integer getFkMaquina() {
@@ -34,12 +34,12 @@ public class Processo {
         FkMaquina = fkMaquina;
     }
 
-    public String getDataCaptura() {
-        return dataCaptura;
+    public String getDtRegistro() {
+        return dtRegistro;
     }
 
-    public void setDataCaptura(String dataCaptura) {
-        this.dataCaptura = dataCaptura;
+    public void setDtRegistro(String dtRegistro) {
+        this.dtRegistro = dtRegistro;
     }
 
     public long getVirtualMemory() {

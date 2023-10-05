@@ -3,7 +3,7 @@ import com.profesorfalken.jsensors.JSensors;
 import com.profesorfalken.jsensors.model.components.Components;
 import com.profesorfalken.jsensors.model.sensors.Load;
 import com.profesorfalken.jsensors.model.sensors.Temperature;
-import componentes.Disco;
+import entidades.Disco;
 import oshi.SystemInfo;
 import oshi.hardware.HWDiskStore;
 
@@ -35,9 +35,9 @@ public class HardwareExtraction {
             String freeSpace = Conversor.formatarBytes(file.getFreeSpace()).replaceAll("TiB","TB").replaceAll("MiB","MB").replaceAll("GiB","GB").replace(',','.');
 
 
-            disco.setFreeSpace(freeSpace);
-            disco.setModel(diskModel);
-            disco.setTotalSpace(totalSpace);
+            disco.setArmazenamentoLivre(freeSpace);
+            disco.setModelo(diskModel);
+            disco.setArmazenamentoTotal(totalSpace);
 
             discos.add(disco);
         }

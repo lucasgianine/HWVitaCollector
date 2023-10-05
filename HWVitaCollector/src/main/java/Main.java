@@ -1,8 +1,10 @@
+import DAO.DiscoDAO;
 import DAO.HardwareDAO;
 import DAO.ProcessoDAO;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
 import com.github.britooo.looca.api.util.Conversor;
+import entidades.Disco;
 import entidades.Hardware;
 import entidades.Processo;
 import oshi.SystemInfo;
@@ -66,18 +68,18 @@ public class Main {
             // DISCO
 
             List<String> paths = new ArrayList<>();
-            HWDiskStore disco ;
+            HWDiskStore disco1 ;
             int qtdDiscos = systemInfo.getHardware().getDiskStores().size();
             for (int i = 0; i < qtdDiscos; i++) {
-                disco = systemInfo.getHardware().getDiskStores().get(i);
+                disco1 = systemInfo.getHardware().getDiskStores().get(i);
                 textoFormatado("DISCO");
-                textoFormatado(String.format("Armazenamento %s",Conversor.formatarBytes(disco.getSize()).replaceAll("GiB","GB")));
-                paths.add(disco.getPartitions().get(0).getMountPoint());
+                textoFormatado(String.format("Armazenamento %s",Conversor.formatarBytes(disco1.getSize()).replaceAll("GiB","GB")));
+                paths.add(disco1.getPartitions().get(0).getMountPoint());
                 File file = new File(paths.get(i));
                 double size = file.getFreeSpace() / (1024.0 * 1024 * 1024);
                 textoFormatado(String.format("Espaço livre %.2f GB", size));
 
-                textoFormatado(String.format(disco.getModel().replaceAll("(Unidades de disco padrão)", "")));
+                textoFormatado(String.format(disco1.getModel().replaceAll("(Unidades de disco padrão)", "")));
                 verticalLinesSout();
 
 
@@ -87,29 +89,36 @@ public class Main {
             System.out.println();
             System.out.println();
 
-            hardwareExtraction.getDiskInformation();
-
+            /*hardwareExtraction.getDiskInformation();
             Hardware hardware = new Hardware();
             hardware.setFkMaquina(400);
             hardware.setUsoProcessador(String.format("%.2f%%", usoProcessador));
             hardware.setTempProcessador(String.format("%.2f°C", temperaturaProcessador));
             hardware.setUsoMemoria(String.format("%.2fGB",usoMemoriaDouble));
-            hardware.setArmazenamentoTotal(hardwareExtraction.discos.get(0).getTotalSpace());
-            hardware.setArmazenamentoLivre(hardwareExtraction.discos.get(0).getFreeSpace());
+            hardware.setArmazenamentoTotal(hardwareExtraction.discos.get(0).getArmazenamentoTotal());
+            hardware.setArmazenamentoLivre(hardwareExtraction.discos.get(0).getArmazenamentoLivre());
             System.out.println("setei");
-
             new HardwareDAO().inserirDadosHardware(hardware);
+            */
 
             List<Processo> processos = Processo.getProcessos();
             for (Processo processo: processos) {
                 processo.setFkMaquina(400);
                 new ProcessoDAO().inserirProcesso(processo);
             }
+
+            List<Disco> discos = Disco.getDiscos();
+            for (Disco disco: discos) {
+                disco.setFkMaquina(400);
+                new DiscoDAO().inserirDisco(disco);
+            }
         };
 
 
 
        scheduler.scheduleAtFixedRate(task, 0, 10, TimeUnit.SECONDS);
+
+
     }
 
 
