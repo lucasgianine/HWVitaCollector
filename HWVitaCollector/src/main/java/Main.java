@@ -110,7 +110,7 @@ public class Main {
 
 
 
-            /*
+
 
                List<ProcessoRegistro> processoRegistros = ProcessoRegistro.getProcessos();
             for (ProcessoRegistro processo: processoRegistros) {
@@ -130,15 +130,10 @@ public class Main {
             new CpuDAO().inserirRegistroCpu(cpuRegistro);
 
             String totalMemoria1 = MemoriaRegistro.getTotalMemory();
-            System.out.println("entrei");
             String porcentagemUsoMemoria = MemoriaRegistro.getMemoryUsagePercentage();
             MemoriaRegistro memoriaRegistro = new MemoriaRegistro(fkMaquina,dataFormatada,totalMemoria1,porcentagemUsoMemoria);
 
-            System.out.println(memoriaRegistro.getDtRegistro());
-            System.out.println(memoriaRegistro.getQtdTotal());
-            System.out.println(memoriaRegistro.getUsoMemoria());
-            System.out.println(memoriaRegistro.getFkMaquina());
-            MemoriaDAO.inserirRegistroMemoria(memoriaRegistro);*/
+            MemoriaDAO.inserirRegistroMemoria(memoriaRegistro);
         };
 
 

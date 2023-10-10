@@ -60,7 +60,7 @@ public class MemoriaRegistro {
         System.out.println("Loads " + loads.get(0));
         for (Load load : loads) {
             if (load.name.contains("Memory")) {
-                return String.format("%.2f %%", load.value);
+                return String.format("%.2f %%", load.value).replace(',','.');
             }
         }
         return "Sensor de memória não encontrado";
@@ -68,9 +68,6 @@ public class MemoriaRegistro {
 
     public static String getTotalMemory(){
         Memoria memoria = new Memoria();
-        String usoMemoria = Conversor.formatarBytes(memoria.getEmUso()).replaceAll("GiB","").replace(',','.');
-        double usoMemoriaDouble = Double.parseDouble(usoMemoria);
-        double usoMemoriaPorcentagem = Double.valueOf(getMemoryUsagePercentage().replace(',', '.').replace("%",""));
-        return String.format("%.2f GB",usoMemoriaDouble * 100 / usoMemoriaPorcentagem);
+        return Conversor.formatarBytes(memoria.getTotal()).replaceAll("GiB","GB").replace(',','.');
     }
 }

@@ -1,5 +1,6 @@
 package entidades;
 
+import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.util.Conversor;
 import oshi.SystemInfo;
 
@@ -52,7 +53,7 @@ public class SistemaRegistro {
         return Conversor.formatarSegundosDecorridos(new SystemInfo().getOperatingSystem().getSystemUptime());
     }
 
-    public static String getUsbGroupSize(){
-
+    public static int getUsbGroupSize(){
+        return new Looca().getDispositivosUsbGrupo().getTotalDispositvosUsbConectados();
     }
 }
