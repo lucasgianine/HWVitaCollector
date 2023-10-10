@@ -1,0 +1,34 @@
+package DAO;
+
+import conexao.Conexao;
+import entidades.CpuRegistro;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class CpuDAO {
+
+
+    public void inserirRegistroCpu(CpuRegistro cpuRegistro){
+        String sql = "INSERT INTO cpuRegistro (fkMaquina,dtRegistro,temperatura,usoPorcentagem) VALUES" +
+                "(?,?,?,?)";
+        PreparedStatement ps = null;
+
+
+        try{
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            ps = Conexao.getConexao().prepareStatement(sql);
+            ps.setInt(1, cpuRegistro.getFkMaquina());
+            ps.setString(2,cpuRegistro.getDtRegistro());
+            ps.setString(3, cpuRegistro.getTemperatura());
+            ps.setString(4, cpuRegistro.getUsoPorcentaegem());
+            ps.execute();
+            ps.close();
+            System.out.println("Executando a instrução sql \n" + sql);
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+}

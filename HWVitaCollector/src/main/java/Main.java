@@ -1,15 +1,18 @@
-import DAO.HardwareDAO;
+import DAO.CpuDAO;
+import DAO.DiscoDAO;
+import DAO.MemoriaDAO;
 import DAO.ProcessoDAO;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
 import com.github.britooo.looca.api.util.Conversor;
-import entidades.Hardware;
-import entidades.Processo;
+import entidades.*;
 import oshi.SystemInfo;
 import oshi.hardware.HWDiskStore;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -22,14 +25,17 @@ public class Main {
         Memoria memoria = new Memoria();
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-
-        HardwareExtraction hardwareExtraction = new HardwareExtraction();
-
-
+        // Apenas enquanto o método de identificação e cadastramento de máquina não está pronto
+        int fkMaquina = 400;
 
         Runnable task = () -> {
 
-            verticalLinesSout();
+            System.out.println(SistemaRegistro.getSystemUptime());
+            Date dataAtual = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String dataFormatada = dateFormat.format(dataAtual);
+
+          /*  verticalLinesSout();
             textoFormatado("MÁQUINA");
             System.out.println("UUID "+systemInfo.getHardware().getComputerSystem().getHardwareUUID());
             System.out.println("Tamanho do uuid = " + systemInfo.getHardware().getComputerSystem().getHardwareUUID().length());
@@ -39,7 +45,7 @@ public class Main {
             // Temperatura do núcleo do Processador
             verticalLinesSout();
             textoFormatado("PROCESSADOR");
-            Double temperaturaProcessador = hardwareExtraction.getCpuTemperature();
+            Double temperaturaProcessador = CpuRegistro.getCpuTemperatureValue();
             textoFormatado(String.format("Temperatura %.2f°C", temperaturaProcessador));
 
 
@@ -54,9 +60,11 @@ public class Main {
             // Uso da memória atual, convertida para Double prontinha para enviar ao Banco
             textoFormatado("MEMORIA");
             String usoMemoria = Conversor.formatarBytes(memoria.getEmUso()).replaceAll("GiB","").replace(',','.');
+
             Double usoMemoriaDouble = Double.valueOf(usoMemoria);
             Double usoMemoriaPorcentagem = hardwareExtraction.getMemoryLoadPercentage();
             Double totalMemoria = usoMemoriaDouble * 100 / usoMemoriaPorcentagem;
+
             textoFormatado(String.format("Memória total: %.2fGB",totalMemoria));
             textoFormatado(String.format("Uso da memória: %.2fGB",usoMemoriaDouble));
             textoFormatado(String.format("Porcentagem de uso: %.2f%%",usoMemoriaPorcentagem));
@@ -86,9 +94,8 @@ public class Main {
             // FIM - DISCO
             System.out.println();
             System.out.println();
-
-            hardwareExtraction.getDiskInformation();
-
+*/
+           /* hardwareExtraction.getDiskInformation();
             Hardware hardware = new Hardware();
             hardware.setFkMaquina(400);
             hardware.setUsoProcessador(String.format("%.2f%%", usoProcessador));
@@ -97,14 +104,41 @@ public class Main {
             hardware.setArmazenamentoTotal(hardwareExtraction.discos.get(0).getTotalSpace());
             hardware.setArmazenamentoLivre(hardwareExtraction.discos.get(0).getFreeSpace());
             System.out.println("setei");
-
             new HardwareDAO().inserirDadosHardware(hardware);
+*/
 
-            List<Processo> processos = Processo.getProcessos();
-            for (Processo processo: processos) {
-                processo.setFkMaquina(400);
-                new ProcessoDAO().inserirProcesso(processo);
+
+
+
+            /*
+
+               List<ProcessoRegistro> processoRegistros = ProcessoRegistro.getProcessos();
+            for (ProcessoRegistro processo: processoRegistros) {
+                processo.setFkMaquina(fkMaquina);
+                new ProcessoDAO().inserirRegistroProcesso(processo);
             }
+
+              List<DiscoRegistro> discoRegistros = DiscoRegistro.getDiscos();
+            for (DiscoRegistro discoRegistro: discoRegistros) {
+                discoRegistro.setFkMaquina(fkMaquina);
+                new DiscoDAO().inserirRegistroDisco(discoRegistro);
+            }
+
+            String temperaturaCpu = String.format("%.2f ºC",CpuRegistro.getCpuTemperatureValue());
+            String usoCpu = CpuRegistro.getCpuUsePercentage();
+            CpuRegistro cpuRegistro = new CpuRegistro(fkMaquina,dataFormatada,temperaturaCpu,usoCpu);
+            new CpuDAO().inserirRegistroCpu(cpuRegistro);
+
+            String totalMemoria1 = MemoriaRegistro.getTotalMemory();
+            System.out.println("entrei");
+            String porcentagemUsoMemoria = MemoriaRegistro.getMemoryUsagePercentage();
+            MemoriaRegistro memoriaRegistro = new MemoriaRegistro(fkMaquina,dataFormatada,totalMemoria1,porcentagemUsoMemoria);
+
+            System.out.println(memoriaRegistro.getDtRegistro());
+            System.out.println(memoriaRegistro.getQtdTotal());
+            System.out.println(memoriaRegistro.getUsoMemoria());
+            System.out.println(memoriaRegistro.getFkMaquina());
+            MemoriaDAO.inserirRegistroMemoria(memoriaRegistro);*/
         };
 
 

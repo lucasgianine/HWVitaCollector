@@ -8,22 +8,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Processo {
+public class ProcessoRegistro {
 
     private Integer FkMaquina;
     private String nome;
-    private String dataCaptura;
+    private String dtRegistro;
     private Integer threads;
 
     private long residentMemory;
 
     private long virtualMemory;
 
-    public Processo(String nome, Integer threads, long residentMemory, String dataCaptura) {
+    public ProcessoRegistro(String nome, Integer threads, long residentMemory, String dtRegistro) {
         this.nome = nome;
         this.threads = threads;
         this.residentMemory = residentMemory;
-        this.dataCaptura = dataCaptura;
+        this.dtRegistro = dtRegistro;
     }
 
     public Integer getFkMaquina() {
@@ -34,12 +34,12 @@ public class Processo {
         FkMaquina = fkMaquina;
     }
 
-    public String getDataCaptura() {
-        return dataCaptura;
+    public String getDtRegistro() {
+        return dtRegistro;
     }
 
-    public void setDataCaptura(String dataCaptura) {
-        this.dataCaptura = dataCaptura;
+    public void setDtRegistro(String dtRegistro) {
+        this.dtRegistro = dtRegistro;
     }
 
     public long getVirtualMemory() {
@@ -86,15 +86,15 @@ public class Processo {
         this.virtualMemory += virtualMemory;
     }
 
-    public static List<Processo> getProcessos(){
+    public static List<ProcessoRegistro> getProcessos(){
         SystemInfo systemInfo = new SystemInfo();
         List<OSProcess> processos = systemInfo.getOperatingSystem().getProcesses();
-        List<Processo> listaProcessos = new ArrayList<>();
+        List<ProcessoRegistro> listaProcessoRegistros = new ArrayList<>();
 
         for (OSProcess processo : processos) {
             boolean processoJaFoiColhido = false;
 
-            for (Processo p : listaProcessos) {
+            for (ProcessoRegistro p : listaProcessoRegistros) {
                 if (processo.getName().contains(p.getNome())) {
                     p.incrementThreads(processo.getThreadCount());
                     p.incrementResidentSize(processo.getResidentSetSize());
@@ -111,51 +111,51 @@ public class Processo {
 
                 // Formata a data atual no formato desejado
                 String dataFormatada = dateFormat.format(dataAtual);
-                listaProcessos.add(new Processo(processo.getName(), processo.getThreadCount(), processo.getResidentSetSize(),dataFormatada));
+                listaProcessoRegistros.add(new ProcessoRegistro(processo.getName(), processo.getThreadCount(), processo.getResidentSetSize(),dataFormatada));
             }
 
         }
 
-        return bubbleSort(listaProcessos);
+        return bubbleSort(listaProcessoRegistros);
     }
 
 
-    static List<Processo> bubbleSort(List<Processo> listaProcessos) {
-        int n = listaProcessos.size();
+    static List<ProcessoRegistro> bubbleSort(List<ProcessoRegistro> listaProcessoRegistros) {
+        int n = listaProcessoRegistros.size();
         long tempRM = 0;
         String tempNome = "";
         long tempVM = 0;
         int tempThreads = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 1; j < (n - i); j++) {
-                if (listaProcessos.get(j - 1).getResidentMemory() < listaProcessos.get(j).getResidentMemory()) {
+                if (listaProcessoRegistros.get(j - 1).getResidentMemory() < listaProcessoRegistros.get(j).getResidentMemory()) {
                     //swap elements
-                    tempRM = listaProcessos.get(j - 1).getResidentMemory();
-                    listaProcessos.get(j - 1).setResidentMemory(listaProcessos.get(j).getResidentMemory());
-                    listaProcessos.get(j).setResidentMemory(tempRM);
+                    tempRM = listaProcessoRegistros.get(j - 1).getResidentMemory();
+                    listaProcessoRegistros.get(j - 1).setResidentMemory(listaProcessoRegistros.get(j).getResidentMemory());
+                    listaProcessoRegistros.get(j).setResidentMemory(tempRM);
 
-                    tempNome = listaProcessos.get(j - 1).getNome();
-                    listaProcessos.get(j - 1).setNome(listaProcessos.get(j).getNome());
-                    listaProcessos.get(j).setNome(tempNome);
+                    tempNome = listaProcessoRegistros.get(j - 1).getNome();
+                    listaProcessoRegistros.get(j - 1).setNome(listaProcessoRegistros.get(j).getNome());
+                    listaProcessoRegistros.get(j).setNome(tempNome);
 
-                    tempVM = listaProcessos.get(j - 1).getVirtualMemory();
-                    listaProcessos.get(j - 1).setVirtualMemory(listaProcessos.get(j).getVirtualMemory());
-                    listaProcessos.get(j).setVirtualMemory(tempVM);
+                    tempVM = listaProcessoRegistros.get(j - 1).getVirtualMemory();
+                    listaProcessoRegistros.get(j - 1).setVirtualMemory(listaProcessoRegistros.get(j).getVirtualMemory());
+                    listaProcessoRegistros.get(j).setVirtualMemory(tempVM);
 
-                    tempThreads = listaProcessos.get(j - 1).getThreads();
-                    listaProcessos.get(j - 1).setThreads(listaProcessos.get(j).getThreads());
-                    listaProcessos.get(j).setThreads(tempThreads);
+                    tempThreads = listaProcessoRegistros.get(j - 1).getThreads();
+                    listaProcessoRegistros.get(j - 1).setThreads(listaProcessoRegistros.get(j).getThreads());
+                    listaProcessoRegistros.get(j).setThreads(tempThreads);
 
 
                 }
             }
         }
         //top 5 Processos Quando esse bloco não está comentado ele ta pegando apenas uma parte dos processos
-        List<Processo> listaTopProcessos = new ArrayList<>();
+        List<ProcessoRegistro> listaTopProcessoRegistros = new ArrayList<>();
         for (int k = 0; k < 5; k++) {
-            listaTopProcessos.add(listaProcessos.get(k));
+            listaTopProcessoRegistros.add(listaProcessoRegistros.get(k));
         }
-        return listaTopProcessos;
+        return listaTopProcessoRegistros;
     }
 
 }
