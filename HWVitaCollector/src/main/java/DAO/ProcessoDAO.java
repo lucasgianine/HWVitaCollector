@@ -8,8 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ProcessoDAO {
-    public void inserirRegistroProcesso(ProcessoRegistro processoRegistro){
-        String sql = "INSERT INTO processoregistro (fkMaquina,nome,dtRegistro,threads,usoMemoriaRam) VALUES (?,?,?,?,?)";
+    public static void inserirRegistroProcesso(ProcessoRegistro processoRegistro){
+        String sql = "INSERT INTO processoRegistro (fkMaquina,nome,dtRegistro,threads,usoMemoriaRam) VALUES (?,?,?,?,?)";
 
         PreparedStatement ps = null;
 

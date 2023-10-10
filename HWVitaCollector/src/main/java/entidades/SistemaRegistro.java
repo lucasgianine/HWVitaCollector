@@ -55,5 +55,6 @@ public class SistemaRegistro {
 
     public static int getUsbGroupSize(){
         return new Looca().getDispositivosUsbGrupo().getTotalDispositvosUsbConectados();
+        //método paia
     }
 }

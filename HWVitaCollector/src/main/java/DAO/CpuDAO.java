@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class CpuDAO {
 
 
-    public void inserirRegistroCpu(CpuRegistro cpuRegistro){
+    public static void inserirRegistroCpu(CpuRegistro cpuRegistro){
         String sql = "INSERT INTO cpuRegistro (fkMaquina,dtRegistro,temperatura,usoPorcentagem) VALUES" +
                 "(?,?,?,?)";
         PreparedStatement ps = null;

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class DiscoDAO {
 
-public void inserirRegistroDisco(DiscoRegistro discoRegistro){
+public static void inserirRegistroDisco(DiscoRegistro discoRegistro){
 
     String sql = "INSERT INTO discoRegistro (fkMaquina,modelo,dtRegistro,armazenamentoTotal,armazenamentoLivre) VALUES" +
             "(?,?,?,?,?)";
