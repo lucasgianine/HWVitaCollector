@@ -1,5 +1,12 @@
 package gui;
 
+import DAO.FuncionarioDAO;
+import DAO.MaquinaDAO;
+import entidades.Funcionario;
+import entidades.Maquina;
+import helpers.VerificacaoHelper;
+import oshi.SystemInfo;
+
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -9,7 +16,13 @@ public class Login extends JDialog {
     private JButton buttonCancel;
     private JTextField textField1;
     private JPasswordField passwordField1;
+    private JLabel labelAlerta;
 
+    public static void mainLogin() {
+        Login dialog = new Login();
+        dialog.pack();
+        dialog.setVisible(true);
+    }
     public Login() {
         setContentPane(contentPane);
         setModal(true);
@@ -18,7 +31,6 @@ public class Login extends JDialog {
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
-
             }
         });
 
@@ -45,19 +57,31 @@ public class Login extends JDialog {
     }
 
     private void onOK() {
-        // add your code here
+        String UUID = new SystemInfo().getHardware().getComputerSystem().getHardwareUUID();
+        String emailFuncionario = textField1.getText();
+        String senhaFuncionario = passwordField1.getText();
+
+        Funcionario funcionario = FuncionarioDAO.getFuncionario(emailFuncionario,senhaFuncionario);
+        if(VerificacaoHelper.funcionarioIsAutenticado(funcionario)){
+            if(VerificacaoHelper.maquinaIsCadastrada(UUID)){
+                System.out.println("Inicializando programa...");
+                dispose();
+            }else{
+                String apelido = "Máquina Recepção, GUICHE 5";
+                Maquina maquina = new Maquina(UUID,funcionario.getFkHospital(),apelido,funcionario.getNome());
+                MaquinaDAO.registrarMaquina(maquina);
+                System.out.println("Cadastrando maquina...");
+                onOK();
+            }
         dispose();
+        }else{
+            labelAlerta.setText("Usuário não encontrado, tente novamente");
+        }
     }
 
     private void onCancel() {
-        // add your code here if necessary
+        System.exit(0);
         dispose();
     }
 
-    public static void main(String[] args) {
-        Login dialog = new Login();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
 }

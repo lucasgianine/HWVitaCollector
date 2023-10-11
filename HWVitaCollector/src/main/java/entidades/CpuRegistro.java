@@ -10,16 +10,16 @@ import com.profesorfalken.jsensors.model.sensors.Temperature;
 import java.util.List;
 
 public class CpuRegistro{
-    private int fkMaquina;
+    private String fkMaquina;
     private String dtRegistro;
     private String temperatura;
     private String usoPorcentaegem;
 
-    public int getFkMaquina() {
+    public String getFkMaquina() {
         return fkMaquina;
     }
 
-    public void setFkMaquina(int fkMaquina) {
+    public void setFkMaquina(String fkMaquina) {
         this.fkMaquina = fkMaquina;
     }
 
@@ -47,7 +47,7 @@ public class CpuRegistro{
         this.usoPorcentaegem = usoPorcentaegem;
     }
 
-    public CpuRegistro(int fkMaquina, String dtRegistro, String temperatura, String usoPorcentaegem) {
+    public CpuRegistro(String fkMaquina, String dtRegistro, String temperatura, String usoPorcentaegem) {
         this.fkMaquina = fkMaquina;
         this.dtRegistro = dtRegistro;
         this.temperatura = temperatura;

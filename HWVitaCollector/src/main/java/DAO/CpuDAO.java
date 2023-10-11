@@ -19,7 +19,7 @@ public class CpuDAO {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
             ps = Conexao.getConexao().prepareStatement(sql);
-            ps.setInt(1, cpuRegistro.getFkMaquina());
+            ps.setString(1, cpuRegistro.getFkMaquina());
             ps.setString(2,cpuRegistro.getDtRegistro());
             ps.setString(3, cpuRegistro.getTemperatura());
             ps.setString(4, cpuRegistro.getUsoPorcentaegem());

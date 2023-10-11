@@ -16,7 +16,7 @@ public class ProcessoDAO {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             ps = Conexao.getConexao().prepareStatement(sql);
-            ps.setInt(1, processoRegistro.getFkMaquina());
+            ps.setString(1, processoRegistro.getFkMaquina());
             ps.setString(2, processoRegistro.getNome());
             ps.setString(3, processoRegistro.getDtRegistro());
             ps.setInt(4, processoRegistro.getThreads());

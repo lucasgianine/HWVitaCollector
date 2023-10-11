@@ -18,7 +18,7 @@ public static void inserirRegistroDisco(DiscoRegistro discoRegistro){
 
         Class.forName("com.mysql.cj.jdbc.Driver");
         ps = Conexao.getConexao().prepareStatement(sql);
-        ps.setInt(1, discoRegistro.getFkMaquina());
+        ps.setString(1, discoRegistro.getFkMaquina());
         ps.setString(2, discoRegistro.getModel());
         ps.setString(3, discoRegistro.getDtRegistro());
         ps.setString(4, discoRegistro.getTotalSpace());

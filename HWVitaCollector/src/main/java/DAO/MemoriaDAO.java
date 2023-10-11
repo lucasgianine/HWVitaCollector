@@ -17,7 +17,7 @@ public class MemoriaDAO {
         try {
         Class.forName("com.mysql.cj.jdbc.Driver");
         ps = Conexao.getConexao().prepareStatement(sql);
-        ps.setInt(1,memoriaRegistro.getFkMaquina());
+        ps.setString(1,memoriaRegistro.getFkMaquina());
         ps.setString(2,memoriaRegistro.getDtRegistro());
         ps.setString(3,memoriaRegistro.getQtdTotal());
         ps.setString(4,memoriaRegistro.getUsoMemoria());

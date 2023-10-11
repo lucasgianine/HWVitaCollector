@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ProcessoRegistro {
 
-    private Integer FkMaquina;
+    private String FkMaquina;
     private String nome;
     private String dtRegistro;
     private Integer threads;
@@ -26,11 +26,11 @@ public class ProcessoRegistro {
         this.dtRegistro = dtRegistro;
     }
 
-    public Integer getFkMaquina() {
+    public String getFkMaquina() {
         return FkMaquina;
     }
 
-    public void setFkMaquina(Integer fkMaquina) {
+    public void setFkMaquina(String fkMaquina) {
         FkMaquina = fkMaquina;
     }
 

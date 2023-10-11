@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DiscoRegistro {
 
-    private int fkMaquina;
+    private String fkMaquina;
 
     private String dtRegistro;
     private String model;
@@ -23,11 +23,11 @@ public class DiscoRegistro {
         return model;
     }
 
-    public int getFkMaquina() {
+    public String getFkMaquina() {
         return fkMaquina;
     }
 
-    public void setFkMaquina(int fkMaquina) {
+    public void setFkMaquina(String fkMaquina) {
         this.fkMaquina = fkMaquina;
     }
 

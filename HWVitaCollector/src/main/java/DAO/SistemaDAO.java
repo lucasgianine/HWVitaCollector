@@ -17,7 +17,7 @@ public class SistemaDAO {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             ps = Conexao.getConexao().prepareStatement(sql);
-            ps.setInt(1,sistemaRegistro.getFkMaquina());
+            ps.setString(1,sistemaRegistro.getFkMaquina());
             ps.setString(2,sistemaRegistro.getDtRegistro());
             ps.setString(3,sistemaRegistro.getTempoDeAtividadeSO());
             ps.setInt(4,sistemaRegistro.getQtdDisposivosUsbConectados());

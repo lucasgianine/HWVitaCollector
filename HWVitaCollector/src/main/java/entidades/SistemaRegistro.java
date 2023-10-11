@@ -5,23 +5,23 @@ import com.github.britooo.looca.api.util.Conversor;
 import oshi.SystemInfo;
 
 public class SistemaRegistro {
-    private int fkMaquina;
+    private String fkMaquina;
     private String dtRegistro;
     private String tempoDeAtividadeSO;
     private int qtdDisposivosUsbConectados;
 
-    public SistemaRegistro(int fkMaquina, String dtRegistro, String tempoDeAtividadeSO, int qtdDisposivosUsbConectados) {
+    public SistemaRegistro(String fkMaquina, String dtRegistro, String tempoDeAtividadeSO, int qtdDisposivosUsbConectados) {
         this.fkMaquina = fkMaquina;
         this.dtRegistro = dtRegistro;
         this.tempoDeAtividadeSO = tempoDeAtividadeSO;
         this.qtdDisposivosUsbConectados = qtdDisposivosUsbConectados;
     }
 
-    public int getFkMaquina() {
+    public String getFkMaquina() {
         return fkMaquina;
     }
 
-    public void setFkMaquina(int fkMaquina) {
+    public void setFkMaquina(String fkMaquina) {
         this.fkMaquina = fkMaquina;
     }
 

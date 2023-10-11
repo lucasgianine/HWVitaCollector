@@ -9,12 +9,12 @@ import com.profesorfalken.jsensors.model.sensors.Load;
 import java.util.List;
 
 public class MemoriaRegistro {
-    int fkMaquina;
+    String fkMaquina;
     String dtRegistro;
     String qtdTotal;
     String usoMemoria;
 
-    public MemoriaRegistro(int fkMaquina, String dtRegistro, String qtdTotal, String usoMemoria) {
+    public MemoriaRegistro(String fkMaquina, String dtRegistro, String qtdTotal, String usoMemoria) {
         this.fkMaquina = fkMaquina;
         this.dtRegistro = dtRegistro;
         this.qtdTotal = qtdTotal;
@@ -22,11 +22,11 @@ public class MemoriaRegistro {
     }
 
 
-    public int getFkMaquina() {
+    public String getFkMaquina() {
         return fkMaquina;
     }
 
-    public void setFkMaquina(int fkMaquina) {
+    public void setFkMaquina(String fkMaquina) {
         this.fkMaquina = fkMaquina;
     }
 
