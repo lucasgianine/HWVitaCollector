@@ -7,6 +7,9 @@ import entidades.Maquina;
 
 public class VerificacaoHelper {
     public static boolean funcionarioIsAutenticado(Funcionario funcionario){
+        if(funcionario == null){
+            return false;
+        }
         String email = funcionario.getEmail();
         String senha = funcionario.getSenha();
         Funcionario f = FuncionarioDAO.getFuncionario(email, senha);

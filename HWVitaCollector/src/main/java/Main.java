@@ -23,15 +23,24 @@ public class Main {
         String UUID = systemInfo.getHardware().getComputerSystem().getHardwareUUID();
 
         Funcionario funcionario = FuncionarioDAO.getFuncionario("leo@gmail.com","senha@123");
-        assert funcionario != null;
-        boolean taVerificado = VerificacaoHelper.funcionarioIsAutenticado(funcionario);
-           boolean maquinaRegistrada = false;
-        if(taVerificado){
-            maquinaRegistrada = VerificacaoHelper.maquinaIsCadastrada(UUID);
+
+        boolean funcionarioRegistrado = VerificacaoHelper.funcionarioIsAutenticado(funcionario);
+        boolean maquinaRegistrada = VerificacaoHelper.maquinaIsCadastrada(UUID);
+        if(funcionarioRegistrado){
+           if(maquinaRegistrada){
+               //Máquina e funcionários já registrados
+               System.out.println("plin plin pegando informações");
+           }else{
+               //Máquina não registrada registrarMaquina()
+               String apelido = "Máquina Recepção, GUICHE 5";
+               Maquina maquina = new Maquina(UUID,funcionario.getFkHospital(),apelido,funcionario.getNome());
+               MaquinaDAO.registrarMaquina(maquina);
+               System.out.println("Cadastrando maquina...");
+               main(args);
+           }
+        }else{
+            System.out.println("Usuário não encontrado cadastre-se no nosso site ou tente novamente");
         }
-        System.out.println("Usuário verificado? "+ taVerificado);
-        System.out.println("Maquina cadastrada? "+ maquinaRegistrada);
-        System.out.println(UUID);
 
 
         // Apenas enquanto o método de identificação e cadastramento de máquina não está pronto

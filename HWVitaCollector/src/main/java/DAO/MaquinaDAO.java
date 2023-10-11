@@ -34,4 +34,20 @@ public class MaquinaDAO {
             return null;
         }
     }
+
+    public static void registrarMaquina(Maquina maquina){
+        PreparedStatement ps = null;
+        String sql = "INSERT INTO MAQUINA (UUID,FKHOSPITAL,APELIDO,RESPONSAVEL) VALUES (?,?,?,?)";
+        try{
+            ps = Conexao.getConexao().prepareStatement(sql);
+            ps.setString(1,maquina.getUuid());
+            ps.setInt(2,maquina.getFkHospital());
+            ps.setString(3, maquina.getApelido());
+            ps.setString(4, maquina.getResponsavel());
+            ps.execute();
+            ps.close();
+        }catch (SQLException e){
+            e.fillInStackTrace();
+        }
+    }
 }
