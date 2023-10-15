@@ -14,6 +14,18 @@
           </config>
         </ContributedStateBase>
       </target>
+      <target name="ubuntu@34.229.69.211:22" type="ssh/sftp" uuid="f1191708-5922-400d-b026-1931db6b2ae8">
+        <config>
+          <option name="projectRootOnTarget" value="/home/ubuntu/HWVitaCollector" />
+          <option name="serverName" value="ubuntu@34.229.69.211:22 key" />
+        </config>
+        <ContributedStateBase type="JavaLanguageRuntime">
+          <config>
+            <option name="homePath" value="/usr/lib/jvm/java-17-openjdk-amd64" />
+            <option name="javaVersionString" value="17.0.8" />
+          </config>
+        </ContributedStateBase>
+      </target>
     </targets>
   </component>
 </project>

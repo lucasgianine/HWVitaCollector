@@ -70,11 +70,18 @@ public class DiscoRegistro {
             DiscoRegistro discoRegistro = new DiscoRegistro();
             HWDisk = systemInfo.getHardware().getDiskStores().get(i);
             paths.add(HWDisk.getPartitions().get(0).getMountPoint());
-            File file = new File(paths.get(i));
+            File file;
+            if(!systemInfo.getOperatingSystem().getFamily().toLowerCase().contains("windows")){
+               file = new File("/");
+            }else{
+                file = new File(paths.get(i));
+            }
+           //System.out.println(file.getPath());
             String diskModel = HWDisk.getModel().replaceAll("[(Unidades de disco padrão)]", "");
             String totalSpace = (Conversor.formatarBytes(HWDisk.getSize()).replaceAll("TiB","TB").replaceAll("MiB","MB").replaceAll("GiB","GB").replace(',','.'));
             String freeSpace = Conversor.formatarBytes(file.getFreeSpace()).replaceAll("TiB","TB").replaceAll("MiB","MB").replaceAll("GiB","GB").replace(',','.');
-
+            //System.out.println(totalSpace);
+            //System.out.println(freeSpace);
 
 
             Date dataAtual = new Date();
