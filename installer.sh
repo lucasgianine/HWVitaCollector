@@ -15,9 +15,8 @@ if [ "$getRes" = "Y" ] || [ "$getRes" = "y" ]
 	if [ $? -eq 0 ]
         then
         versao_atual=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}')
-        versao_necessaria="17.0.6"
 
-        if [[ "$versao_atual" == "$versao_necessaria" ]]
+        if [[ "$versao_atual" == "17.0.6" ]] || [[ "$versao_atual" == "17.0.8" ]]
             then
             echo "Java $versao_atual já está instalado."
 			echo "Prosseguindo com a instalação do software..."
@@ -61,7 +60,7 @@ if [ "$getRes" = "Y" ] || [ "$getRes" = "y" ]
 	fi
 
 	# Inicializando a instalação do .jar no repositório da Vita (Projeto de PI)
-	curl -LJO https://github.com/vita-sptech/HWVitaCollector/blob/main/HWVitaCollector/out/artifacts/HWVitaCollector_jar/HWVitaCollector.jar
+	curl -LJO https://github.com/vita-sptech/HWVitaCollector/raw/main/HWVitaCollector/out/artifacts/HWVitaCollector_jar/HWVitaCollector.jar
     
 
 	if [ $? -eq 0 ]
