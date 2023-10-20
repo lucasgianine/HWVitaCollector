@@ -26,6 +26,66 @@
           </config>
         </ContributedStateBase>
       </target>
+      <target name="ubuntu@54.158.194.86:22" type="ssh/sftp" uuid="1092977d-e44e-4be7-a523-5ed2cbcf0a31">
+        <config>
+          <option name="projectRootOnTarget" value="/home/ubuntu/HWVitaCollector" />
+          <option name="serverName" value="ubuntu@54.158.194.86:22 key" />
+        </config>
+        <ContributedStateBase type="JavaLanguageRuntime">
+          <config>
+            <option name="homePath" value="/usr/lib/jvm/java-17-openjdk-amd64" />
+            <option name="javaVersionString" value="17.0.8" />
+          </config>
+        </ContributedStateBase>
+      </target>
+      <target name="ubuntu@54.158.194.86:222" type="ssh/sftp" uuid="84d06e16-004f-4669-aa01-dce9458a861e">
+        <config>
+          <option name="projectRootOnTarget" value="/home/ubuntu/HWVitaCollector" />
+          <option name="serverName" value="ubuntu@54.158.194.86:22 key" />
+        </config>
+        <ContributedStateBase type="JavaLanguageRuntime">
+          <config>
+            <option name="homePath" value="/usr/lib/jvm/java-17-openjdk-amd64" />
+            <option name="javaVersionString" value="17.0.8" />
+          </config>
+        </ContributedStateBase>
+      </target>
+      <target name="ubuntu@54.158.194.86:223" type="ssh/sftp" uuid="dc3a429e-4fdd-4bb8-a954-7a811b588cf1">
+        <config>
+          <option name="projectRootOnTarget" value="/home/ubuntu/HWVitaCollector" />
+          <option name="serverName" value="ubuntu@54.158.194.86:22 key" />
+        </config>
+        <ContributedStateBase type="JavaLanguageRuntime">
+          <config>
+            <option name="homePath" value="/usr/lib/jvm/openjdk-17" />
+            <option name="javaVersionString" value="17.0.8" />
+          </config>
+        </ContributedStateBase>
+      </target>
+      <target name="ubuntu@54.158.194.86:224" type="ssh/sftp" uuid="ab760405-884a-4eae-94a0-91854f29514b">
+        <config>
+          <option name="projectRootOnTarget" value="/home/ubuntu/HWVitaCollector" />
+          <option name="serverName" value="ubuntu@54.158.194.86:22 key" />
+        </config>
+        <ContributedStateBase type="JavaLanguageRuntime">
+          <config>
+            <option name="homePath" value="/usr/lib/jvm/java-17-openjdk-amd64/bin/java" />
+            <option name="javaVersionString" value="17.0.8" />
+          </config>
+        </ContributedStateBase>
+      </target>
+      <target name="ubuntu@54.158.194.86:225" type="ssh/sftp" uuid="e9dfcee3-c521-4c40-9d93-cc05984d09d0">
+        <config>
+          <option name="projectRootOnTarget" value="/home/ubuntu/HWVitaCollector" />
+          <option name="serverName" value="ubuntu@54.158.194.86:22 key" />
+        </config>
+        <ContributedStateBase type="JavaLanguageRuntime">
+          <config>
+            <option name="homePath" value="/lib/jvm/java-17-openjdk-amd64" />
+            <option name="javaVersionString" value="17.0.8" />
+          </config>
+        </ContributedStateBase>
+      </target>
     </targets>
   </component>
 </project>

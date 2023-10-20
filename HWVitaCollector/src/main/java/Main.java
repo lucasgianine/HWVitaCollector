@@ -22,8 +22,9 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     public static void main(String[] args) {
         String UUID = new SystemInfo().getHardware().getComputerSystem().getHardwareUUID();
-        Login.mainLogin();
-        HardwareExtractor.HardwareExtractorLoop(UUID);
+        //Login.mainLogin();
+        //HardwareExtractor.HardwareExtractorLoop(UUID);
+        System.out.println(UUID);
      }
     }
 
