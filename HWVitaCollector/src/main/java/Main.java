@@ -1,5 +1,6 @@
 import DAO.*;
 import com.github.britooo.looca.api.core.Looca;
+import com.github.britooo.looca.api.group.discos.DiscoGrupo;
 import com.github.britooo.looca.api.group.dispositivos.DispositivoUsb;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
@@ -22,8 +23,8 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     public static void main(String[] args) {
         String UUID = new SystemInfo().getHardware().getComputerSystem().getHardwareUUID();
-        //Login.mainLogin();
-        //HardwareExtractor.HardwareExtractorLoop(UUID);
+        Login.mainLogin();
+        HardwareExtractor.HardwareExtractorLoop(UUID);
         System.out.println(UUID);
      }
     }
