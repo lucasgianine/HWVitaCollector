@@ -24,8 +24,9 @@ public class CpuDAO {
             ps.setString(3, cpuRegistro.getTemperatura());
             ps.setString(4, cpuRegistro.getUsoPorcentaegem());
             ps.execute();
+            System.out.println("Inserindo informações de CPU");
             ps.close();
-            System.out.println("Executando a instrução sql \n" + sql);
+            //System.out.println("Executando a instrução sql \n" + sql);
         }catch (SQLException | ClassNotFoundException e){
             System.out.println(e.getMessage());
         }

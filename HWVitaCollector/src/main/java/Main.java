@@ -24,15 +24,18 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     public static void main(String[] args) {
         String UUID = new SystemInfo().getHardware().getComputerSystem().getHardwareUUID();
-
-        /*System.out.println("antes de abrir o login");
+        boolean hasInterface = true;
+        try{
         Login.mainLogin();
         HardwareExtractor.HardwareExtractorLoop(UUID);
-        */
+        }catch (Exception e){
+            hasInterface = false;
+            System.out.println(e);
+        }
 
-
-        System.out.println(UUID);
-        //BLOCO PARA MÁQUINAS SEM INTERFACE --
+        if(!hasInterface){
+            System.out.println(UUID);
+            //BLOCO PARA MÁQUINAS SEM INTERFACE --
             Funcionario funcionario = FuncionarioDAO.getFuncionario("leo@gmail.com","senha@123");
             if(VerificacaoHelper.maquinaIsCadastrada(UUID)){
                 System.out.println("Inicializando programa...");
@@ -41,10 +44,11 @@ public class Main {
                 Maquina maquina = new Maquina(UUID,funcionario.getFkHospital(),apelido,funcionario.getNome());
                 MaquinaDAO.registrarMaquina(maquina);
                 System.out.println("Cadastrando maquina...");
-            }
+                }
             HardwareExtractor.HardwareExtractorLoop(UUID);
         }
-     }
+    }
+ }
 
 
 

@@ -24,8 +24,9 @@ public static void inserirRegistroDisco(DiscoRegistro discoRegistro){
         ps.setString(4, discoRegistro.getTotalSpace());
         ps.setString(5, discoRegistro.getFreeSpace());
         ps.execute();
+        //System.out.println("Executando a instrução sql \n" + sql);
+        System.out.println("Inserindo informações de disco");
         ps.close();
-        System.out.println("Executando a instrução sql \n" + sql);
     }catch (SQLException | ClassNotFoundException e){
         System.out.println(e.getMessage());
     }

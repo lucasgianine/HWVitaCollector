@@ -55,7 +55,12 @@ public class MemoriaRegistro {
     }
 
     public static String getMemoryUsagePercentage () {
+        Memoria memoria = new Memoria();
         Components components = JSensors.get.components();
+        if(components.cpus.isEmpty()){
+            String usoMemoriaPorcentagem = String.format("%s%%",Conversor.formatarBytes(memoria.getEmUso() / memoria.getTotal() * 100).replaceAll("GiB","").replace(',','.'));
+            return usoMemoriaPorcentagem;
+        }
         List<Load> loads = components.cpus.get(0).sensors.loads;
         for (Load load : loads) {
             if (load.name.contains("Memory")) {

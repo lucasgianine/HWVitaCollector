@@ -55,10 +55,15 @@ public class CpuRegistro{
     }
 
     public static Double getCpuTemperatureValue(){
+        //System.out.println("entrou no getcputemperature");
         Components components = JSensors.get.components();
         List<Cpu> cpus = components.cpus;
-        List<Temperature> temperatures = cpus.get(0).sensors.temperatures;
+        if(cpus.isEmpty()){
+            return 0.0;
+        }
 
+
+        List<Temperature> temperatures = cpus.get(0).sensors.temperatures;
         if (cpus != null) {
             for (final com.profesorfalken.jsensors.model.components.Cpu cpu : cpus) {
                 //System.out.println("Found CPU component: " + cpu.name);

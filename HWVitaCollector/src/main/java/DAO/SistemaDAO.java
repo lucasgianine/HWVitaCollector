@@ -22,6 +22,7 @@ public class SistemaDAO {
             ps.setString(3,sistemaRegistro.getTempoDeAtividadeSO());
             ps.setInt(4,sistemaRegistro.getQtdDisposivosUsbConectados());
             ps.execute();
+            System.out.println("Inserindo informações de sistema");
             ps.close();
         }catch (SQLException | ClassNotFoundException e){
             System.out.println(e);

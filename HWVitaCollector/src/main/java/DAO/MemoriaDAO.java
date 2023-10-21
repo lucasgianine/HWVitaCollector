@@ -22,6 +22,7 @@ public class MemoriaDAO {
         ps.setString(3,memoriaRegistro.getQtdTotal());
         ps.setString(4,memoriaRegistro.getUsoMemoria());
         ps.execute();
+        System.out.println("Inserindo instruções de memória");
         ps.close();
         }catch (SQLException | ClassNotFoundException e){
             System.out.println(e);
