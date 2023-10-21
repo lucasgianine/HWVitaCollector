@@ -10,7 +10,7 @@ public class CpuDAO {
 
 
     public static void inserirRegistroCpu(CpuRegistro cpuRegistro){
-        String sql = "INSERT INTO cpuRegistro (fkMaquina,dtRegistro,temperatura,usoPorcentagem) VALUES" +
+        String sql = "INSERT INTO CpuRegistro (fkMaquina,dtRegistro,temperatura,usoPorcentagem) VALUES" +
                 "(?,?,?,?)";
         PreparedStatement ps = null;
 

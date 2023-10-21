@@ -12,7 +12,7 @@ import java.util.UUID;
 public class MaquinaDAO {
 
     public static Maquina getMaquinaByUUID(String UUID){
-        String sql = "SELECT * FROM MAQUINA WHERE uuid = ?;";
+        String sql = "SELECT * FROM Maquina WHERE uuid = ?;";
         PreparedStatement ps = null;
         try{
         ps = Conexao.getConexao().prepareStatement(sql);
@@ -37,7 +37,7 @@ public class MaquinaDAO {
 
     public static void registrarMaquina(Maquina maquina){
         PreparedStatement ps = null;
-        String sql = "INSERT INTO MAQUINA (UUID,FKHOSPITAL,APELIDO,RESPONSAVEL) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO Maquina (uuid,fkHospital,apelido,responsavel) VALUES (?,?,?,?)";
         try{
             ps = Conexao.getConexao().prepareStatement(sql);
             ps.setString(1,maquina.getUuid());
@@ -45,6 +45,7 @@ public class MaquinaDAO {
             ps.setString(3, maquina.getApelido());
             ps.setString(4, maquina.getResponsavel());
             ps.execute();
+            System.out.println("Executando instrução SQL " + sql);
             ps.close();
         }catch (SQLException e){
             e.fillInStackTrace();

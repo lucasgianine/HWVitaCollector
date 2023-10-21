@@ -23,11 +23,24 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     public static void main(String[] args) {
         String UUID = new SystemInfo().getHardware().getComputerSystem().getHardwareUUID();
-        Login.mainLogin();
-        HardwareExtractor.HardwareExtractorLoop(UUID);
+        //Login.mainLogin();
+        //HardwareExtractor.HardwareExtractorLoop(UUID);
         System.out.println(UUID);
+
+
+            Funcionario funcionario = FuncionarioDAO.getFuncionario("leo@gmail.com","senha@123");
+            if(VerificacaoHelper.maquinaIsCadastrada(UUID)){
+                System.out.println("Inicializando programa...");
+            }else{
+                String apelido = "Máquina Recepção, GUICHE 5";
+                Maquina maquina = new Maquina(UUID,funcionario.getFkHospital(),apelido,funcionario.getNome());
+                MaquinaDAO.registrarMaquina(maquina);
+                System.out.println("Cadastrando maquina...");
+            }
+            HardwareExtractor.HardwareExtractorLoop(UUID);
+        }
      }
-    }
+
 
 
 

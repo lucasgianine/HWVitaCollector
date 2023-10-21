@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class FuncionarioDAO {
     public static Funcionario getFuncionario(String emailFuncionario, String senhaFuncionario){
-        String sql = "SELECT * FROM FUNCIONARIO WHERE email = ? AND senha = ?";
+        String sql = "SELECT * FROM Funcionario WHERE email = ? AND senha = ?";
         PreparedStatement ps = null;
         try {
             ps = Objects.requireNonNull(Conexao.getConexao()).prepareStatement(sql);

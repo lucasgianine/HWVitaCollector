@@ -6,9 +6,12 @@ import java.sql.SQLException;
 
 public class Conexao {
 
-    private static  final String url = "jdbc:mysql://localhost:3306/vita";
+    //private static  final String url = "jdbc:mysql://localhost:3306/vita";
+    //private static  final String user = "root";
+    //private static  final String password = "Odranoel@6969";
+    private static  final String url = "jdbc:mysql://database-1.czxa9gxppmzn.us-east-1.rds.amazonaws.com:3306/vita";
     private static  final String user = "root";
-    private static  final String password = "Odranoel@6969";
+    private static  final String password = "grupovitadb";
 
 
     private static Connection conn;

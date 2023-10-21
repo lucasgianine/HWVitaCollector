@@ -10,7 +10,7 @@ public class DiscoDAO {
 
 public static void inserirRegistroDisco(DiscoRegistro discoRegistro){
 
-    String sql = "INSERT INTO discoRegistro (fkMaquina,modelo,dtRegistro,armazenamentoTotal,armazenamentoLivre) VALUES" +
+    String sql = "INSERT INTO DiscoRegistro (fkMaquina,modelo,dtRegistro,armazenamentoTotal,armazenamentoLivre) VALUES" +
             "(?,?,?,?,?)";
     PreparedStatement ps = null;
 

@@ -6,10 +6,11 @@ import entidades.ProcessoRegistro;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 public class ProcessoDAO {
     public static void inserirRegistroProcesso(ProcessoRegistro processoRegistro){
-        String sql = "INSERT INTO processoRegistro (fkMaquina,nome,dtRegistro,threads,usoMemoriaRam) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO ProcessoRegistro (fkMaquina,nome,dtRegistro,threads,usoMemoriaRam) VALUES (?,?,?,?,?)";
 
         PreparedStatement ps = null;
 

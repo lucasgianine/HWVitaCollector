@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class MemoriaDAO {
     public static void inserirRegistroMemoria(MemoriaRegistro memoriaRegistro){
-        String sql = "INSERT INTO memoriaRegistro (fkMaquina,dtRegistro,qtdTotal,usoMemoria) VALUES" +
+        String sql = "INSERT INTO MemoriaRegistro (fkMaquina,dtRegistro,qtdTotal,usoMemoria) VALUES" +
                 "(?,?,?,?) ";
 
         PreparedStatement ps = null;

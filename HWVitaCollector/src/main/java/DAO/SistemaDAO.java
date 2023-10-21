@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class SistemaDAO {
     public static void inserirRegistroSistema(SistemaRegistro sistemaRegistro){
-        String sql = "INSERT INTO sistemaRegistro (fkMaquina,dtRegistro,tempoDeAtividadeSistema,qtdDispositivosUsb) VALUES" +
+        String sql = "INSERT INTO SistemaRegistro (fkMaquina,dtRegistro,tempoDeAtividadeSistema,qtdDispositivosUsb) VALUES" +
                 "(?,?,?,?) ";
 
         PreparedStatement ps = null;
