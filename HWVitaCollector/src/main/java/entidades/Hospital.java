@@ -1,7 +1,10 @@
 package entidades;
 
+import lombok.ToString;
+
+@ToString
 public class Hospital {
-    private int id;
+    @ToString.Exclude private int id;
     private String nome;
     private String telefone;
     private String email;

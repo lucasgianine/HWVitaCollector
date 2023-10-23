@@ -20,9 +20,9 @@ public class HardwareExtractor {
             String dataFormatada = dateFormat.format(dataAtual);
 
             List<ProcessoRegistro> processoRegistros = ProcessoRegistro.getProcessos();
-            for (ProcessoRegistro processo: processoRegistros) {
-                processo.setFkMaquina(fkMaquina);
-                ProcessoDAO.inserirRegistroProcesso(processo);
+            for (ProcessoRegistro processoRegistro: processoRegistros) {
+                processoRegistro.setFkMaquina(fkMaquina);
+                ProcessoDAO.inserirRegistroProcesso(processoRegistro);
             }
 
             List<DiscoRegistro> discoRegistros = DiscoRegistro.getDiscos();

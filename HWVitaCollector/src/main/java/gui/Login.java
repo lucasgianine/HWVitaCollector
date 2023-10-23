@@ -70,7 +70,6 @@ public class Login extends JDialog {
                 String apelido = "Máquina Recepção, GUICHE 5";
                 Maquina maquina = new Maquina(UUID,funcionario.getFkHospital(),apelido,funcionario.getNome());
                 MaquinaDAO.registrarMaquina(maquina);
-                System.out.println("Cadastrando maquina...");
                 onOK();
             }
         dispose();

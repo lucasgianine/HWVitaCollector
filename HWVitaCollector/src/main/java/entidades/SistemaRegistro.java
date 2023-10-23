@@ -2,10 +2,11 @@ package entidades;
 
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.util.Conversor;
+import lombok.ToString;
 import oshi.SystemInfo;
-
+@ToString
 public class SistemaRegistro {
-    private String fkMaquina;
+    @ToString.Exclude private String fkMaquina;
     private String dtRegistro;
     private String tempoDeAtividadeSO;
     private int qtdDisposivosUsbConectados;
@@ -15,6 +16,14 @@ public class SistemaRegistro {
         this.dtRegistro = dtRegistro;
         this.tempoDeAtividadeSO = tempoDeAtividadeSO;
         this.qtdDisposivosUsbConectados = qtdDisposivosUsbConectados;
+    }
+    public static String getSystemUptime(){
+        return Conversor.formatarSegundosDecorridos(new SystemInfo().getOperatingSystem().getSystemUptime());
+    }
+
+    public static int getUsbGroupSize(){
+        return new Looca().getDispositivosUsbGrupo().getTotalDispositvosUsbConectados();
+        //método paia
     }
 
     public String getFkMaquina() {
@@ -49,12 +58,4 @@ public class SistemaRegistro {
         this.qtdDisposivosUsbConectados = qtdDisposivosUsbConectados;
     }
 
-    public static String getSystemUptime(){
-        return Conversor.formatarSegundosDecorridos(new SystemInfo().getOperatingSystem().getSystemUptime());
-    }
-
-    public static int getUsbGroupSize(){
-        return new Looca().getDispositivosUsbGrupo().getTotalDispositvosUsbConectados();
-        //método paia
-    }
 }

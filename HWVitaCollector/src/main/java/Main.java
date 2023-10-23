@@ -20,7 +20,6 @@ public class Main {
             System.out.println(e.getMessage());
         }
         if (!hasInterface) {
-
             Scanner scanner = new Scanner(System.in);
             System.out.println("Faça login com suas credenciais cadastradas");
             System.out.println("Digite seu email: ");
@@ -34,7 +33,6 @@ public class Main {
                     String apelido = "Máquina Recepção, GUICHE 5";
                     Maquina maquina = new Maquina(UUID, funcionario.getFkHospital(), apelido, funcionario.getNome());
                     MaquinaDAO.registrarMaquina(maquina);
-                    System.out.println("Cadastrando maquina...");
                 }
             } else {
                 System.out.println("Registro não encontrado");

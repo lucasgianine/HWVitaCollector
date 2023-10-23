@@ -45,8 +45,13 @@ public class MaquinaDAO {
             ps.setString(3, maquina.getApelido());
             ps.setString(4, maquina.getResponsavel());
             ps.execute();
-            //System.out.println("Inserindo Máquina");
-            //System.out.println("Executando instrução SQL " + sql);
+            System.out.println(String.format(
+                    """
+             |---------------------------------------------------------------------------------------------------------|
+             | Cadastrando Máquina                                                                                     |
+             | %s                                                                                                       \s
+             |---------------------------------------------------------------------------------------------------------|
+             """,maquina));
             ps.close();
         }catch (SQLException e){
             e.fillInStackTrace();

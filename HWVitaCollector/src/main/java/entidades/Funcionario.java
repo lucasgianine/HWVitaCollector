@@ -1,8 +1,11 @@
 package entidades;
 
+import lombok.ToString;
+
+@ToString
 public class Funcionario {
-    private Integer id;
-    private Integer fkHospital;
+    @ToString.Exclude private Integer id;
+    @ToString.Exclude private Integer fkHospital;
     private String email;
     private String senha;
     private String nome;

@@ -1,5 +1,7 @@
 package entidades;
 
+import com.github.britooo.looca.api.util.Conversor;
+import lombok.ToString;
 import oshi.SystemInfo;
 import oshi.software.os.OSProcess;
 
@@ -10,80 +12,20 @@ import java.util.List;
 
 public class ProcessoRegistro {
 
-    private String FkMaquina;
+    @ToString.Exclude private String FkMaquina;
     private String nome;
     private String dtRegistro;
     private Integer threads;
 
-    private long residentMemory;
+    @ToString.Exclude private long residentMemory;
 
-    private long virtualMemory;
+    @ToString.Exclude private long virtualMemory;
 
     public ProcessoRegistro(String nome, Integer threads, long residentMemory, String dtRegistro) {
         this.nome = nome;
         this.threads = threads;
         this.residentMemory = residentMemory;
         this.dtRegistro = dtRegistro;
-    }
-
-    public String getFkMaquina() {
-        return FkMaquina;
-    }
-
-    public void setFkMaquina(String fkMaquina) {
-        FkMaquina = fkMaquina;
-    }
-
-    public String getDtRegistro() {
-        return dtRegistro;
-    }
-
-    public void setDtRegistro(String dtRegistro) {
-        this.dtRegistro = dtRegistro;
-    }
-
-    public long getVirtualMemory() {
-        return virtualMemory;
-    }
-
-    public void setVirtualMemory(long virtualMemory) {
-        this.virtualMemory = virtualMemory;
-    }
-
-    public long getResidentMemory() {
-        return residentMemory;
-    }
-
-    public void setResidentMemory(long residentMemory) {
-        this.residentMemory = residentMemory;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Integer getThreads() {
-        return threads;
-    }
-
-    public void setThreads(Integer threads) {
-        this.threads = threads;
-    }
-
-    public void incrementThreads(Integer threads) {
-        this.threads += threads;
-    }
-
-    public void incrementResidentSize(long residentMemory) {
-        this.residentMemory += residentMemory;
-    }
-
-    public void incrementVirtualMemory(long virtualMemory) {
-        this.virtualMemory += virtualMemory;
     }
 
     public static List<ProcessoRegistro> getProcessos(){
@@ -158,5 +100,76 @@ public class ProcessoRegistro {
         return listaTopProcessoRegistros;
     }
 
+
+    public String getFkMaquina() {
+        return FkMaquina;
+    }
+
+    public void setFkMaquina(String fkMaquina) {
+        FkMaquina = fkMaquina;
+    }
+
+    public String getDtRegistro() {
+        return dtRegistro;
+    }
+
+    public void setDtRegistro(String dtRegistro) {
+        this.dtRegistro = dtRegistro;
+    }
+
+    public long getVirtualMemory() {
+        return virtualMemory;
+    }
+
+    public void setVirtualMemory(long virtualMemory) {
+        this.virtualMemory = virtualMemory;
+    }
+
+    public long getResidentMemory() {
+        return residentMemory;
+    }
+
+    public void setResidentMemory(long residentMemory) {
+        this.residentMemory = residentMemory;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Integer getThreads() {
+        return threads;
+    }
+
+    public void setThreads(Integer threads) {
+        this.threads = threads;
+    }
+
+    public void incrementThreads(Integer threads) {
+        this.threads += threads;
+    }
+
+    public void incrementResidentSize(long residentMemory) {
+        this.residentMemory += residentMemory;
+    }
+
+    public void incrementVirtualMemory(long virtualMemory) {
+        this.virtualMemory += virtualMemory;
+    }
+
+
+    @Override
+    public String toString() {
+        return "ProcessoRegistro{" +
+                ", nome='" + nome + '\'' +
+                ", dtRegistro='" + dtRegistro + '\'' +
+                ", threads=" + threads +
+                ", usoRam=" + Conversor.formatarBytes(residentMemory) +
+                '}';
+    }
 }
 

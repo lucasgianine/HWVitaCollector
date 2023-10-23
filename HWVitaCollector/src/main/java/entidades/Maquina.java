@@ -1,8 +1,11 @@
 package entidades;
 
+import lombok.ToString;
+
+@ToString
 public class Maquina {
-    private String uuid;
-    private int fkHospital;
+    @ToString.Exclude private String uuid;
+    @ToString.Exclude private int fkHospital;
     private String apelido;
     private String responsavel;
 

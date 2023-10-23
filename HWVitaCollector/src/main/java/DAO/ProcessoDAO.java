@@ -23,8 +23,13 @@ public class ProcessoDAO {
             ps.setInt(4, processoRegistro.getThreads());
             ps.setString(5, Conversor.formatarBytes(processoRegistro.getResidentMemory()));
             ps.execute();
-            System.out.println("Inserindo informações de processo");
-            //System.out.println("Executando Instrução sql " + sql);
+            System.out.println(String.format(
+                    """
+             |---------------------------------------------------------------------------------------------------------|
+             | Inserindo informações de processo                                                                       |
+             | %s                                                                                                       \s
+             |---------------------------------------------------------------------------------------------------------|
+             """,processoRegistro));
             ps.close();
         }catch (SQLException e){
             System.out.println(e);

@@ -1,6 +1,9 @@
 package entidades;
 
 import com.github.britooo.looca.api.util.Conversor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import oshi.SystemInfo;
 import oshi.hardware.HWDiskStore;
 
@@ -9,56 +12,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+@ToString
 public class DiscoRegistro {
 
-    private String fkMaquina;
+    @ToString.Exclude private String fkMaquina;
 
     private String dtRegistro;
     private String model;
-    private String totalSpace;
-    private String freeSpace;
-
-    public String getModel() {
-        return model;
-    }
-
-    public String getFkMaquina() {
-        return fkMaquina;
-    }
-
-    public void setFkMaquina(String fkMaquina) {
-        this.fkMaquina = fkMaquina;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getTotalSpace() {
-        return totalSpace;
-    }
-
-    public String getDtRegistro() {
-        return dtRegistro;
-    }
-
-    public void setDtRegistro(String dtRegistro) {
-        this.dtRegistro = dtRegistro;
-    }
-
-    public void setTotalSpace(String totalSpace) {
-        this.totalSpace = totalSpace;
-    }
-
-    public String getFreeSpace() {
-        return freeSpace;
-    }
-
-    public void setFreeSpace(String freeSpace) {
-        this.freeSpace = freeSpace;
-    }
-
+    private String espacoTotal;
+    private String espacoLivre;
 
     public static List<DiscoRegistro> getDiscos(){
         List<DiscoRegistro> discoRegistros = new ArrayList<>();
@@ -78,10 +40,10 @@ public class DiscoRegistro {
             }
            //System.out.println(file.getPath());
             String diskModel = HWDisk.getModel().replaceAll("[(Unidades de disco padrão)]", "");
-            String totalSpace = (Conversor.formatarBytes(HWDisk.getSize()).replaceAll("TiB","TB").replaceAll("MiB","MB").replaceAll("GiB","GB").replace(',','.'));
-            String freeSpace = Conversor.formatarBytes(file.getFreeSpace()).replaceAll("TiB","TB").replaceAll("MiB","MB").replaceAll("GiB","GB").replace(',','.');
-            //System.out.println(totalSpace);
-            //System.out.println(freeSpace);
+            String espacoTotal = (Conversor.formatarBytes(HWDisk.getSize()).replaceAll("TiB","TB").replaceAll("MiB","MB").replaceAll("GiB","GB").replace(',','.'));
+            String espacoLivre = Conversor.formatarBytes(file.getFreeSpace()).replaceAll("TiB","TB").replaceAll("MiB","MB").replaceAll("GiB","GB").replace(',','.');
+            //System.out.println(espacoTotal);
+            //System.out.println(espacoLivre);
 
 
             Date dataAtual = new Date();
@@ -89,14 +51,52 @@ public class DiscoRegistro {
             String dataFormatada = dateFormat.format(dataAtual);
 
             discoRegistro.setDtRegistro(dataFormatada);
-            discoRegistro.setFreeSpace(freeSpace);
+            discoRegistro.setEspacoLivre(espacoLivre);
             discoRegistro.setModel(diskModel);
-            discoRegistro.setTotalSpace(totalSpace);
+            discoRegistro.setEspacoTotal(espacoTotal);
 
             discoRegistros.add(discoRegistro);
         }
         return discoRegistros;
+    }
 
+    public String getFkMaquina() {
+        return fkMaquina;
+    }
 
+    public void setFkMaquina(String fkMaquina) {
+        this.fkMaquina = fkMaquina;
+    }
+
+    public String getDtRegistro() {
+        return dtRegistro;
+    }
+
+    public void setDtRegistro(String dtRegistro) {
+        this.dtRegistro = dtRegistro;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getEspacoTotal() {
+        return espacoTotal;
+    }
+
+    public void setEspacoTotal(String espacoTotal) {
+        this.espacoTotal = espacoTotal;
+    }
+
+    public String getEspacoLivre() {
+        return espacoLivre;
+    }
+
+    public void setEspacoLivre(String espacoLivre) {
+        this.espacoLivre = espacoLivre;
     }
 }
