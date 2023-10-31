@@ -9,9 +9,7 @@ import lombok.ToString;
 
 import java.util.List;
 @ToString
-public class MemoriaRegistro {
-    @ToString.Exclude String fkMaquina;
-    String dtRegistro;
+public class MemoriaRegistro extends Registro {
     String qtdTotal;
     String usoMemoria;
 
@@ -41,23 +39,6 @@ public class MemoriaRegistro {
     public static String getTotalMemory(){
         Memoria memoria = new Memoria();
         return Conversor.formatarBytes(memoria.getTotal()).replaceAll("GiB","GB").replace(',','.');
-    }
-
-
-    public String getFkMaquina() {
-        return fkMaquina;
-    }
-
-    public void setFkMaquina(String fkMaquina) {
-        this.fkMaquina = fkMaquina;
-    }
-
-    public String getDtRegistro() {
-        return dtRegistro;
-    }
-
-    public void setDtRegistro(String dtRegistro) {
-        this.dtRegistro = dtRegistro;
     }
 
     public String getQtdTotal() {

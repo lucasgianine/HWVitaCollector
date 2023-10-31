@@ -10,11 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ProcessoRegistro {
-
-    @ToString.Exclude private String FkMaquina;
+public class ProcessoRegistro extends Registro {
     private String nome;
-    private String dtRegistro;
     private Integer threads;
 
     @ToString.Exclude private long residentMemory;
@@ -98,23 +95,6 @@ public class ProcessoRegistro {
             listaTopProcessoRegistros.add(listaProcessoRegistros.get(k));
         }
         return listaTopProcessoRegistros;
-    }
-
-
-    public String getFkMaquina() {
-        return FkMaquina;
-    }
-
-    public void setFkMaquina(String fkMaquina) {
-        FkMaquina = fkMaquina;
-    }
-
-    public String getDtRegistro() {
-        return dtRegistro;
-    }
-
-    public void setDtRegistro(String dtRegistro) {
-        this.dtRegistro = dtRegistro;
     }
 
     public long getVirtualMemory() {

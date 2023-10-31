@@ -13,11 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 @ToString
-public class DiscoRegistro {
-
-    @ToString.Exclude private String fkMaquina;
-
-    private String dtRegistro;
+public class DiscoRegistro  extends Registro{
     private String model;
     private String espacoTotal;
     private String espacoLivre;
@@ -58,22 +54,6 @@ public class DiscoRegistro {
             discoRegistros.add(discoRegistro);
         }
         return discoRegistros;
-    }
-
-    public String getFkMaquina() {
-        return fkMaquina;
-    }
-
-    public void setFkMaquina(String fkMaquina) {
-        this.fkMaquina = fkMaquina;
-    }
-
-    public String getDtRegistro() {
-        return dtRegistro;
-    }
-
-    public void setDtRegistro(String dtRegistro) {
-        this.dtRegistro = dtRegistro;
     }
 
     public String getModel() {

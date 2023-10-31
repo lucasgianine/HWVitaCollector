@@ -10,9 +10,7 @@ import lombok.ToString;
 
 import java.util.List;
 @ToString
-public class CpuRegistro{
-    @ToString.Exclude private String fkMaquina;
-    private String dtRegistro;
+public class CpuRegistro extends Registro{
     private String temperatura;
     private String usoPorcentaegem;
 
@@ -44,22 +42,6 @@ public class CpuRegistro{
 
     public static String getCpuUsePercentage(){
         return String.format("%.2f %%",new Processador().getUso());
-    }
-
-    public String getFkMaquina() {
-        return fkMaquina;
-    }
-
-    public void setFkMaquina(String fkMaquina) {
-        this.fkMaquina = fkMaquina;
-    }
-
-    public String getDtRegistro() {
-        return dtRegistro;
-    }
-
-    public void setDtRegistro(String dtRegistro) {
-        this.dtRegistro = dtRegistro;
     }
 
     public String getTemperatura() {

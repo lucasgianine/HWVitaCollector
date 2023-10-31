@@ -5,9 +5,7 @@ import com.github.britooo.looca.api.util.Conversor;
 import lombok.ToString;
 import oshi.SystemInfo;
 @ToString
-public class SistemaRegistro {
-    @ToString.Exclude private String fkMaquina;
-    private String dtRegistro;
+public class SistemaRegistro extends Registro{
     private String tempoDeAtividadeSO;
     private int qtdDisposivosUsbConectados;
 
@@ -24,22 +22,6 @@ public class SistemaRegistro {
     public static int getUsbGroupSize(){
         return new Looca().getDispositivosUsbGrupo().getTotalDispositvosUsbConectados();
         //método paia
-    }
-
-    public String getFkMaquina() {
-        return fkMaquina;
-    }
-
-    public void setFkMaquina(String fkMaquina) {
-        this.fkMaquina = fkMaquina;
-    }
-
-    public String getDtRegistro() {
-        return dtRegistro;
-    }
-
-    public void setDtRegistro(String dtRegistro) {
-        this.dtRegistro = dtRegistro;
     }
 
     public String getTempoDeAtividadeSO() {
