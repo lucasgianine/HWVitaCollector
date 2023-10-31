@@ -1,4 +1,4 @@
-package conexao;
+package conexoes;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,9 +9,6 @@ public class Conexao {
     private static  final String url = "jdbc:mysql://localhost:3306/vita";
     private static  final String user = "root";
     private static  final String password = "Odranoel@6969";
-//    private static  final String url = "jdbc:mysql://database-1.czxa9gxppmzn.us-east-1.rds.amazonaws.com:3306/vita";
-//    private static  final String user = "root";
-//    private static  final String password = "grupovitadb";
 
 
     private static Connection conn;
@@ -21,10 +18,8 @@ public class Conexao {
         try{
             if(conn == null){
                 conn = DriverManager.getConnection(url,user,password);
-                return conn;
-            }else{
-                return conn;
             }
+            return conn;
         }catch (SQLException e) {
             e.printStackTrace();
             System.out.println(e);
@@ -32,4 +27,5 @@ public class Conexao {
         }
 
     }
+
 }

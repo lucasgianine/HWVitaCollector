@@ -8,5 +8,4 @@ import lombok.Setter;
 public abstract class Registro {
     protected String fkMaquina;
     protected String dtRegistro;
-
 }

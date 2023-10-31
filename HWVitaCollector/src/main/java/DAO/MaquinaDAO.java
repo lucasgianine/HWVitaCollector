@@ -1,13 +1,11 @@
 package DAO;
 
-import conexao.Conexao;
-import entidades.Funcionario;
+import conexoes.Conexao;
 import entidades.Maquina;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.UUID;
 
 public class MaquinaDAO {
 
@@ -35,7 +33,12 @@ public class MaquinaDAO {
         }
     }
 
+
     public static void registrarMaquina(Maquina maquina){
+       registrarMaquinaLocal(maquina);
+       //registrarMaquinaNuvem(maquina);
+    }
+    public static void registrarMaquinaLocal(Maquina maquina){
         PreparedStatement ps = null;
         String sql = "INSERT INTO Maquina (uuid,fkHospital,apelido,responsavel) VALUES (?,?,?,?)";
         try{
@@ -48,7 +51,29 @@ public class MaquinaDAO {
             System.out.println(String.format(
                     """
              |---------------------------------------------------------------------------------------------------------|
-             | Cadastrando Máquina                                                                                     |
+             | Cadastrando Máquina (Local)                                                                             |
+             | %s                                                                                                       \s
+             |---------------------------------------------------------------------------------------------------------|
+             """,maquina));
+            ps.close();
+        }catch (SQLException e){
+            e.fillInStackTrace();
+        }
+    }
+    public static void registrarMaquinaNuvem(Maquina maquina){
+        PreparedStatement ps = null;
+        String sql = "INSERT INTO Maquina (uuid,fkHospital,apelido,responsavel) VALUES (?,?,?,?)";
+        try{
+            ps = Conexao.getConexao().prepareStatement(sql);
+            ps.setString(1,maquina.getUuid());
+            ps.setInt(2,maquina.getFkHospital());
+            ps.setString(3, maquina.getApelido());
+            ps.setString(4, maquina.getResponsavel());
+            ps.execute();
+            System.out.println(String.format(
+                    """
+             |---------------------------------------------------------------------------------------------------------|
+             | Cadastrando Máquina (Nuvem)                                                                             |
              | %s                                                                                                       \s
              |---------------------------------------------------------------------------------------------------------|
              """,maquina));

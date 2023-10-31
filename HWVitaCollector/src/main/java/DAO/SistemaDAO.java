@@ -1,7 +1,7 @@
 package DAO;
 
-import conexao.Conexao;
-import entidades.MemoriaRegistro;
+import conexoes.Conexao;
+import conexoes.ConexaoNuvem;
 import entidades.SistemaRegistro;
 
 import java.sql.PreparedStatement;
@@ -9,6 +9,10 @@ import java.sql.SQLException;
 
 public class SistemaDAO {
     public static void inserirRegistroSistema(SistemaRegistro sistemaRegistro){
+        inserirRegistroSistemaLocal(sistemaRegistro);
+        //inserirRegistroSistemaNuvem(sistemaRegistro);
+    }
+    public static void inserirRegistroSistemaLocal(SistemaRegistro sistemaRegistro){
         String sql = "INSERT INTO SistemaRegistro (fkMaquina,dtRegistro,tempoDeAtividadeSistema,qtdDispositivosUsb) VALUES" +
                 "(?,?,?,?) ";
 
@@ -25,7 +29,33 @@ public class SistemaDAO {
             System.out.println(String.format(
                     """
              |---------------------------------------------------------------------------------------------------------|
-             | Inserindo informações de sistema                                                                        |
+             | Inserindo informações de sistema (Local)                                                                |
+             | %s                                                                                                       \s
+             |---------------------------------------------------------------------------------------------------------|
+             """,sistemaRegistro));
+            ps.close();
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println(e);
+        }
+    }
+    public static void inserirRegistroSistemaNuvem(SistemaRegistro sistemaRegistro){
+        String sql = "INSERT INTO SistemaRegistro (fkMaquina,dtRegistro,tempoDeAtividadeSistema,qtdDispositivosUsb) VALUES" +
+                "(?,?,?,?) ";
+
+        PreparedStatement ps = null;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            ps = ConexaoNuvem.getConexaoNuvem().prepareStatement(sql);
+            ps.setString(1,sistemaRegistro.getFkMaquina());
+            ps.setString(2,sistemaRegistro.getDtRegistro());
+            ps.setString(3,sistemaRegistro.getTempoDeAtividadeSO());
+            ps.setInt(4,sistemaRegistro.getQtdDisposivosUsbConectados());
+            ps.execute();
+            System.out.println(String.format(
+                    """
+             |---------------------------------------------------------------------------------------------------------|
+             | Inserindo informações de sistema (Nuvem)                                                                |
              | %s                                                                                                       \s
              |---------------------------------------------------------------------------------------------------------|
              """,sistemaRegistro));

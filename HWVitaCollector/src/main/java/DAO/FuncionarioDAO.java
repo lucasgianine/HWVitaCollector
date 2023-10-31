@@ -1,6 +1,6 @@
 package DAO;
 
-import conexao.Conexao;
+import conexoes.Conexao;
 import entidades.Funcionario;
 
 import java.sql.PreparedStatement;
