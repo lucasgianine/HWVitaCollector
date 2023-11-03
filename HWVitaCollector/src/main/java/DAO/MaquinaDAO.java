@@ -35,8 +35,17 @@ public class MaquinaDAO {
 
 
     public static void registrarMaquina(Maquina maquina){
-       registrarMaquinaLocal(maquina);
-       //registrarMaquinaNuvem(maquina);
+        try {
+            registrarMaquinaLocal(maquina);
+        }catch (Exception e){
+            System.out.println("Não foi possivel conectar no banco Local");
+        }
+        try {
+            registrarMaquinaNuvem(maquina);
+        }catch (Exception e){
+            System.out.println("Não foi possivel conectar no banco em Nuvem");
+        }
+
     }
     public static void registrarMaquinaLocal(Maquina maquina){
         PreparedStatement ps = null;

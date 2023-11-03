@@ -17,7 +17,6 @@ public class Main {
             HardwareExtractor.HardwareExtractorLoop(UUID);
         }catch (Exception e) {
             hasInterface = false;
-            System.out.println(e.getMessage());
         }
         if (!hasInterface) {
             Scanner scanner = new Scanner(System.in);

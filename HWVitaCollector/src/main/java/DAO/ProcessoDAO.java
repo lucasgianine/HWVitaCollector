@@ -15,10 +15,13 @@ public class ProcessoDAO {
     public static void inserirRegistroProcesso(ProcessoRegistro processoRegistro){
         try {
             inserirRegistroProcessoLocal(processoRegistro);
-            //inserirRegistroProcessoNuvem(processoRegistro);
         }catch (Exception e){
-            System.out.println("Paia");
-            throw new RuntimeException(e);
+            System.out.println("Não foi possivel conectar no banco Local");
+        }
+        try {
+            inserirRegistroProcessoNuvem(processoRegistro);
+        }catch (Exception e){
+            System.out.println("Não foi possivel conectar no banco em Nuvem");
         }
 
     }

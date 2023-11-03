@@ -9,8 +9,17 @@ import java.sql.SQLException;
 
 public class MemoriaDAO {
     public static void inserirRegistroMemoria(MemoriaRegistro memoriaRegistro){
-        inserirRegistroMemoriaLocal(memoriaRegistro);
-        //inserirRegistroMemoriaNuvem(memoriaRegistro);
+        try {
+            inserirRegistroMemoriaLocal(memoriaRegistro);
+        }catch (Exception e){
+            System.out.println("Não foi possivel conectar no banco Local");
+        }
+        try {
+            inserirRegistroMemoriaLocal(memoriaRegistro);
+        }catch (Exception e){
+            System.out.println("Não foi possivel conectar no banco em Nuvem");
+        }
+
     }
     public static void inserirRegistroMemoriaLocal(MemoriaRegistro memoriaRegistro){
         String sql = "INSERT INTO MemoriaRegistro (fkMaquina,dtRegistro,qtdTotal,usoMemoria) VALUES" +

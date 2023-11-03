@@ -13,6 +13,9 @@ public class FuncionarioDAO {
         String sql = "SELECT * FROM Funcionario WHERE email = ? AND senha = ?";
         PreparedStatement ps = null;
         try {
+            if(Conexao.getConexao() == null){
+                return null;
+            }
             ps = Objects.requireNonNull(Conexao.getConexao()).prepareStatement(sql);
             ps.setString(1,emailFuncionario);
             ps.setString(2,senhaFuncionario);
@@ -32,7 +35,7 @@ public class FuncionarioDAO {
             ps.close();
             return f;
         }catch (SQLException e){
-            System.out.println(e);
+            System.out.println("Não foi possivel acessar o banco de dados que contém o registro de funcionários.");
             return  null;
         }
     }

@@ -11,8 +11,17 @@ import java.sql.SQLException;
 public class DiscoDAO {
 
 public static void inserirRegistroDisco(DiscoRegistro discoRegistro){
-    inserirRegistroDiscoLocal(discoRegistro);
-    //inserirRegistroDiscoNuvem(discoRegistro);
+    try {
+        inserirRegistroDiscoLocal(discoRegistro);
+    }catch (Exception e){
+        System.out.println("Não foi possivel conectar no banco Local");
+    }
+    try {
+        inserirRegistroDiscoNuvem(discoRegistro);
+    }catch (Exception e){
+        System.out.println("Não foi possivel conectar no banco em Nuvem");
+    }
+
 }
 public static void inserirRegistroDiscoLocal(DiscoRegistro discoRegistro){
     String sql = "INSERT INTO DiscoRegistro (fkMaquina,modelo,dtRegistro,armazenamentoTotal,armazenamentoLivre) VALUES" +

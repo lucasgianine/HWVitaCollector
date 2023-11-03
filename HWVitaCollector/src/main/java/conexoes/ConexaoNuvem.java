@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexaoNuvem {
-    private static  final String urlNuvem = "jdbc:mysql://databose-1.czxa9gxppmzn.us-east-1.rds.amazonaws.com:3306/vita";
+    private static  final String urlNuvem = "jdbc:mysql://database-1.czxa9gxppmzn.us-east-1.rds.amazonaws.com:3306/vita";
     private static  final String userNuvem = "root";
     private static  final String passwordNuvem = "grupovitadb";
 
@@ -17,8 +17,7 @@ public class ConexaoNuvem {
             }
             return conn;
         }catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e);
+            System.out.println("Conexão com banco em nuvem não foi iniciada.");
             return null;
         }
     }

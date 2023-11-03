@@ -21,8 +21,7 @@ public class Conexao {
             }
             return conn;
         }catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e);
+            System.out.println("Conexão com banco local não foi iniciada.");
             return null;
         }
 
