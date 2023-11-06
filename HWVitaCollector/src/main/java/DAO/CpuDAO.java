@@ -36,7 +36,7 @@ public class CpuDAO {
             ps.setString(1, cpuRegistro.getFkMaquina());
             ps.setString(2,cpuRegistro.getDtRegistro());
             ps.setString(3, cpuRegistro.getTemperatura());
-            ps.setString(4, cpuRegistro.getUsoPorcentaegem());
+            ps.setString(4, cpuRegistro.getUsoPorcentagem());
             ps.execute();
             System.out.println(String.format(
                     """
@@ -64,7 +64,7 @@ public class CpuDAO {
             ps.setString(1, cpuRegistro.getFkMaquina());
             ps.setString(2,cpuRegistro.getDtRegistro());
             ps.setString(3, cpuRegistro.getTemperatura());
-            ps.setString(4, cpuRegistro.getUsoPorcentaegem());
+            ps.setString(4, cpuRegistro.getUsoPorcentagem());
             ps.execute();
             System.out.println(String.format(
                     """
