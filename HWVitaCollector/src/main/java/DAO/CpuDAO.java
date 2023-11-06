@@ -47,7 +47,7 @@ public class CpuDAO {
              """,cpuRegistro));
             ps.close();
             //System.out.println("Executando a instrução sql \n" + sql);
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
@@ -75,7 +75,7 @@ public class CpuDAO {
              """,cpuRegistro));
             ps.close();
             //System.out.println("Executando a instrução sql \n" + sql);
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (Exception e){
             System.out.println(e.getMessage());
         }
     }

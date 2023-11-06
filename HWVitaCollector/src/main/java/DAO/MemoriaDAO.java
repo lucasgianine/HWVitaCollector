@@ -43,7 +43,7 @@ public class MemoriaDAO {
              |---------------------------------------------------------------------------------------------------------|
              """,memoriaRegistro));
             ps.close();
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (Exception e){
             System.out.println(e);
         }
     }
@@ -69,7 +69,7 @@ public class MemoriaDAO {
              |---------------------------------------------------------------------------------------------------------|
              """,memoriaRegistro));
             ps.close();
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (Exception e){
             System.out.println(e);
         }
     }
