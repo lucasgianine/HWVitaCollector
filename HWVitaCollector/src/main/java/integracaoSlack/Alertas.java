@@ -49,7 +49,7 @@ public class Alertas {
             CpuDAO.inserirRegistroCpu(cpuRegistro);
 
             try {
-                verificarCPU(cpuRegistro.getTemperatura(), cpuRegistro.getUsoPorcentaegem());
+                verificarCPU(cpuRegistro.getTemperatura(), cpuRegistro.getUsoPorcentagem());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (InterruptedException e) {
