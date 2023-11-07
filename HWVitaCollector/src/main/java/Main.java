@@ -4,6 +4,7 @@ import gui.Login;
 import helpers.AsciiHelper;
 import helpers.HardwareExtractor;
 import helpers.VerificacaoHelper;
+import integracaoSlack.Alertas;
 import oshi.SystemInfo;
 import java.util.*;
 @SuppressWarnings("SpellCheckingInspection")
@@ -15,6 +16,7 @@ public class Main {
         try {
             Login.mainLogin();
             HardwareExtractor.HardwareExtractorLoop(UUID);
+            Alertas.AlertasLoop(UUID);
         }catch (Exception e) {
             hasInterface = false;
         }
@@ -38,6 +40,7 @@ public class Main {
                 System.exit(404);
             }
                 HardwareExtractor.HardwareExtractorLoop(UUID);
+                Alertas.AlertasLoop(UUID);
             }
         }
     }
