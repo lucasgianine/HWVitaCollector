@@ -3,6 +3,7 @@ package DAO;
 import conexoes.Conexao;
 import conexoes.ConexaoNuvem;
 import entidades.CpuRegistro;
+import helpers.Logging;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -11,9 +12,11 @@ public class CpuDAO {
 
 
     public static void inserirRegistroCpu(CpuRegistro cpuRegistro){
+
         try {
             inserirRegistroCpuLocal(cpuRegistro);
         }catch (Exception e){
+            Logging.AddLogInfo(Logging.fileHandler,"Falha ao inserir registro de Cpu Local " + e.getMessage());
             System.out.println("Não foi possivel conectar no banco Local");
         }
         try {

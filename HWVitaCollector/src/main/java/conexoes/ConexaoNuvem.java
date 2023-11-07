@@ -1,5 +1,7 @@
 package conexoes;
 
+import helpers.Logging;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -18,6 +20,7 @@ public class ConexaoNuvem {
             return conn;
         }catch (SQLException e) {
             System.out.println("Conexão com banco em nuvem não foi iniciada.");
+            Logging.AddLogInfo(Logging.fileHandler,"Erro na conexão com o banco em nuvem na classe ConexãoNuvem Código de erro: " + e.getSQLState());
             return null;
         }
     }

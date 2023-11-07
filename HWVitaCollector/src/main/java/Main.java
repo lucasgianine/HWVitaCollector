@@ -3,12 +3,20 @@ import entidades.*;
 import gui.Login;
 import helpers.AsciiHelper;
 import helpers.HardwareExtractor;
+import helpers.Logging;
 import helpers.VerificacaoHelper;
 import oshi.SystemInfo;
 import java.util.*;
 @SuppressWarnings("SpellCheckingInspection")
 public class Main {
     public static void main(String[] args) {
+        try {
+            Logging logging = new Logging();
+            logging.CreateLog();
+        }catch (Exception e){
+            e.fillInStackTrace();
+        }
+
         String UUID = new SystemInfo().getHardware().getComputerSystem().getHardwareUUID();
         boolean hasInterface = true;
         AsciiHelper.vitaHealthAscii();
