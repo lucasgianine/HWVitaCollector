@@ -35,9 +35,7 @@ public class Alertas {
 
                 try {
                     verificarDisco(discoRegistro.getEspacoLivre());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (InterruptedException e) {
+                } catch (IOException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -50,9 +48,7 @@ public class Alertas {
 
             try {
                 verificarCPU(cpuRegistro.getTemperatura(), cpuRegistro.getUsoPorcentagem());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (InterruptedException e) {
+            }  catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
@@ -64,9 +60,7 @@ public class Alertas {
 
             try {
                 verificarMemoria(memoriaRegistro.getUsoMemoria());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (InterruptedException e) {
+            }  catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
