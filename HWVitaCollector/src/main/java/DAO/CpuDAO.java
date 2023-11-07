@@ -3,6 +3,7 @@ package DAO;
 import conexoes.Conexao;
 import conexoes.ConexaoNuvem;
 import entidades.CpuRegistro;
+import helpers.Logging;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -11,9 +12,11 @@ public class CpuDAO {
 
 
     public static void inserirRegistroCpu(CpuRegistro cpuRegistro){
+
         try {
             inserirRegistroCpuLocal(cpuRegistro);
         }catch (Exception e){
+            Logging.AddLogInfo(Logging.fileHandler,"Falha ao inserir registro de Cpu Local " + e.getMessage());
             System.out.println("Não foi possivel conectar no banco Local");
         }
         try {
@@ -36,7 +39,7 @@ public class CpuDAO {
             ps.setString(1, cpuRegistro.getFkMaquina());
             ps.setString(2,cpuRegistro.getDtRegistro());
             ps.setString(3, cpuRegistro.getTemperatura());
-            ps.setString(4, cpuRegistro.getUsoPorcentaegem());
+            ps.setString(4, cpuRegistro.getUsoPorcentagem());
             ps.execute();
             System.out.println(String.format(
                     """
@@ -47,7 +50,7 @@ public class CpuDAO {
              """,cpuRegistro));
             ps.close();
             //System.out.println("Executando a instrução sql \n" + sql);
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
@@ -64,7 +67,7 @@ public class CpuDAO {
             ps.setString(1, cpuRegistro.getFkMaquina());
             ps.setString(2,cpuRegistro.getDtRegistro());
             ps.setString(3, cpuRegistro.getTemperatura());
-            ps.setString(4, cpuRegistro.getUsoPorcentaegem());
+            ps.setString(4, cpuRegistro.getUsoPorcentagem());
             ps.execute();
             System.out.println(String.format(
                     """
@@ -75,7 +78,7 @@ public class CpuDAO {
              """,cpuRegistro));
             ps.close();
             //System.out.println("Executando a instrução sql \n" + sql);
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (Exception e){
             System.out.println(e.getMessage());
         }
     }

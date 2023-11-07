@@ -26,8 +26,8 @@ public class DiscoRegistro  extends Registro{
         HWDiskStore HWDisk;
         for (int i = 0; i < qtdDiscos; i++) {
             DiscoRegistro discoRegistro = new DiscoRegistro();
-            HWDisk = systemInfo.getHardware().getDiskStores().get(i);
-            paths.add(HWDisk.getPartitions().get(0).getMountPoint());
+                HWDisk = systemInfo.getHardware().getDiskStores().get(i);
+                paths.add(HWDisk.getPartitions().get(0).getMountPoint());
             File file;
             if(!systemInfo.getOperatingSystem().getFamily().toLowerCase().contains("windows")){
                file = new File("/");

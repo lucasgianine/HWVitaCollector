@@ -46,7 +46,7 @@ public static void inserirRegistroDiscoLocal(DiscoRegistro discoRegistro){
                 |---------------------------------------------------------------------------------------------------------|
                 """,discoRegistro));
         ps.close();
-    }catch (SQLException | ClassNotFoundException e){
+    }catch (Exception e){
         System.out.println(e.getMessage());
     }
 }
@@ -72,7 +72,7 @@ public static void inserirRegistroDiscoNuvem(DiscoRegistro discoRegistro){
                 |---------------------------------------------------------------------------------------------------------|
                 """,discoRegistro));
         ps.close();
-    }catch (SQLException | ClassNotFoundException e){
+    }catch (Exception e){
         System.out.println(e.getMessage());
     }
 }

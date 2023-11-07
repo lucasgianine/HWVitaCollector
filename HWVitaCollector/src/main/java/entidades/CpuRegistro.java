@@ -12,13 +12,13 @@ import java.util.List;
 @ToString
 public class CpuRegistro extends Registro{
     private String temperatura;
-    private String usoPorcentaegem;
+    private String usoPorcentagem;
 
-    public CpuRegistro(String fkMaquina, String dtRegistro, String temperatura, String usoPorcentaegem) {
+    public CpuRegistro(String fkMaquina, String dtRegistro, String temperatura, String usoPorcentagem) {
         this.fkMaquina = fkMaquina;
         this.dtRegistro = dtRegistro;
         this.temperatura = temperatura;
-        this.usoPorcentaegem = usoPorcentaegem;
+        this.usoPorcentagem = usoPorcentagem;
     }
 
     public static Double getCpuTemperatureValue(){
@@ -52,11 +52,11 @@ public class CpuRegistro extends Registro{
         this.temperatura = temperatura;
     }
 
-    public String getUsoPorcentaegem() {
-        return usoPorcentaegem;
+    public String getUsoPorcentagem() {
+        return usoPorcentagem;
     }
 
-    public void setUsoPorcentaegem(String usoPorcentaegem) {
-        this.usoPorcentaegem = usoPorcentaegem;
+    public void setUsoPorcentagem(String usoPorcentagem) {
+        this.usoPorcentagem = usoPorcentagem;
     }
 }
