@@ -7,9 +7,7 @@ import entidades.Maquina;
 
 public class VerificacaoHelper {
     public static boolean funcionarioIsAutenticado(Funcionario funcionario){
-        if(funcionario == null){
-            return false;
-        }
+        if(funcionario == null) return false;
         String email = funcionario.getEmail();
         String senha = funcionario.getSenha();
         Funcionario f = FuncionarioDAO.getFuncionario(email, senha);
@@ -18,11 +16,6 @@ public class VerificacaoHelper {
 
     public static boolean maquinaIsCadastrada(String UUID){
         Maquina maquina = MaquinaDAO.getMaquinaByUUID(UUID);
-
-        if(maquina == null){
-            return false;
-        }else{
-            return true;
-        }
+        return maquina != null;
     }
 }

@@ -4,6 +4,7 @@ import com.github.britooo.looca.api.util.Conversor;
 import conexoes.Conexao;
 import conexoes.ConexaoNuvem;
 import entidades.ProcessoRegistro;
+import helpers.Logging;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -50,10 +51,8 @@ public class ProcessoDAO {
              """,processoRegistro));
             ps.close();
 
-        }catch (SQLException e){
-            System.out.println(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        }catch (Exception e){
+            Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
         }
     }
 
@@ -79,8 +78,8 @@ public class ProcessoDAO {
              """,processoRegistro));
             ps.close();
 
-        }catch (SQLException  | ClassNotFoundException e){
-            throw  new RuntimeException(e);
+        }catch (Exception e){
+            Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
         }
     }
 }

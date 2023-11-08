@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
+@SuppressWarnings("WrapperTypeMayBePrimitive")
 public class Alertas {
     static JSONObject json = new JSONObject();
 
@@ -81,7 +81,7 @@ public class Alertas {
         Double espacoLivreParsed = Double.parseDouble(espacoLivreDisco);
 
         if (espacoLivreParsed >= 5) {
-            String alerta = "[🚨] - O espaço livre (%.1f GB) é menor que %.1f GB!".formatted(espacoLivreParsed, 5);
+            String alerta = "[🚨] - O espaço livre (%.1f GB) é menor que %d GB!".formatted(espacoLivreParsed, 5);
 
             json.put("text", alerta);
             Slack.sendMessage(json);

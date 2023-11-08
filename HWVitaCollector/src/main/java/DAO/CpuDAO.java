@@ -51,7 +51,7 @@ public class CpuDAO {
             ps.close();
             //System.out.println("Executando a instrução sql \n" + sql);
         }catch (Exception e){
-            System.out.println(e.getMessage());
+           Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
         }
     }
     public static void inserirRegistroCpuNuvem(CpuRegistro cpuRegistro){
@@ -79,7 +79,7 @@ public class CpuDAO {
             ps.close();
             //System.out.println("Executando a instrução sql \n" + sql);
         }catch (Exception e){
-            System.out.println(e.getMessage());
+            Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
         }
     }
 

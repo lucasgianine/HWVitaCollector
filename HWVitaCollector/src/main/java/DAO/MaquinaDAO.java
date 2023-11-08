@@ -2,6 +2,7 @@ package DAO;
 
 import conexoes.Conexao;
 import entidades.Maquina;
+import helpers.Logging;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -88,7 +89,7 @@ public class MaquinaDAO {
              """,maquina));
             ps.close();
         }catch (SQLException e){
-            e.fillInStackTrace();
+            Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
         }
     }
 }

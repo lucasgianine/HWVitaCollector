@@ -39,8 +39,12 @@ public class Main {
             Funcionario funcionario = FuncionarioDAO.getFuncionario(emailFuncionario, senhaFuncionario);
             if (VerificacaoHelper.funcionarioIsAutenticado(funcionario)) {
                 if (!VerificacaoHelper.maquinaIsCadastrada(UUID)) {
-                    String apelido = "Máquina Recepção, GUICHE 5";
-                    Maquina maquina = new Maquina(UUID, funcionario.getFkHospital(), apelido, funcionario.getNome());
+                    System.out.println("Cadastre sua máquina: ");
+                    System.out.print("Local: ");
+                    String local = scanner.nextLine();
+                    System.out.print("Cadastre o responsável: ");
+                    String responsavel = scanner.nextLine();
+                    Maquina maquina = new Maquina(UUID, funcionario.getFkHospital(), local, responsavel);
                     MaquinaDAO.registrarMaquina(maquina);
                 }
             } else {

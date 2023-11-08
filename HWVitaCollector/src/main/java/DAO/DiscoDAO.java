@@ -4,6 +4,7 @@ import conexoes.ConexaoNuvem;
 import entidades.DiscoRegistro;
 import conexoes.Conexao;
 import entidades.ProcessoRegistro;
+import helpers.Logging;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -47,7 +48,7 @@ public static void inserirRegistroDiscoLocal(DiscoRegistro discoRegistro){
                 """,discoRegistro));
         ps.close();
     }catch (Exception e){
-        System.out.println(e.getMessage());
+        Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
     }
 }
 public static void inserirRegistroDiscoNuvem(DiscoRegistro discoRegistro){
@@ -73,7 +74,7 @@ public static void inserirRegistroDiscoNuvem(DiscoRegistro discoRegistro){
                 """,discoRegistro));
         ps.close();
     }catch (Exception e){
-        System.out.println(e.getMessage());
+        Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
     }
 }
 

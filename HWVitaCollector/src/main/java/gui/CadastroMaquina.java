@@ -4,26 +4,23 @@ import DAO.FuncionarioDAO;
 import DAO.MaquinaDAO;
 import entidades.Funcionario;
 import entidades.Maquina;
-import helpers.VerificacaoHelper;
 import oshi.SystemInfo;
 
 import javax.swing.*;
 import java.awt.event.*;
 
-public class Login extends JDialog {
+public class CadastroMaquina extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JTextField textField1;
-    private JPasswordField passwordField1;
-    private JLabel labelAlerta;
+    private JTextField localLabel;
+    private JTextField responsavelLabel;
+    private JLabel labelCamposIncompletos;
 
-    public static void mainLogin() {
-        Login dialog = new Login();
-        dialog.pack();
-        dialog.setVisible(true);
-    }
-    public Login() {
+    private static String emailFuncionario;
+    private static String senhaFuncionario;
+
+    public CadastroMaquina() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -57,28 +54,28 @@ public class Login extends JDialog {
     }
 
     private void onOK() {
-        String UUID = new SystemInfo().getHardware().getComputerSystem().getHardwareUUID();
-        String emailFuncionario = textField1.getText();
-        String senhaFuncionario = passwordField1.getText();
-
-        Funcionario funcionario = FuncionarioDAO.getFuncionario(emailFuncionario,senhaFuncionario);
-        if(VerificacaoHelper.funcionarioIsAutenticado(funcionario)){
-            if(VerificacaoHelper.maquinaIsCadastrada(UUID)){
-                System.out.println("Inicializando programa...");
-                dispose();
-            }else{
-                CadastroMaquina.CadastrarMaquina(funcionario);
-                onOK();
-            }
-        dispose();
-        }else{
-            labelAlerta.setText("Usuário não encontrado, tente novamente");
+        if(localLabel.getText().isEmpty()|| responsavelLabel.getText().isEmpty()){
+            labelCamposIncompletos.setText("Preencha todos os campos primeiro");
+            return;
         }
+        Funcionario funcionario = FuncionarioDAO.getFuncionario(emailFuncionario,senhaFuncionario);
+        String UUID = new SystemInfo().getHardware().getComputerSystem().getHardwareUUID();
+        assert funcionario != null;
+        Maquina maquina = new Maquina(UUID,funcionario.getFkHospital(),localLabel.getText(),responsavelLabel.getText());
+        MaquinaDAO.registrarMaquina(maquina);
+        dispose();
     }
 
     private void onCancel() {
-        System.exit(0);
+        // add your code here if necessary
         dispose();
     }
 
+    public static void CadastrarMaquina(Funcionario funcionario) {
+        CadastroMaquina dialog = new CadastroMaquina();
+        emailFuncionario = funcionario.getEmail();
+        senhaFuncionario = funcionario.getSenha();
+        dialog.setBounds(0,0,320,240);
+        dialog.setVisible(true);
+    }
 }

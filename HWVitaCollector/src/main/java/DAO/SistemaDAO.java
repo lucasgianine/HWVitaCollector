@@ -3,6 +3,7 @@ package DAO;
 import conexoes.Conexao;
 import conexoes.ConexaoNuvem;
 import entidades.SistemaRegistro;
+import helpers.Logging;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -44,7 +45,7 @@ public class SistemaDAO {
              """,sistemaRegistro));
             ps.close();
         }catch (Exception e){
-            System.out.println(e);
+            Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
         }
     }
     public static void inserirRegistroSistemaNuvem(SistemaRegistro sistemaRegistro){
@@ -70,7 +71,7 @@ public class SistemaDAO {
              """,sistemaRegistro));
             ps.close();
         }catch (Exception e){
-            System.out.println(e);
+            Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
         }
     }
 }
