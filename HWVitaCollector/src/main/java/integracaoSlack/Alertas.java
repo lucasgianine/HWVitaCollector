@@ -2,6 +2,7 @@ package integracaoSlack;
 
 import DAO.*;
 import entidades.*;
+import helpers.Helper;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -25,14 +26,11 @@ public class Alertas {
             List<ProcessoRegistro> processoRegistros = ProcessoRegistro.getProcessos();
             for (ProcessoRegistro processoRegistro: processoRegistros) {
                 processoRegistro.setFkMaquina(fkMaquina);
-                ProcessoDAO.inserirRegistroProcesso(processoRegistro);
             }
 
             List<DiscoRegistro> discoRegistros = DiscoRegistro.getDiscos();
             for (DiscoRegistro discoRegistro: discoRegistros) {
                 discoRegistro.setFkMaquina(fkMaquina);
-                DiscoDAO.inserirRegistroDisco(discoRegistro);
-
                 try {
                     verificarDisco(discoRegistro.getEspacoLivre());
                 } catch (IOException | InterruptedException e) {
@@ -43,11 +41,11 @@ public class Alertas {
             // CPU
             String temperaturaCpu = String.format("%.2f ºC", CpuRegistro.getCpuTemperatureValue());
             String usoCpu = CpuRegistro.getCpuUsePercentage();
-            CpuRegistro cpuRegistro = new CpuRegistro(fkMaquina,dataFormatada,temperaturaCpu,usoCpu);
-            CpuDAO.inserirRegistroCpu(cpuRegistro);
+
+
 
             try {
-                verificarCPU(cpuRegistro.getTemperatura(), cpuRegistro.getUsoPorcentagem());
+                verificarCPU(temperaturaCpu,usoCpu);
             }  catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -55,11 +53,11 @@ public class Alertas {
             // MEMÓRIA
             String totalMemoria1 = MemoriaRegistro.getTotalMemory();
             String porcentagemUsoMemoria = MemoriaRegistro.getMemoryUsagePercentage();
-            MemoriaRegistro memoriaRegistro = new MemoriaRegistro(fkMaquina,dataFormatada,totalMemoria1,porcentagemUsoMemoria);
-            MemoriaDAO.inserirRegistroMemoria(memoriaRegistro);
+
+
 
             try {
-                verificarMemoria(memoriaRegistro.getUsoMemoria());
+                verificarMemoria(porcentagemUsoMemoria);
             }  catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -67,20 +65,16 @@ public class Alertas {
             // SISTEMA
             SistemaRegistro sistemaRegistro = new SistemaRegistro
                     (fkMaquina,dataFormatada,SistemaRegistro.getSystemUptime(),SistemaRegistro.getUsbGroupSize());
-            SistemaDAO.inserirRegistroSistema(sistemaRegistro);
 
-            System.out.println("Registrou Todos");
         };
 
         scheduler.scheduleAtFixedRate(task, 0, 10, TimeUnit.SECONDS);
     }
 
     public static void verificarDisco (String espacoLivre) throws IOException, InterruptedException {
-        String espacoLivreDisco = espacoLivre.replaceAll(",", ".");
+        Double espacoLivreParsed = Helper.parseDouble(espacoLivre);
 
-        Double espacoLivreParsed = Double.parseDouble(espacoLivreDisco);
-
-        if (espacoLivreParsed >= 5) {
+        if (espacoLivreParsed <= 900) {
             String alerta = "[🚨] - O espaço livre (%.1f GB) é menor que %d GB!".formatted(espacoLivreParsed, 5);
 
             json.put("text", alerta);
@@ -89,11 +83,8 @@ public class Alertas {
     }
 
     public static void verificarCPU (String temperatura, String porcentagem) throws IOException, InterruptedException {
-        String temperaturaCpu = temperatura.replaceAll(",", ".");
-        String porcentagemCpu = porcentagem.replaceAll(",", ".");
-
-        Double temperaturaParsed = Double.parseDouble(temperaturaCpu);
-        Double porcentagemParsed = Double.parseDouble(porcentagemCpu);
+        Double temperaturaParsed = Helper.parseDouble(temperatura);
+        Double porcentagemParsed = Helper.parseDouble(porcentagem);
 
         // Valores em hardcoded atualmente
         if (temperaturaParsed >= 40.0) {
@@ -110,9 +101,7 @@ public class Alertas {
     }
 
     public static void verificarMemoria (String usoMemoria) throws IOException, InterruptedException {
-        String usoMemoriaRAM = usoMemoria.replaceAll(",", ".");
-
-        Double usoMemoriaParsed = Double.parseDouble(usoMemoriaRAM);
+        Double usoMemoriaParsed = Helper.parseDouble(usoMemoria);
 
         // usoMemoria > parametro
         if (usoMemoriaParsed >= 3.7) {

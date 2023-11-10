@@ -6,13 +6,13 @@ import lombok.ToString;
 public class Maquina {
     @ToString.Exclude private String uuid;
     @ToString.Exclude private int fkHospital;
-    private String apelido;
+    private String local;
     private String responsavel;
 
-    public Maquina(String uuid, int fkHospital, String apelido, String responsavel) {
+    public Maquina(String uuid, int fkHospital, String local, String responsavel) {
         this.uuid = uuid;
         this.fkHospital = fkHospital;
-        this.apelido = apelido;
+        this.local = local;
         this.responsavel = responsavel;
     }
     public Maquina(){}
@@ -33,12 +33,12 @@ public class Maquina {
         this.fkHospital = fkHospital;
     }
 
-    public String getApelido() {
-        return apelido;
+    public String getLocal() {
+        return local;
     }
 
-    public void setApelido(String apelido) {
-        this.apelido = apelido;
+    public void setLocal(String local) {
+        this.local = local;
     }
 
     public String getResponsavel() {

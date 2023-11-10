@@ -1,12 +1,14 @@
 package DAO;
 
 import conexoes.Conexao;
+import conexoes.ConexaoNuvem;
 import entidades.Maquina;
 import helpers.Logging;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class MaquinaDAO {
 
@@ -23,7 +25,7 @@ public class MaquinaDAO {
             maquina = new Maquina();
             maquina.setId(resultSet.getString(1));
             maquina.setFkHospital(resultSet.getInt(2));
-            maquina.setApelido(resultSet.getString(3));
+            maquina.setLocal(resultSet.getString(3));
             maquina.setResponsavel(resultSet.getString(4));
         }
         ps.close();
@@ -50,12 +52,12 @@ public class MaquinaDAO {
     }
     public static void registrarMaquinaLocal(Maquina maquina){
         PreparedStatement ps = null;
-        String sql = "INSERT INTO Maquina (uuid,fkHospital,apelido,responsavel) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO Maquina (uuid,fkHospital,localidade,responsavel) VALUES (?,?,?,?)";
         try{
             ps = Conexao.getConexao().prepareStatement(sql);
             ps.setString(1,maquina.getUuid());
             ps.setInt(2,maquina.getFkHospital());
-            ps.setString(3, maquina.getApelido());
+            ps.setString(3, maquina.getLocal());
             ps.setString(4, maquina.getResponsavel());
             ps.execute();
             System.out.println(String.format(
@@ -67,17 +69,18 @@ public class MaquinaDAO {
              """,maquina));
             ps.close();
         }catch (SQLException e){
+            System.out.println("Ai não né");
             e.fillInStackTrace();
         }
     }
     public static void registrarMaquinaNuvem(Maquina maquina){
         PreparedStatement ps = null;
-        String sql = "INSERT INTO Maquina (uuid,fkHospital,apelido,responsavel) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO Maquina (uuid,fkHospital,localidade,responsavel) VALUES (?,?,?,?)";
         try{
-            ps = Conexao.getConexao().prepareStatement(sql);
+            ps = ConexaoNuvem.getConexaoNuvem().prepareStatement(sql);
             ps.setString(1,maquina.getUuid());
             ps.setInt(2,maquina.getFkHospital());
-            ps.setString(3, maquina.getApelido());
+            ps.setString(3, maquina.getLocal());
             ps.setString(4, maquina.getResponsavel());
             ps.execute();
             System.out.println(String.format(

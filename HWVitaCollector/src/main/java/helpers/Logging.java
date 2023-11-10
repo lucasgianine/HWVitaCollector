@@ -9,9 +9,8 @@ import java.nio.file.Path;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import java.util.logging.*;
+
 public class Logging {
     public static FileHandler fileHandler;
 
@@ -26,7 +25,14 @@ public class Logging {
             }
         };
 
+        for(Handler h:logger.getHandlers())
+        {
+            h.close();   //must call h.close or a .LCK file will remain.
+        }
+
+
         fileHandler.setFormatter(formatter);
+        logger.setUseParentHandlers(false);
         logger.addHandler(fileHandler);
         logger.info(mensagem);
 
@@ -39,13 +45,13 @@ public class Logging {
 
 
         String nomeDaPasta = "HWVitaCollectorLog";
-        String nomeBaseArquivoLog = "log";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
         String dataHoraAtual = dateFormat.format(new Date());
-        String nomeArquivoLog = dataHoraAtual + "_" + nomeBaseArquivoLog + ".log";
+        String nomeArquivoLog = dataHoraAtual + "log_.txt";
+
 
         File pasta = new File(caminhoDaPasta, nomeDaPasta);
-        File arquivoLog = new File(pasta, nomeArquivoLog);
+        File arquivoLog = new File(pasta.getPath(), nomeArquivoLog);
 
 
         FileHandler filo;

@@ -31,9 +31,9 @@ public class Main {
         if (!hasInterface) {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Faça login com suas credenciais cadastradas");
-            System.out.println("Digite seu email: ");
+            System.out.print("Digite seu email: ");
             String emailFuncionario = scanner.nextLine();
-            System.out.println("Digite sua senha: ");
+            System.out.print("Digite sua senha: ");
             String senhaFuncionario = scanner.nextLine();
 
             Funcionario funcionario = FuncionarioDAO.getFuncionario(emailFuncionario, senhaFuncionario);
