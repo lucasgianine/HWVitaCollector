@@ -4,6 +4,7 @@ import com.github.britooo.looca.api.util.Conversor;
 import conexoes.Conexao;
 import conexoes.ConexaoNuvem;
 import entidades.ProcessoRegistro;
+import helpers.Helper;
 import helpers.Logging;
 
 import java.sql.PreparedStatement;
@@ -34,7 +35,6 @@ public class ProcessoDAO {
         PreparedStatement ps = null;
 
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
             ps = Conexao.getConexao().prepareStatement(sql);
             ps.setString(1, processoRegistro.getFkMaquina());
             ps.setString(2, processoRegistro.getNome());
@@ -52,7 +52,8 @@ public class ProcessoDAO {
             ps.close();
 
         }catch (Exception e){
-            Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
+            String stackTrace = Helper.getStackTraceAsString(e);
+            Logging.AddLogInfo(Logging.fileHandler,e.getMessage() + stackTrace);
         }
     }
 
@@ -61,7 +62,6 @@ public class ProcessoDAO {
         String sql = "INSERT INTO ProcessoRegistro (fkMaquina,nome,dtRegistro,threads,usoMemoriaRam) VALUES (?,?,?,?,?)";
         PreparedStatement ps = null;
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
             ps = ConexaoNuvem.getConexaoNuvem().prepareStatement(sql);
             ps.setString(1, processoRegistro.getFkMaquina());
             ps.setString(2, processoRegistro.getNome());
@@ -79,7 +79,8 @@ public class ProcessoDAO {
             ps.close();
 
         }catch (Exception e){
-            Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
+            String stackTrace = Helper.getStackTraceAsString(e);
+            Logging.AddLogInfo(Logging.fileHandler,e.getMessage() + stackTrace);
         }
     }
 }

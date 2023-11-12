@@ -3,6 +3,7 @@ package DAO;
 import conexoes.Conexao;
 import conexoes.ConexaoNuvem;
 import entidades.CpuRegistro;
+import helpers.Helper;
 import helpers.Logging;
 
 import java.sql.PreparedStatement;
@@ -16,7 +17,8 @@ public class CpuDAO {
         try {
             inserirRegistroCpuLocal(cpuRegistro);
         }catch (Exception e){
-            Logging.AddLogInfo(Logging.fileHandler,"Falha ao inserir registro de Cpu Local " + e.getMessage());
+            String stackTrace = Helper.getStackTraceAsString(e);
+            Logging.AddLogInfo(Logging.fileHandler,"Falha ao inserir registro de Cpu Local " + e.getMessage() + stackTrace);
             System.out.println("Não foi possivel conectar no banco Local");
         }
         try {
@@ -34,7 +36,6 @@ public class CpuDAO {
 
         try{
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
             ps = Conexao.getConexao().prepareStatement(sql);
             ps.setString(1, cpuRegistro.getFkMaquina());
             ps.setString(2,cpuRegistro.getDtRegistro());
@@ -51,7 +52,8 @@ public class CpuDAO {
             ps.close();
             //System.out.println("Executando a instrução sql \n" + sql);
         }catch (Exception e){
-           Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
+            String stackTrace = Helper.getStackTraceAsString(e);
+           Logging.AddLogInfo(Logging.fileHandler,e.getMessage() + stackTrace);
         }
     }
     public static void inserirRegistroCpuNuvem(CpuRegistro cpuRegistro){
@@ -62,7 +64,6 @@ public class CpuDAO {
 
         try{
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
             ps = ConexaoNuvem.getConexaoNuvem().prepareStatement(sql);
             ps.setString(1, cpuRegistro.getFkMaquina());
             ps.setString(2,cpuRegistro.getDtRegistro());
@@ -79,7 +80,8 @@ public class CpuDAO {
             ps.close();
             //System.out.println("Executando a instrução sql \n" + sql);
         }catch (Exception e){
-            Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
+            String stackTrace = Helper.getStackTraceAsString(e);
+            Logging.AddLogInfo(Logging.fileHandler,e.getMessage() + stackTrace);
         }
     }
 

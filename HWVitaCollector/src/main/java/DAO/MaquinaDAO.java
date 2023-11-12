@@ -3,6 +3,7 @@ package DAO;
 import conexoes.Conexao;
 import conexoes.ConexaoNuvem;
 import entidades.Maquina;
+import helpers.Helper;
 import helpers.Logging;
 
 import java.sql.PreparedStatement;
@@ -92,7 +93,8 @@ public class MaquinaDAO {
              """,maquina));
             ps.close();
         }catch (SQLException e){
-            Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
+            String stackTrace = Helper.getStackTraceAsString(e);
+            Logging.AddLogInfo( Logging.fileHandler,"Erro ao cadastrar máquina (Nuvem) "+ e.getMessage() + stackTrace);
         }
     }
 }

@@ -3,6 +3,7 @@ package DAO;
 import conexoes.Conexao;
 import conexoes.ConexaoNuvem;
 import entidades.MemoriaRegistro;
+import helpers.Helper;
 import helpers.Logging;
 
 import java.sql.PreparedStatement;
@@ -29,7 +30,6 @@ public class MemoriaDAO {
         PreparedStatement ps = null;
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
             ps = Conexao.getConexao().prepareStatement(sql);
             ps.setString(1,memoriaRegistro.getFkMaquina());
             ps.setString(2,memoriaRegistro.getDtRegistro());
@@ -45,7 +45,8 @@ public class MemoriaDAO {
              """,memoriaRegistro));
             ps.close();
         }catch (Exception e){
-            Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
+            String stackTrace = Helper.getStackTraceAsString(e);
+            Logging.AddLogInfo(Logging.fileHandler,e.getMessage() + stackTrace);
         }
     }
     public static void inserirRegistroMemoriaNuvem(MemoriaRegistro memoriaRegistro){
@@ -55,7 +56,6 @@ public class MemoriaDAO {
         PreparedStatement ps = null;
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
             ps = ConexaoNuvem.getConexaoNuvem().prepareStatement(sql);
             ps.setString(1,memoriaRegistro.getFkMaquina());
             ps.setString(2,memoriaRegistro.getDtRegistro());
@@ -71,7 +71,8 @@ public class MemoriaDAO {
              """,memoriaRegistro));
             ps.close();
         }catch (Exception e){
-            Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
+            String stackTrace = Helper.getStackTraceAsString(e);
+            Logging.AddLogInfo(Logging.fileHandler,e.getMessage() + stackTrace);
         }
     }
 }

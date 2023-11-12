@@ -20,10 +20,10 @@ public class Slack {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println("""
-                Status: %s
-                Response: %s
-                """.formatted(response.statusCode(), response.body())
-        );
+//        System.out.println("""
+//                Status: %s
+//                Response: %s
+//                """.formatted(response.statusCode(), response.body())
+//        );
     }
 }

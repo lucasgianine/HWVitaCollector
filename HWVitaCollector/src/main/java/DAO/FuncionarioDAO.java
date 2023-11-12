@@ -2,6 +2,7 @@ package DAO;
 
 import conexoes.Conexao;
 import entidades.Funcionario;
+import helpers.Helper;
 import helpers.Logging;
 
 import java.sql.PreparedStatement;
@@ -37,7 +38,8 @@ public class FuncionarioDAO {
             return f;
         }catch (SQLException e){
             System.out.println("Não foi possivel acessar o banco de dados que contém o registro de funcionários.");
-            Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
+            String stackTrace = Helper.getStackTraceAsString(e);
+            Logging.AddLogInfo(Logging.fileHandler,e.getMessage()+stackTrace);
             return  null;
         }
     }

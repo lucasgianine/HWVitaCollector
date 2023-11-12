@@ -4,6 +4,7 @@ import conexoes.ConexaoNuvem;
 import entidades.DiscoRegistro;
 import conexoes.Conexao;
 import entidades.ProcessoRegistro;
+import helpers.Helper;
 import helpers.Logging;
 
 import java.sql.PreparedStatement;
@@ -30,7 +31,6 @@ public static void inserirRegistroDiscoLocal(DiscoRegistro discoRegistro){
     PreparedStatement ps = null;
     try{
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
         ps = Conexao.getConexao().prepareStatement(sql);
         ps.setString(1, discoRegistro.getFkMaquina());
         ps.setString(2, discoRegistro.getModel());
@@ -48,7 +48,8 @@ public static void inserirRegistroDiscoLocal(DiscoRegistro discoRegistro){
                 """,discoRegistro));
         ps.close();
     }catch (Exception e){
-        Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
+        String stackTrace = Helper.getStackTraceAsString(e);
+        Logging.AddLogInfo(Logging.fileHandler,e.getMessage() + stackTrace);
     }
 }
 public static void inserirRegistroDiscoNuvem(DiscoRegistro discoRegistro){
@@ -56,7 +57,6 @@ public static void inserirRegistroDiscoNuvem(DiscoRegistro discoRegistro){
             "(?,?,?,?,?)";
     PreparedStatement ps = null;
     try{
-        Class.forName("com.mysql.cj.jdbc.Driver");
         ps = ConexaoNuvem.getConexaoNuvem().prepareStatement(sql);
         ps.setString(1, discoRegistro.getFkMaquina());
         ps.setString(2, discoRegistro.getModel());
@@ -74,7 +74,8 @@ public static void inserirRegistroDiscoNuvem(DiscoRegistro discoRegistro){
                 """,discoRegistro));
         ps.close();
     }catch (Exception e){
-        Logging.AddLogInfo(Logging.fileHandler,e.getMessage());
+        String stackTrace = Helper.getStackTraceAsString(e);
+        Logging.AddLogInfo(Logging.fileHandler,e.getMessage() + stackTrace);
     }
 }
 

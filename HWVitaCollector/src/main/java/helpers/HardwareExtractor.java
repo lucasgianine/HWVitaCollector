@@ -50,7 +50,8 @@ public class HardwareExtractor {
                 System.out.println("Registrou Todos");
             }catch (Exception e){
                 e.fillInStackTrace();
-                Logging.AddLogInfo(Logging.fileHandler, "Erro no HardwareExtractor " + e.getMessage());
+                String stackTrace = Helper.getStackTraceAsString(e);
+                Logging.AddLogInfo(Logging.fileHandler, "Erro no HardwareExtractor " + e.getMessage() + stackTrace);
             }
 
         };

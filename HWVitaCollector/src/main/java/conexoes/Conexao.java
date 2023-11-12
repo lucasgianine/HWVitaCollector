@@ -1,5 +1,8 @@
 package conexoes;
 
+import helpers.Helper;
+import helpers.Logging;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -21,6 +24,8 @@ public class Conexao {
             }
             return conn;
         }catch (SQLException e) {
+            String stackTrace = Helper.getStackTraceAsString(e);
+            Logging.AddLogInfo(Logging.fileHandler,"Conexão local não foi estabelecida :" + stackTrace);
             System.out.println("Conexão com banco local não foi iniciada.");
             return null;
         }
