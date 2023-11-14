@@ -5,7 +5,7 @@ import lombok.ToString;
 @ToString
 public class Funcionario {
     @ToString.Exclude private Integer id;
-    @ToString.Exclude private Integer fkHospital;
+    @ToString.Exclude private static Integer fkHospital;
     private String email;
     private String senha;
     private String nome;

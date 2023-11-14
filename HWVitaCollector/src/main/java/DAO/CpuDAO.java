@@ -36,7 +36,7 @@ public class CpuDAO {
 
         try{
 
-            ps = Conexao.getConexao().prepareStatement(sql);
+            ps = Conexao.conn.prepareStatement(sql);
             ps.setString(1, cpuRegistro.getFkMaquina());
             ps.setString(2,cpuRegistro.getDtRegistro());
             ps.setString(3, cpuRegistro.getTemperatura());
@@ -63,8 +63,7 @@ public class CpuDAO {
 
 
         try{
-
-            ps = ConexaoNuvem.getConexaoNuvem().prepareStatement(sql);
+            ps = ConexaoNuvem.conn.prepareStatement(sql);
             ps.setString(1, cpuRegistro.getFkMaquina());
             ps.setString(2,cpuRegistro.getDtRegistro());
             ps.setString(3, cpuRegistro.getTemperatura());

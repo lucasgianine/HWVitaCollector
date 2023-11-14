@@ -30,7 +30,7 @@ public class MemoriaDAO {
         PreparedStatement ps = null;
 
         try {
-            ps = Conexao.getConexao().prepareStatement(sql);
+            ps = Conexao.conn.prepareStatement(sql);
             ps.setString(1,memoriaRegistro.getFkMaquina());
             ps.setString(2,memoriaRegistro.getDtRegistro());
             ps.setString(3,memoriaRegistro.getQtdTotal());
@@ -56,7 +56,7 @@ public class MemoriaDAO {
         PreparedStatement ps = null;
 
         try {
-            ps = ConexaoNuvem.getConexaoNuvem().prepareStatement(sql);
+            ps = ConexaoNuvem.conn.prepareStatement(sql);
             ps.setString(1,memoriaRegistro.getFkMaquina());
             ps.setString(2,memoriaRegistro.getDtRegistro());
             ps.setString(3,memoriaRegistro.getQtdTotal());

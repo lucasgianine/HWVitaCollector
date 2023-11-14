@@ -1,5 +1,6 @@
 package conexoes;
 
+import com.mysql.cj.log.Log;
 import helpers.Helper;
 import helpers.Logging;
 
@@ -13,24 +14,22 @@ public class ConexaoNuvem {
     //private static  final String passwordNuvem = "grupovitadb";
    private static String urlNuvem= "jdbc:sqlserver://44.205.185.26:1433;databaseName=vita;user=sa;password=Odranoel@6969;encrypt=true;trustServerCertificate=true";
 
-    private static Connection conn;
-    public static Connection getConexaoNuvem(){
+    public static Connection conn;
+    public static void getConexaoNuvem(){
         try{
             if(conn == null){
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                //conn = DriverManager.getConnection(urlNuvem,userNuvem,passwordNuvem);
                 conn = DriverManager.getConnection(urlNuvem);
             }
-            return conn;
         }catch (SQLException e) {
             System.out.println("Conexão com banco em nuvem não foi iniciada.");
             String stackTrace = Helper.getStackTraceAsString(e);
             Logging.AddLogInfo(Logging.fileHandler,"Erro na conexão com o banco em nuvem na classe ConexãoNuvem Código de erro: " + e.getSQLState() + stackTrace);
 
-            return null;
         } catch (ClassNotFoundException e) {
+            String stackTrace = Helper.getStackTraceAsString(e);
             System.out.println("class.forName Exception");
-            throw new RuntimeException(e);
+            Logging.AddLogInfo(Logging.fileHandler,e.getMessage() + stackTrace);
         }
     }
 }

@@ -18,7 +18,7 @@ public class FuncionarioDAO {
             if(Conexao.getConexao() == null){
                 return null;
             }
-            ps = Objects.requireNonNull(Conexao.getConexao()).prepareStatement(sql);
+            ps = Objects.requireNonNull(Conexao.conn).prepareStatement(sql);
             ps.setString(1,emailFuncionario);
             ps.setString(2,senhaFuncionario);
             ps.execute();

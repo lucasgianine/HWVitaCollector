@@ -35,7 +35,7 @@ public class ProcessoDAO {
         PreparedStatement ps = null;
 
         try{
-            ps = Conexao.getConexao().prepareStatement(sql);
+            ps = Conexao.conn.prepareStatement(sql);
             ps.setString(1, processoRegistro.getFkMaquina());
             ps.setString(2, processoRegistro.getNome());
             ps.setString(3, processoRegistro.getDtRegistro());
@@ -62,7 +62,7 @@ public class ProcessoDAO {
         String sql = "INSERT INTO ProcessoRegistro (fkMaquina,nome,dtRegistro,threads,usoMemoriaRam) VALUES (?,?,?,?,?)";
         PreparedStatement ps = null;
         try{
-            ps = ConexaoNuvem.getConexaoNuvem().prepareStatement(sql);
+            ps = ConexaoNuvem.conn.prepareStatement(sql);
             ps.setString(1, processoRegistro.getFkMaquina());
             ps.setString(2, processoRegistro.getNome());
             ps.setString(3, processoRegistro.getDtRegistro());

@@ -1,4 +1,6 @@
 import DAO.*;
+import conexoes.Conexao;
+import conexoes.ConexaoNuvem;
 import entidades.*;
 import gui.Login;
 import helpers.AsciiHelper;
@@ -11,6 +13,7 @@ import java.util.*;
 @SuppressWarnings("SpellCheckingInspection")
 public class Main {
     public static void main(String[] args) {
+        String UUID = new SystemInfo().getHardware().getComputerSystem().getHardwareUUID();
         try {
             Logging logging = new Logging();
             logging.CreateLog();
@@ -18,7 +21,21 @@ public class Main {
             e.fillInStackTrace();
         }
 
-        String UUID = new SystemInfo().getHardware().getComputerSystem().getHardwareUUID();
+        try{
+            ConexaoNuvem.getConexaoNuvem();
+            Conexao.getConexao();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+
+        }
+        if(Conexao.conn == null){
+            Logging.AddLogInfo(Logging.fileHandler,"Conexão com banco principal não foi estabelecida, programa interrompido: Main: 31");
+            System.exit(0);
+        }
+
+
+
+
         boolean hasInterface = true;
         AsciiHelper.vitaHealthAscii();
         try {

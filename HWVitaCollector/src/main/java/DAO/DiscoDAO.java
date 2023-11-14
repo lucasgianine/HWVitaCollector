@@ -31,7 +31,7 @@ public static void inserirRegistroDiscoLocal(DiscoRegistro discoRegistro){
     PreparedStatement ps = null;
     try{
 
-        ps = Conexao.getConexao().prepareStatement(sql);
+        ps = Conexao.conn.prepareStatement(sql);
         ps.setString(1, discoRegistro.getFkMaquina());
         ps.setString(2, discoRegistro.getModel());
         ps.setString(3, discoRegistro.getDtRegistro());
@@ -57,7 +57,7 @@ public static void inserirRegistroDiscoNuvem(DiscoRegistro discoRegistro){
             "(?,?,?,?,?)";
     PreparedStatement ps = null;
     try{
-        ps = ConexaoNuvem.getConexaoNuvem().prepareStatement(sql);
+        ps = ConexaoNuvem.conn.prepareStatement(sql);
         ps.setString(1, discoRegistro.getFkMaquina());
         ps.setString(2, discoRegistro.getModel());
         ps.setString(3, discoRegistro.getDtRegistro());

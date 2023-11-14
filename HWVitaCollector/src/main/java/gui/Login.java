@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class Login extends JDialog {
+    public static int fkFuncionarioStatic ;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -63,6 +64,7 @@ public class Login extends JDialog {
 
         Funcionario funcionario = FuncionarioDAO.getFuncionario(emailFuncionario,senhaFuncionario);
         if(VerificacaoHelper.funcionarioIsAutenticado(funcionario)){
+            fkFuncionarioStatic = funcionario.getFkHospital();
             if(VerificacaoHelper.maquinaIsCadastrada(UUID)){
                 System.out.println("Inicializando programa...");
                 dispose();

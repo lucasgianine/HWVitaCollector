@@ -63,6 +63,8 @@ public class CadastroMaquina extends JDialog {
         assert funcionario != null;
         Maquina maquina = new Maquina(UUID,funcionario.getFkHospital(),localLabel.getText(),responsavelLabel.getText());
         MaquinaDAO.registrarMaquina(maquina);
+
+
         dispose();
     }
 

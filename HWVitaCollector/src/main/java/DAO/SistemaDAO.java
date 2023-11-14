@@ -30,7 +30,7 @@ public class SistemaDAO {
         PreparedStatement ps = null;
 
         try {
-            ps = Conexao.getConexao().prepareStatement(sql);
+            ps = Conexao.conn.prepareStatement(sql);
             ps.setString(1,sistemaRegistro.getFkMaquina());
             ps.setString(2,sistemaRegistro.getDtRegistro());
             ps.setString(3,sistemaRegistro.getTempoDeAtividadeSO());
@@ -56,7 +56,7 @@ public class SistemaDAO {
         PreparedStatement ps = null;
 
         try {
-            ps = ConexaoNuvem.getConexaoNuvem().prepareStatement(sql);
+            ps = ConexaoNuvem.conn.prepareStatement(sql);
             ps.setString(1,sistemaRegistro.getFkMaquina());
             ps.setString(2,sistemaRegistro.getDtRegistro());
             ps.setString(3,sistemaRegistro.getTempoDeAtividadeSO());

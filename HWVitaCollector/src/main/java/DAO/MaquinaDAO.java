@@ -17,7 +17,7 @@ public class MaquinaDAO {
         String sql = "SELECT * FROM Maquina WHERE uuid = ?;";
         PreparedStatement ps = null;
         try{
-        ps = Conexao.getConexao().prepareStatement(sql);
+        ps = Conexao.conn.prepareStatement(sql);
         ps.setString(1,UUID);
         ps.execute();
         ResultSet resultSet = ps.getResultSet();
@@ -55,7 +55,7 @@ public class MaquinaDAO {
         PreparedStatement ps = null;
         String sql = "INSERT INTO Maquina (uuid,fkHospital,localidade,responsavel) VALUES (?,?,?,?)";
         try{
-            ps = Conexao.getConexao().prepareStatement(sql);
+            ps = Conexao.conn.prepareStatement(sql);
             ps.setString(1,maquina.getUuid());
             ps.setInt(2,maquina.getFkHospital());
             ps.setString(3, maquina.getLocal());
@@ -78,7 +78,7 @@ public class MaquinaDAO {
         PreparedStatement ps = null;
         String sql = "INSERT INTO Maquina (uuid,fkHospital,localidade,responsavel) VALUES (?,?,?,?)";
         try{
-            ps = ConexaoNuvem.getConexaoNuvem().prepareStatement(sql);
+            ps = ConexaoNuvem.conn.prepareStatement(sql);
             ps.setString(1,maquina.getUuid());
             ps.setInt(2,maquina.getFkHospital());
             ps.setString(3, maquina.getLocal());

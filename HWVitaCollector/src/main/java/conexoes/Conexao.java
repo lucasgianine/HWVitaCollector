@@ -14,7 +14,7 @@ public class Conexao {
     private static  final String password = "Odranoel@6969";
 
 
-    private static Connection conn;
+    public static Connection conn;
 
     public static Connection getConexao(){
 
