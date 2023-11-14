@@ -14,6 +14,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         String UUID = new SystemInfo().getHardware().getComputerSystem().getHardwareUUID();
+        // BLOCO TRY PARA CRIAÇÃO DOS LOGS.
         try {
             Logging logging = new Logging();
             logging.CreateLog();
@@ -21,6 +22,7 @@ public class Main {
             e.fillInStackTrace();
         }
 
+        //BLOCO TRY PARA FAZER AS CONEXÕES NECESSÁRIAS
         try{
             ConexaoNuvem.getConexaoNuvem();
             Conexao.getConexao();
@@ -28,14 +30,14 @@ public class Main {
             System.out.println(e.getMessage());
 
         }
+
+        //IF PARA VERIFICAR SE CONEXÃO PRINCIPAL, A CONEXÃO QUE FAZ AS VALIDAÇÕES ESTA NULA, SE ESTIVER, GERAMOS UM LOG E ENCERRAMOS O PROGRAMA
         if(Conexao.conn == null){
             Logging.AddLogInfo(Logging.fileHandler,"Conexão com banco principal não foi estabelecida, programa interrompido: Main: 31");
             System.exit(0);
         }
 
-
-
-
+        //BLOCO DE LOGIN E INICIAÇÃO DO PROGRAMA VIA INTERFACE
         boolean hasInterface = true;
         AsciiHelper.vitaHealthAscii();
         try {
@@ -45,6 +47,7 @@ public class Main {
         }catch (Exception e) {
             hasInterface = false;
         }
+
         if (!hasInterface) {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Faça login com suas credenciais cadastradas");

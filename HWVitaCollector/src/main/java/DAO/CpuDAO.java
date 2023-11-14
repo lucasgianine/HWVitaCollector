@@ -13,21 +13,10 @@ public class CpuDAO {
 
 
     public static void inserirRegistroCpu(CpuRegistro cpuRegistro){
-
-        try {
             inserirRegistroCpuLocal(cpuRegistro);
-        }catch (Exception e){
-            String stackTrace = Helper.getStackTraceAsString(e);
-            Logging.AddLogInfo(Logging.fileHandler,"Falha ao inserir registro de Cpu Local " + e.getMessage() + stackTrace);
-            System.out.println("Não foi possivel conectar no banco Local");
-        }
-        try {
             inserirRegistroCpuNuvem(cpuRegistro);
-        }catch (Exception e){
-            System.out.println("Não foi possivel conectar no banco em Nuvem");
-        }
-
     }
+
     public static void inserirRegistroCpuLocal(CpuRegistro cpuRegistro){
         String sql = "INSERT INTO CpuRegistro (fkMaquina,dtRegistro,temperatura,usoPorcentagem) VALUES" +
                 "(?,?,?,?)";

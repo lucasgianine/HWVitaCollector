@@ -90,7 +90,7 @@ public class Alertas {
 
         if (espacoLivreBytes <= espacoLivreParametro) {
             String alerta = "[🚨] - O espaço livre (%.1f GB) é menor que %d GB!".formatted(espacoLivreParsed, 5);
-
+            System.out.println(alerta);
             json.put("text", alerta);
             Slack.sendMessage(json);
         }

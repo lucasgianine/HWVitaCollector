@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.FileHandler;
 
 public class HardwareExtractor {
 
@@ -49,7 +48,6 @@ public class HardwareExtractor {
 
                 System.out.println("Registrou Todos");
             }catch (Exception e){
-                e.fillInStackTrace();
                 String stackTrace = Helper.getStackTraceAsString(e);
                 Logging.AddLogInfo(Logging.fileHandler, "Erro no HardwareExtractor " + e.getMessage() + stackTrace);
             }

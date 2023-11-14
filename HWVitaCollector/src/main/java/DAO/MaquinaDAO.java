@@ -39,17 +39,8 @@ public class MaquinaDAO {
 
 
     public static void registrarMaquina(Maquina maquina){
-        try {
-            registrarMaquinaLocal(maquina);
-        }catch (Exception e){
-            System.out.println("Não foi possivel conectar no banco Local");
-        }
-        try {
-            registrarMaquinaNuvem(maquina);
-        }catch (Exception e){
-            System.out.println("Não foi possivel conectar no banco em Nuvem");
-        }
-
+        registrarMaquinaLocal(maquina);
+        registrarMaquinaNuvem(maquina);
     }
     public static void registrarMaquinaLocal(Maquina maquina){
         PreparedStatement ps = null;
@@ -69,9 +60,9 @@ public class MaquinaDAO {
              |---------------------------------------------------------------------------------------------------------|
              """,maquina));
             ps.close();
-        }catch (SQLException e){
-            System.out.println("Ai não né");
-            e.fillInStackTrace();
+        }catch (Exception e){
+            String stackTrace = Helper.getStackTraceAsString(e);
+            Logging.AddLogInfo( Logging.fileHandler,"Erro ao cadastrar máquina (Local) "+ e.getMessage() + stackTrace);
         }
     }
     public static void registrarMaquinaNuvem(Maquina maquina){
@@ -92,7 +83,7 @@ public class MaquinaDAO {
              |---------------------------------------------------------------------------------------------------------|
              """,maquina));
             ps.close();
-        }catch (SQLException e){
+        }catch (Exception e){
             String stackTrace = Helper.getStackTraceAsString(e);
             Logging.AddLogInfo( Logging.fileHandler,"Erro ao cadastrar máquina (Nuvem) "+ e.getMessage() + stackTrace);
         }

@@ -11,17 +11,8 @@ import java.sql.SQLException;
 
 public class SistemaDAO {
     public static void inserirRegistroSistema(SistemaRegistro sistemaRegistro){
-        try {
-            inserirRegistroSistemaLocal(sistemaRegistro);
-        }catch (Exception e){
-            System.out.println("Não foi possivel conectar no banco Local");
-        }
-        try {
-            inserirRegistroSistemaNuvem(sistemaRegistro);
-        }catch (Exception e){
-            System.out.println("Não foi possivel conectar no banco em Nuvem");
-        }
-
+        inserirRegistroSistemaLocal(sistemaRegistro);
+        inserirRegistroSistemaNuvem(sistemaRegistro);
     }
     public static void inserirRegistroSistemaLocal(SistemaRegistro sistemaRegistro){
         String sql = "INSERT INTO SistemaRegistro (fkMaquina,dtRegistro,tempoDeAtividadeSistema,qtdDispositivosUsb) VALUES" +

@@ -36,11 +36,11 @@ public class FuncionarioDAO {
             }
             ps.close();
             return f;
-        }catch (SQLException e){
+        }catch (Exception e){
             System.out.println("Não foi possivel acessar o banco de dados que contém o registro de funcionários.");
             String stackTrace = Helper.getStackTraceAsString(e);
             Logging.AddLogInfo(Logging.fileHandler,e.getMessage()+stackTrace);
-            return  null;
         }
+            return  null;
     }
 }
