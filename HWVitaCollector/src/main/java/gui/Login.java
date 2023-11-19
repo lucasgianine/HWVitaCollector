@@ -8,6 +8,7 @@ import helpers.VerificacaoHelper;
 import oshi.SystemInfo;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class Login extends JDialog {
@@ -19,10 +20,16 @@ public class Login extends JDialog {
     private JPasswordField passwordField1;
     private JLabel labelAlerta;
 
+    private static Login d;
+
     public static void mainLogin() {
         Login dialog = new Login();
         dialog.pack();
+        dialog.setAlwaysOnTop(true);
+        dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
+        d = dialog;
+
     }
     public Login() {
         setContentPane(contentPane);

@@ -78,6 +78,8 @@ public class CadastroMaquina extends JDialog {
         emailFuncionario = funcionario.getEmail();
         senhaFuncionario = funcionario.getSenha();
         dialog.setBounds(0,0,320,240);
+        dialog.setAlwaysOnTop(true);
+        dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }
 }

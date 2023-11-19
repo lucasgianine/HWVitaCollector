@@ -1,7 +1,9 @@
 package helpers;
 
 import DAO.*;
+import conexoes.ConexaoNuvem;
 import entidades.*;
+import integracaoSlack.Alertas;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,9 +18,7 @@ public class HardwareExtractor {
     ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         Runnable task = () -> {
             try{
-                Date dataAtual = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String dataFormatada = dateFormat.format(dataAtual);
+               String dataFormatada = Helper.getDataFormatada();
 
                 List<ProcessoRegistro> processoRegistros = ProcessoRegistro.getProcessos();
                 for (ProcessoRegistro processoRegistro: processoRegistros) {
@@ -46,16 +46,16 @@ public class HardwareExtractor {
                         (fkMaquina,dataFormatada,SistemaRegistro.getSystemUptime(),SistemaRegistro.getUsbGroupSize());
                 SistemaDAO.inserirRegistroSistema(sistemaRegistro);
 
+                Alertas.VerificarMetricas(processoRegistros,discoRegistros,cpuRegistro,memoriaRegistro,sistemaRegistro);
                 System.out.println("Registrou Todos");
             }catch (Exception e){
                 String stackTrace = Helper.getStackTraceAsString(e);
                 Logging.AddLogInfo(Logging.fileHandler, "Erro no HardwareExtractor " + e.getMessage() + stackTrace);
             }
-
         };
 
 
 
-        scheduler.scheduleAtFixedRate(task, 0, 10, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(task, 0, 15, TimeUnit.SECONDS);
     }
 }

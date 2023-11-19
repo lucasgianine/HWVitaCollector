@@ -28,8 +28,8 @@ public class Main {
             Conexao.getConexao();
         }catch (Exception e){
             System.out.println(e.getMessage());
-
         }
+
 
         //IF PARA VERIFICAR SE CONEXÃO PRINCIPAL, A CONEXÃO QUE FAZ AS VALIDAÇÕES ESTA NULA, SE ESTIVER, GERAMOS UM LOG E ENCERRAMOS O PROGRAMA
         if(Conexao.conn == null){
@@ -43,7 +43,6 @@ public class Main {
         try {
             Login.mainLogin();
             HardwareExtractor.HardwareExtractorLoop(UUID);
-            Alertas.AlertasLoop(UUID);
         }catch (Exception e) {
             hasInterface = false;
         }
@@ -72,7 +71,6 @@ public class Main {
                 System.exit(404);
             }
                 HardwareExtractor.HardwareExtractorLoop(UUID);
-                Alertas.AlertasLoop(UUID);
             }
         }
     }

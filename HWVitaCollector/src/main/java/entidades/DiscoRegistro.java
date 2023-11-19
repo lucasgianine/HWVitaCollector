@@ -1,6 +1,7 @@
 package entidades;
 
 import com.github.britooo.looca.api.util.Conversor;
+import helpers.Helper;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -42,9 +43,7 @@ public class DiscoRegistro  extends Registro{
             //System.out.println(espacoLivre);
 
 
-            Date dataAtual = new Date();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String dataFormatada = dateFormat.format(dataAtual);
+            String dataFormatada = Helper.getDataFormatada();
 
             discoRegistro.setDtRegistro(dataFormatada);
             discoRegistro.setEspacoLivre(espacoLivre);
