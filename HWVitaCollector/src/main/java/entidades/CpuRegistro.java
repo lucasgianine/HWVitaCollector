@@ -22,7 +22,6 @@ public class CpuRegistro extends Registro{
     }
 
     public static Double getCpuTemperatureValue(){
-        //System.out.println("entrou no getcputemperature");
         Components components = JSensors.get.components();
         List<Cpu> cpus = components.cpus;
         if(cpus.isEmpty()){
@@ -41,7 +40,7 @@ public class CpuRegistro extends Registro{
     }
 
     public static String getCpuUsePercentage(){
-        return String.format("%.2f %%",new Processador().getUso());
+       return String.format("%.2f %%",new Processador().getUso());
     }
 
     public String getTemperatura() {
@@ -59,4 +58,6 @@ public class CpuRegistro extends Registro{
     public void setUsoPorcentagem(String usoPorcentagem) {
         this.usoPorcentagem = usoPorcentagem;
     }
+
+
 }

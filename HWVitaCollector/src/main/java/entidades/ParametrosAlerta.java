@@ -8,12 +8,8 @@ public class ParametrosAlerta {
     private String minLivreDisco;
     private String maxTempoDeAtividade;
     private String minQtdUsb;
-    private String processoMaxUsoRam;
-    private String tempoParaAlertaUsoProcessador;
-    private String tempoParaAlertaUsoMemoria;
-    private String tempoParaAlertaTempProcessador;
-    private String tempoParaAlertaUsoRamProcessos;
-
+    private String porcentagemMaximaRamProcesso;
+    private String tempoParaAlertaSec;
 
     public ParametrosAlerta() {
     }
@@ -74,43 +70,36 @@ public class ParametrosAlerta {
         this.minQtdUsb = minQtdUsb;
     }
 
-    public String getProcessoMaxUsoRam() {
-        return processoMaxUsoRam;
+
+    public String getPorcentagemMaximaRamProcesso() {
+        return porcentagemMaximaRamProcesso;
     }
 
-    public void setProcessoMaxUsoRam(String processoMaxUsoRam) {
-        this.processoMaxUsoRam = processoMaxUsoRam;
+    public void setPorcentagemMaximaRamProcesso(String porcentagemMaximaRamProcesso) {
+        this.porcentagemMaximaRamProcesso = porcentagemMaximaRamProcesso;
     }
 
-    public String getTempoParaAlertaUsoProcessador() {
-        return tempoParaAlertaUsoProcessador;
+    public String getTempoParaAlertaSec() {
+        return tempoParaAlertaSec;
     }
 
-    public void setTempoParaAlertaUsoProcessador(String tempoParaAlertaUsoProcessador) {
-        this.tempoParaAlertaUsoProcessador = tempoParaAlertaUsoProcessador;
+    public void setTempoParaAlertaSec(String tempoParaAlertaSec) {
+        this.tempoParaAlertaSec = tempoParaAlertaSec;
     }
 
-    public String getTempoParaAlertaUsoMemoria() {
-        return tempoParaAlertaUsoMemoria;
-    }
 
-    public void setTempoParaAlertaUsoMemoria(String tempoParaAlertaUsoMemoria) {
-        this.tempoParaAlertaUsoMemoria = tempoParaAlertaUsoMemoria;
-    }
-
-    public String getTempoParaAlertaTempProcessador() {
-        return tempoParaAlertaTempProcessador;
-    }
-
-    public void setTempoParaAlertaTempProcessador(String tempoParaAlertaTempProcessador) {
-        this.tempoParaAlertaTempProcessador = tempoParaAlertaTempProcessador;
-    }
-
-    public String getTempoParaAlertaUsoRamProcessos() {
-        return tempoParaAlertaUsoRamProcessos;
-    }
-
-    public void setTempoParaAlertaUsoRamProcessos(String tempoParaAlertaUsoRamProcessos) {
-        this.tempoParaAlertaUsoRamProcessos = tempoParaAlertaUsoRamProcessos;
+    @Override
+    public String toString() {
+        return "ParametrosAlerta{" +
+                "fkHospital=" + fkHospital +
+                ", maxTempProcessador='" + maxTempProcessador + '\'' +
+                ", maxUsoProcessador='" + maxUsoProcessador + '\'' +
+                ", maxUsoMemoria='" + maxUsoMemoria + '\'' +
+                ", minLivreDisco='" + minLivreDisco + '\'' +
+                ", maxTempoDeAtividade='" + maxTempoDeAtividade + '\'' +
+                ", minQtdUsb='" + minQtdUsb + '\'' +
+                ", porcentagemMaximaRamProcesso='" + porcentagemMaximaRamProcesso + '\'' +
+                ", tempoParaAlertaSec='" + tempoParaAlertaSec + '\'' +
+                '}';
     }
 }

@@ -1,10 +1,16 @@
 package DAO;
 
+import com.mysql.cj.log.Log;
 import conexoes.Conexao;
 import entidades.ParametrosAlerta;
+import helpers.Helper;
+import helpers.Logging;
 
+import java.awt.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ParametrosAlertaDAO {
@@ -12,7 +18,9 @@ public class ParametrosAlertaDAO {
         String sql = "SELECT * FROM ParametrosAlerta WHERE fkHospital = ?";
         PreparedStatement ps;
         try{
-            if(Conexao.conn == null) throw new RuntimeException("Sem conexão, ParametrosAlerta inacessíveis");
+            if(Conexao.conn == null){
+                Logging.AddLogInfo(Logging.fileHandler,"Parametros de alerta inacessíveis");
+            }
 
             ps = Objects.requireNonNull(Conexao.conn).prepareStatement(sql);
             ps.setInt(1,fkHospital);
@@ -28,11 +36,8 @@ public class ParametrosAlertaDAO {
                 p.setMinLivreDisco(result.getString(6));
                 p.setMaxTempoDeAtividade(result.getString(7));
                 p.setMinQtdUsb(result.getString(8));
-                p.setProcessoMaxUsoRam(result.getString(9));
-                p.setTempoParaAlertaUsoProcessador(result.getString(10));
-                p.setTempoParaAlertaUsoMemoria(result.getString(11));
-                p.setTempoParaAlertaTempProcessador(result.getString(12));
-                p.setTempoParaAlertaUsoRamProcessos(result.getString(13));
+                p.setPorcentagemMaximaRamProcesso(result.getString(9));
+                p.setTempoParaAlertaSec(result.getString(10));
             }
                return p;
         }catch (Exception e){
@@ -41,4 +46,32 @@ public class ParametrosAlertaDAO {
         System.out.println("retornando null");
         return null;
     }
+
+    public static List<Double> getAvgsByTime(String UUID, int segundosParaAlerta){
+        List<Double> valueList = new ArrayList<>();
+        String sql = "SELECT AVG(usoPorcentagem) as avgUsoProcessador, AVG(temperatura) as avgTempProcessador, AVG(usoMemoria) as avgUsoMemoria from CpuRegistro as c JOIN MemoriaRegistro ON c.fkMaquina = MemoriaRegistro.fkMaquina WHERE TIMESTAMPDIFF(second,c.dtRegistro,now()) < ? and c.fkMaquina = ?;";
+
+        if(Conexao.conn == null){
+            Logging.AddLogInfo(Logging.fileHandler,"Parametros de alerta inacessíveis");
+        }
+        PreparedStatement ps;
+        try {
+            ps = Objects.requireNonNull(Conexao.conn).prepareStatement(sql);
+            ps.setInt(1,segundosParaAlerta);
+            ps.setString(2,UUID);
+            ps.execute();
+            ResultSet result = ps.getResultSet();
+            if(result.next()){
+                valueList.add(result.getDouble(1));
+                valueList.add(result.getDouble(2));
+                valueList.add(result.getDouble(3));
+            }
+            return valueList;
+        }catch (Exception e){
+            String stacktrace = Helper.getStackTraceAsString(e);
+            Logging.AddLogInfo(Logging.fileHandler,"Erro ao pegar médias das métricas " + stacktrace);
+        }
+        return null;
+    }
+
 }

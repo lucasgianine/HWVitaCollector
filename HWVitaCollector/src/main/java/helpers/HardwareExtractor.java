@@ -46,7 +46,7 @@ public class HardwareExtractor {
                         (fkMaquina,dataFormatada,SistemaRegistro.getSystemUptime(),SistemaRegistro.getUsbGroupSize());
                 SistemaDAO.inserirRegistroSistema(sistemaRegistro);
 
-                Alertas.VerificarMetricas(processoRegistros,discoRegistros,cpuRegistro,memoriaRegistro,sistemaRegistro);
+                Alertas.VerificarMetricas(fkMaquina,processoRegistros,discoRegistros,cpuRegistro,memoriaRegistro,sistemaRegistro);
                 System.out.println("Registrou Todos");
             }catch (Exception e){
                 String stackTrace = Helper.getStackTraceAsString(e);

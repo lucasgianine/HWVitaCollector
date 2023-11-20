@@ -1,6 +1,8 @@
 package integracaoSlack;
 
 import DAO.*;
+import com.github.britooo.looca.api.group.memoria.Memoria;
+import com.github.britooo.looca.api.util.Conversor;
 import entidades.*;
 import gui.Login;
 import helpers.Helper;
@@ -22,7 +24,8 @@ public class Alertas {
     static JSONObject json = new JSONObject();
     public static ParametrosAlerta parametrosAlerta = ParametrosAlertaDAO.getParametros(Login.fkFuncionarioStatic);
 
-    public static void VerificarMetricas(List<ProcessoRegistro> processoRegistros, List<DiscoRegistro> discoRegistros, CpuRegistro cpuRegistro, MemoriaRegistro memoriaRegistro, SistemaRegistro sistemaRegistro) throws IOException, InterruptedException {
+
+    public static void VerificarMetricas(String fkMaquina,List<ProcessoRegistro> processoRegistros, List<DiscoRegistro> discoRegistros, CpuRegistro cpuRegistro, MemoriaRegistro memoriaRegistro, SistemaRegistro sistemaRegistro) throws IOException, InterruptedException {
 
         if (parametrosAlerta == null) {
             Logging.AddLogInfo(Logging.fileHandler, "Parametros nulos na classe Alertas");
@@ -30,61 +33,86 @@ public class Alertas {
             return;
         }
 
+        Integer tempoParaAlerta = Integer.parseInt(parametrosAlerta.getTempoParaAlertaSec());
+        List<Double> mediaParametrosUltimosSegundos = ParametrosAlertaDAO.getAvgsByTime(fkMaquina,tempoParaAlerta);
+
+        assert mediaParametrosUltimosSegundos != null;
+        Double mediaUsoCpu = mediaParametrosUltimosSegundos.get(0);
+        Double mediaTempCpu = mediaParametrosUltimosSegundos.get(1);
+        Double mediaUsoMemoria = mediaParametrosUltimosSegundos.get(2);
+
+
         for (DiscoRegistro dc : discoRegistros) {
             verificarDisco(dc.getEspacoLivre());
         }
-        verificarCPU(cpuRegistro.getTemperatura(), cpuRegistro.getUsoPorcentagem());
-        verificarMemoria(memoriaRegistro.getUsoMemoria());
+        verificarCPU(mediaTempCpu,mediaUsoCpu);
+        verificarMemoria(mediaUsoMemoria);
+
+        for (ProcessoRegistro ps : processoRegistros) {
+            verificarProcesso(ps.getResidentMemory(),ps.getNome());
+        }
 
 
     }
 
     public static void verificarDisco (String espacoLivre) throws IOException, InterruptedException {
-        Double espacoLivreParsed = Double.parseDouble(espacoLivre.toUpperCase().replaceAll("GB","").replaceAll("MB","").replaceAll("TB","")) - 10.0;
+        Double espacoLivreParsed = Double.parseDouble(espacoLivre.toUpperCase().replaceAll("GB","").replaceAll("MB","").replaceAll("TB",""));
         long espacoLivreBytes = (long) (espacoLivreParsed * 1024 * 1024 * 1024);
         long espacoLivreParametro = Long.parseLong(parametrosAlerta.getMinLivreDisco()) ;
 
-        double espacoLivreParametroEmGb = (double) espacoLivreParametro /1024/1024/1024;
 
-
+        //dadinho mockado pra forçar alerta
         if (espacoLivreBytes <= espacoLivreParametro + 9999999999L ) {
-            String alerta = "[🚨] - O espaço livre (%.1f GB) é menor que (%.1f) GB!".formatted(espacoLivreParsed, espacoLivreParametroEmGb);
+            String alerta = "[🚨] - O espaço livre (%.1f GB) é menor que (%.1f) GB!".formatted(espacoLivreParsed, ((double) espacoLivreParametro /1024/1024/1024));
             System.out.println(alerta);
             json.put("text", alerta);
             Slack.sendMessage(json);
         }
     }
 
-    public static void verificarCPU (String temperatura, String porcentagem) throws IOException, InterruptedException {
-        Double temperaturaParsed = Double.parseDouble(temperatura.replaceAll("ºC","").replace(",","."));
-        Double porcentagemParsed = Double.parseDouble(porcentagem.replaceAll("%","").replace(",","."));
+    public static void verificarCPU (Double temperatura, Double porcentagem) throws IOException, InterruptedException {
         Double temperaturaParametro = Double.parseDouble(parametrosAlerta.getMaxTempProcessador());
         Double porcentagemParametro = Double.parseDouble(parametrosAlerta.getMaxUsoProcessador());
 
 
-        if (temperaturaParsed > temperaturaParametro) {
-            String alerta = "[🚨] - A temperatura (%.1fº) da máquina passou de 75º!".formatted(temperaturaParsed);
+        if (temperatura > temperaturaParametro) {
+            String alerta = "[🚨] - A temperatura (%.1fº) da máquina passou de 75º!".formatted(temperatura);
             System.out.println(alerta);
             json.put("text", alerta);
             Slack.sendMessage(json);
         }
-        if (porcentagemParsed >= porcentagemParametro) {
-            String alerta = "[🚨] - Sua CPU (%.1f%%) está ficando supercarregada!".formatted(porcentagemParsed);
+        if (porcentagem >= porcentagemParametro) {
+            String alerta = "[🚨] - Sua CPU (%.1f%%) está ficando supercarregada!".formatted(porcentagem);
             System.out.println(alerta);
             json.put("text", alerta);
             Slack.sendMessage(json);
         }
     }
 
-    public static void verificarMemoria (String usoMemoria) throws IOException, InterruptedException {
-        Double usoMemoriaParsed = Double.parseDouble(usoMemoria.replaceAll("%","").replace(",","."));
+    public static void verificarMemoria (Double usoMemoria) throws IOException, InterruptedException {
         Double maxUsoMemoria = Double.parseDouble(parametrosAlerta.getMaxUsoMemoria());
 
         // usoMemoria > parametro
-        if (usoMemoriaParsed >= maxUsoMemoria) {
-            String alerta = "[🚨] - O uso atual da memória ram (%.1f %%) ultrapassou de %.1f %%!".formatted(usoMemoriaParsed, 95.0);
+        if (usoMemoria >= maxUsoMemoria) {
+            String alerta = "[🚨] - O uso atual da memória ram (%.1f %%) ultrapassou de %.1f %%!".formatted(usoMemoria, maxUsoMemoria);
             json.put("text", alerta);
             Slack.sendMessage(json);
         }
+    }
+
+    public static void verificarProcesso(long usoRamProcesso, String nome)throws IOException, InterruptedException{
+        long totalRam = new Memoria().getTotal();
+        double pctUso = ((double) usoRamProcesso/totalRam*100);
+        double pctMaximaRamParametro = Double.parseDouble(parametrosAlerta.getPorcentagemMaximaRamProcesso());
+
+        //dadinho mockado pra forçar alerta
+        if(pctUso > pctMaximaRamParametro - 50.0){
+            String alerta = "[🚨] - O uso atual de memória ram do processo %s está em %.2f %% do total!".formatted(nome,pctUso);
+            System.out.println(alerta);
+            json.put("text", alerta);
+            Slack.sendMessage(json);
+        }
+
+
     }
 }
