@@ -24,6 +24,8 @@ public class Alertas {
     static JSONObject json = new JSONObject();
     public static ParametrosAlerta parametrosAlerta = ParametrosAlertaDAO.getParametros(Login.fkFuncionarioStatic);
 
+    public static String fkMaquinaStatic;
+
 
     public static void VerificarMetricas(String fkMaquina, List<ProcessoRegistro> processoRegistros, List<DiscoRegistro> discoRegistros, CpuRegistro cpuRegistro, MemoriaRegistro memoriaRegistro, SistemaRegistro sistemaRegistro) throws IOException, InterruptedException {
 
@@ -32,7 +34,7 @@ public class Alertas {
             System.out.println("Parametros nulos na classe Alertas");
             return;
         }
-
+        fkMaquinaStatic = fkMaquina;
         Integer tempoParaAlerta = Integer.parseInt(parametrosAlerta.getTempoParaAlertaSec());
         List<Double> mediaParametrosUltimosSegundos = ParametrosAlertaDAO.getAvgsByTime(fkMaquina, tempoParaAlerta);
 
@@ -41,6 +43,7 @@ public class Alertas {
         Double mediaTempCpu = mediaParametrosUltimosSegundos.get(1);
         Double mediaUsoMemoria = mediaParametrosUltimosSegundos.get(2);
 
+        try {
 
         for (DiscoRegistro dc : discoRegistros) {
             verificarDisco(dc.getEspacoLivre());
@@ -53,12 +56,16 @@ public class Alertas {
         }
 
         verificarSistema(sistemaRegistro.getTempoDeAtividadeSO(),sistemaRegistro.getQtdDisposivosUsbConectados());
+        }catch (Exception e){
+            String stacktrace = Helper.getStackTraceAsString(e);
+            Logging.AddLogInfo(Logging.fileHandler,"Erro nas verificações de alertas " + stacktrace);
+        }
 
     }
 
     public static void verificarDisco(String espacoLivre) throws IOException, InterruptedException {
         Double espacoLivreParsed = Double.parseDouble(espacoLivre.toUpperCase().replaceAll("GB", "").replaceAll("MB", "").replaceAll("TB", ""));
-        long espacoLivreBytes = (long) (espacoLivreParsed * 1024 * 1024 * 1024);
+        long espacoLivreBytes = (long) (espacoLivreParsed * 1024 * 1024 * 1024) - 10L *1024*1024*1024;
         long espacoLivreParametro = Long.parseLong(parametrosAlerta.getMinLivreDisco());
 
 
@@ -68,6 +75,7 @@ public class Alertas {
             System.out.println(alerta);
             json.put("text", alerta);
             Slack.sendMessage(json);
+            gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Disco","armazenamentoLivre",alerta);
         }
     }
 
@@ -81,12 +89,14 @@ public class Alertas {
             System.out.println(alerta);
             json.put("text", alerta);
             Slack.sendMessage(json);
+            gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Cpu","temperatura",alerta);
         }
         if (porcentagem >= porcentagemParametro) {
             String alerta = "[🚨] - Sua CPU (%.1f%%) está ficando supercarregada!".formatted(porcentagem);
             System.out.println(alerta);
             json.put("text", alerta);
             Slack.sendMessage(json);
+            gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Cpu","usoPorcentagem",alerta);
         }
     }
 
@@ -95,9 +105,10 @@ public class Alertas {
 
         // usoMemoria > parametro
         if (usoMemoria >= maxUsoMemoria) {
-            String alerta = "[🚨] - O uso atual da memória ram (%.1f %%) ultrapassou de %.1f %%!".formatted(usoMemoria, maxUsoMemoria);
+            String alerta = "[🚨] - O uso da memória ram (%.1f %%) ultrapassou de %.1f %%!".formatted(usoMemoria, maxUsoMemoria);
             json.put("text", alerta);
             Slack.sendMessage(json);
+            gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Memoria","usoMemoria",alerta);
         }
     }
 
@@ -108,10 +119,11 @@ public class Alertas {
 
         //dadinho mockado pra forçar alerta
         if (pctUso > pctMaximaRamParametro - 50.0) {
-            String alerta = "[🚨] - O uso atual de memória ram do processo %s está em %.2f %% do total!".formatted(nome, pctUso);
+            String alerta = "[🚨] - O uso de memória ram do processo %s está em %.2f %% do total!".formatted(nome, pctUso);
             System.out.println(alerta);
             json.put("text", alerta);
             Slack.sendMessage(json);
+            gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"software","Processo","usoMemoriaRam",alerta);
         }
     }
 
@@ -124,6 +136,7 @@ public class Alertas {
             System.out.println(alerta);
             json.put("text", alerta);
             Slack.sendMessage(json);
+            gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"software","Sistema Operacional","tempoDeAtividadeSistema",alerta);
         }
 
         if(qtdUsb<minQtdUsbParametro){
@@ -131,6 +144,16 @@ public class Alertas {
             System.out.println(alerta);
             json.put("text", alerta);
             Slack.sendMessage(json);
+            gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"software","Sistema Operacional","qtdDispositivosUsb",alerta);
         }
     }
+
+
+    public static void gerarOcorrencia(String fkMaquina,String dtOcorrencia,String categoria, String componente, String metrica, String descricao){
+        if(!OcorrenciaDAO.hasOcorrenciaIgualRecente(fkMaquina,metrica)){
+            OcorrenciaDAO.inserirOcorrencia(fkMaquina, dtOcorrencia, categoria, componente, metrica, descricao);
+        }
+
+    }
+
 }

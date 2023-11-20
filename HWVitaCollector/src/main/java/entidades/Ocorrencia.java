@@ -8,8 +8,7 @@ public class Ocorrencia {
     private String metrica;
     private String descricao;
 
-    public Ocorrencia(String fkMaquina, String dtOcorrencia, String categoria, String componente, String metrica, String descricao) {
-        this.fkMaquina = fkMaquina;
+    public Ocorrencia(String fkMaquina, String dtOcorrencia, String categoria, String componente, String metrica, String descricao) {        this.fkMaquina = fkMaquina;
         this.dtOcorrencia = dtOcorrencia;
         this.categoria = categoria;
         this.componente = componente;
