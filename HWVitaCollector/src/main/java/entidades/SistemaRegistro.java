@@ -16,7 +16,7 @@ public class SistemaRegistro extends Registro{
         this.qtdDisposivosUsbConectados = qtdDisposivosUsbConectados;
     }
     public static String getSystemUptime(){
-        return Conversor.formatarSegundosDecorridos(new SystemInfo().getOperatingSystem().getSystemUptime());
+        return "" + new SystemInfo().getOperatingSystem().getSystemUptime();
     }
 
     public static int getUsbGroupSize(){
