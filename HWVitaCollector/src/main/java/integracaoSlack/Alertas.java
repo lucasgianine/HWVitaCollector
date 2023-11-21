@@ -22,7 +22,7 @@ import java.util.logging.FileHandler;
 @SuppressWarnings("WrapperTypeMayBePrimitive")
 public class Alertas {
     static JSONObject json = new JSONObject();
-    public static ParametrosAlerta parametrosAlerta = ParametrosAlertaDAO.getParametros(Login.fkFuncionarioStatic);
+    public static ParametrosAlerta parametrosAlerta = ParametrosAlertaDAO.getParametros(Login.fkHospitalStatic);
 
     public static String fkMaquinaStatic;
 
@@ -72,10 +72,11 @@ public class Alertas {
         //dadinho mockado pra forçar alerta
         if (espacoLivreBytes <= espacoLivreParametro + 9999999999L) {
             String alerta = "[🚨] - O espaço livre (%.1f GB) é menor que (%.1f) GB!".formatted(espacoLivreParsed, ((double) espacoLivreParametro / 1024 / 1024 / 1024));
+            if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Disco","armazenamentoLivre",alerta)){
             System.out.println(alerta);
             json.put("text", alerta);
             Slack.sendMessage(json);
-            gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Disco","armazenamentoLivre",alerta);
+            }
         }
     }
 
@@ -83,20 +84,23 @@ public class Alertas {
         Double temperaturaParametro = Double.parseDouble(parametrosAlerta.getMaxTempProcessador());
         Double porcentagemParametro = Double.parseDouble(parametrosAlerta.getMaxUsoProcessador());
 
-
         if (temperatura > temperaturaParametro) {
             String alerta = "[🚨] - A temperatura (%.1fº) da máquina passou de 75º!".formatted(temperatura);
-            System.out.println(alerta);
-            json.put("text", alerta);
-            Slack.sendMessage(json);
-            gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Cpu","temperatura",alerta);
+            if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Cpu","temperatura",alerta)){
+                System.out.println(alerta);
+                json.put("text", alerta);
+                Slack.sendMessage(json);
+            }
         }
+
         if (porcentagem >= porcentagemParametro) {
             String alerta = "[🚨] - Sua CPU (%.1f%%) está ficando supercarregada!".formatted(porcentagem);
+            if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Cpu","usoPorcentagem",alerta)){
             System.out.println(alerta);
             json.put("text", alerta);
             Slack.sendMessage(json);
-            gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Cpu","usoPorcentagem",alerta);
+            }
+
         }
     }
 
@@ -104,11 +108,13 @@ public class Alertas {
         Double maxUsoMemoria = Double.parseDouble(parametrosAlerta.getMaxUsoMemoria());
 
         // usoMemoria > parametro
-        if (usoMemoria >= maxUsoMemoria) {
+        if (usoMemoria > maxUsoMemoria) {
             String alerta = "[🚨] - O uso da memória ram (%.1f %%) ultrapassou de %.1f %%!".formatted(usoMemoria, maxUsoMemoria);
+            if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Memoria","usoMemoria",alerta)){
+            System.out.println(alerta);
             json.put("text", alerta);
             Slack.sendMessage(json);
-            gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Memoria","usoMemoria",alerta);
+            }
         }
     }
 
@@ -119,11 +125,12 @@ public class Alertas {
 
         //dadinho mockado pra forçar alerta
         if (pctUso > pctMaximaRamParametro - 50.0) {
-            String alerta = "[🚨] - O uso de memória ram do processo %s está em %.2f %% do total!".formatted(nome, pctUso);
-            System.out.println(alerta);
-            json.put("text", alerta);
-            Slack.sendMessage(json);
-            gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"software","Processo","usoMemoriaRam",alerta);
+                String alerta = "[🚨] - O uso de memória ram do processo %s está em %.2f %% do total!".formatted(nome, pctUso);
+                if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"software","Processo","usoMemoriaRam",alerta)){
+                System.out.println(alerta);
+                json.put("text", alerta);
+                Slack.sendMessage(json);
+            }
         }
     }
 
@@ -133,27 +140,31 @@ public class Alertas {
         int minQtdUsbParametro = Integer.parseInt(parametrosAlerta.getMinQtdUsb());
         if(secUptimeParsed>secUptimeParametro){
             String alerta = "[🚨] - O sistema está ativo a muito tempo (%s), pode haver perda de performance ".formatted(Conversor.formatarSegundosDecorridos(secUptimeParsed));
-            System.out.println(alerta);
-            json.put("text", alerta);
-            Slack.sendMessage(json);
-            gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"software","Sistema Operacional","tempoDeAtividadeSistema",alerta);
+            if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"software","Sistema Operacional","tempoDeAtividadeSistema",alerta)){
+                System.out.println(alerta);
+                json.put("text", alerta);
+                Slack.sendMessage(json);
+            }
+
         }
 
         if(qtdUsb<minQtdUsbParametro){
             String alerta = "[🚨] - O não foram encontrados os dispositivos usb necessários";
-            System.out.println(alerta);
-            json.put("text", alerta);
-            Slack.sendMessage(json);
-            gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"software","Sistema Operacional","qtdDispositivosUsb",alerta);
+            if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"software","Sistema Operacional","qtdDispositivosUsb",alerta)){
+                System.out.println(alerta);
+                json.put("text", alerta);
+                Slack.sendMessage(json);
+            }
         }
     }
 
 
-    public static void gerarOcorrencia(String fkMaquina,String dtOcorrencia,String categoria, String componente, String metrica, String descricao){
+    public static boolean gerarOcorrencia(String fkMaquina,String dtOcorrencia,String categoria, String componente, String metrica, String descricao){
         if(!OcorrenciaDAO.hasOcorrenciaIgualRecente(fkMaquina,metrica)){
             OcorrenciaDAO.inserirOcorrencia(fkMaquina, dtOcorrencia, categoria, componente, metrica, descricao);
+            return true;
         }
-
+        return false;
     }
 
 }

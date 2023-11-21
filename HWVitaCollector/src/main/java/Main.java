@@ -3,10 +3,7 @@ import conexoes.Conexao;
 import conexoes.ConexaoNuvem;
 import entidades.*;
 import gui.Login;
-import helpers.AsciiHelper;
-import helpers.HardwareExtractor;
-import helpers.Logging;
-import helpers.VerificacaoHelper;
+import helpers.*;
 import integracaoSlack.Alertas;
 import oshi.SystemInfo;
 import java.util.*;
@@ -27,6 +24,8 @@ public class Main {
             ConexaoNuvem.getConexaoNuvem();
             Conexao.getConexao();
         }catch (Exception e){
+            String stackTrace = Helper.getStackTraceAsString(e);
+            Logging.AddLogInfo(Logging.fileHandler,e.getMessage() + stackTrace);
             System.out.println(e.getMessage());
         }
 
