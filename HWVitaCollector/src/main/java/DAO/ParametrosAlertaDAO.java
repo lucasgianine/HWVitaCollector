@@ -49,8 +49,12 @@ public class ParametrosAlertaDAO {
 
     public static List<Double> getAvgsByTime(String UUID, int segundosParaAlerta){
         List<Double> valueList = new ArrayList<>();
-        String sql = "SELECT AVG(usoPorcentagem) as avgUsoProcessador, AVG(temperatura) as avgTempProcessador, AVG(usoMemoria) as avgUsoMemoria from CpuRegistro as c JOIN MemoriaRegistro ON c.fkMaquina = MemoriaRegistro.fkMaquina WHERE TIMESTAMPDIFF(second,c.dtRegistro,now()) < ? and c.fkMaquina = ?;";
 
+        //SELECT MYSQL
+        //String sql = "SELECT AVG(usoPorcentagem) as avgUsoProcessador, AVG(temperatura) as avgTempProcessador, AVG(usoMemoria) as avgUsoMemoria from CpuRegistro as c JOIN MemoriaRegistro ON c.fkMaquina = MemoriaRegistro.fkMaquina WHERE TIMESTAMPDIFF(second,c.dtRegistro,now()) < ? and c.fkMaquina = ?;";
+
+        //SELET SQLSERVER
+        String sql = "SELECT AVG(CAST(c.usoPorcentagem AS DECIMAL(10, 2))) AS avgUsoProcessador, AVG(CAST(c.temperatura AS DECIMAL(10, 2))) AS avgTempProcessador, AVG(CAST(m.usoMemoria AS DECIMAL(10, 2))) AS avgUsoMemoria FROM CpuRegistro c INNER JOIN MemoriaRegistro m ON c.fkMaquina = m.fkMaquina WHERE DATEDIFF(SECOND, CAST(c.dtRegistro AS DATETIME), GETDATE()) < CAST(? as int) AND c.fkMaquina = ?;";
         if(Conexao.conn == null){
             Logging.AddLogInfo(Logging.fileHandler,"Parametros de alerta inacessíveis");
         }

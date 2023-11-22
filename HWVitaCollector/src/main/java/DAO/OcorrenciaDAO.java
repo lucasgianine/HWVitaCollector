@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class OcorrenciaDAO {
 
     public static void inserirOcorrencia(String fkMaquina, String dtOcorrencia, String categoria, String componente, String metrica, String descricao) {
-        String sql = "INSERT INTO Ocorrencia VALUES (NULL,?,?,?,?,?,?);";
+        String sql = "INSERT INTO Ocorrencia (fkMaquina,dtOcorrencia,categoria,componente,metrica,descricao) VALUES (?,?,?,?,?,?);";
         PreparedStatement ps;
         String stacktrace = null;
         try {
@@ -36,7 +36,11 @@ public class OcorrenciaDAO {
     }
 
     public static boolean hasOcorrenciaIgualRecente(String fkMaquina, String metrica) {
-        String sql = "SELECT * FROM Ocorrencia o WHERE fkMaquina = ? and metrica = ? AND TIMESTAMPDIFF(second,o.dtOcorrencia,now()) < 60;";
+        // MYSQL QUERY
+        //String sql = "SELECT * FROM Ocorrencia o WHERE fkMaquina = ? and metrica = ? AND TIMESTAMPDIFF(second,o.dtOcorrencia,now()) < 60;";
+
+        //SQLSERVER QUERY
+        String sql = "SELECT * FROM Ocorrencia o WHERE fkMaquina = ? AND metrica = ? AND DATEDIFF(SECOND, o.dtOcorrencia, GETDATE()) < 60;";
         PreparedStatement ps;
 
 
