@@ -93,6 +93,11 @@ if [ "$getRes" = "Y" ] || [ "$getRes" = "y" ]
 		then
 		echo -e "\n[Etapa de verificação do Docker concluída]"
         echo "O Docker já está instalado na sua máquina."
+
+		sudo systemctl start docker
+		sudo systemctl enable docker
+		sleep 2
+
 		echo "Verificando banco de dados do software..."
 
 		sleep 5
@@ -134,28 +139,9 @@ if [ "$getRes" = "Y" ] || [ "$getRes" = "y" ]
 
 	echo -e "[Etapa de verificação (3/3) - Banco de dados]\n"
 
-	sudo docker images # Verificando se há uma imagem Docker
-
-	if [ "$(sudo docker ps -aqf name=VitaContainer)" ] # Verificando se há um container com o nome VitaContainer
-		then
-		echo -e "\n[Etapa de verificação do Banco de dados concluída]"
-        echo "Você já possui nosso banco de dados em sua máquina."
-		echo -e "Inicializando o banco...\n"
-
-		sudo docker start VitaContainer
-		sleep 2
-		echo -e "\n[Container inicializado]"
-		sleep 5
-		clear
-	else
-		sudo docker pull mysql:5.7 # Baixando a imagem do MySQL 
-		sleep 2
-		sudo docker run -d -p 3306:3306 --name VitaContainer -e "MYSQL_DATABASE=vita" -e "MYSQL_ROOT_PASSWORD=vitagrupo6db" mysql:5.7 # Criando o container do MySQL da Vita
-
-		echo -e "\n[Container criado]"
-		sleep 5
-		clear
-	fi
+	sudo docker pull mysql:5.7
+	sudo docker run -d -p 3306:3306 --name VitaContainer -e "MYSQL_ROOT_PASSWORD=grupo06vitadb" mysql:5.7
+	sudo docker exec -i VitaContainer mysql -u root -p grupo06vitadb < ./script.sql
 
 	echo "[Etapa de instalação]"
 	echo -e "Prosseguindo com a instalação do software...\n"
