@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class MemoriaDAO {
     public static void inserirRegistroMemoria(MemoriaRegistro memoriaRegistro){
         inserirRegistroMemoriaLocal(memoriaRegistro);
-        inserirRegistroMemoriaLocal(memoriaRegistro);
+        inserirRegistroMemoriaNuvem(memoriaRegistro);
     }
     public static void inserirRegistroMemoriaLocal(MemoriaRegistro memoriaRegistro){
         String sql = "INSERT INTO MemoriaRegistro (fkMaquina,dtRegistro,qtdTotal,usoMemoria) VALUES" +

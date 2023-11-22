@@ -54,7 +54,7 @@ public class ParametrosAlertaDAO {
         //String sql = "SELECT AVG(usoPorcentagem) as avgUsoProcessador, AVG(temperatura) as avgTempProcessador, AVG(usoMemoria) as avgUsoMemoria from CpuRegistro as c JOIN MemoriaRegistro ON c.fkMaquina = MemoriaRegistro.fkMaquina WHERE TIMESTAMPDIFF(second,c.dtRegistro,now()) < ? and c.fkMaquina = ?;";
 
         //SELET SQLSERVER
-        String sql = "SELECT AVG(CAST(c.usoPorcentagem AS DECIMAL(10, 2))) AS avgUsoProcessador, AVG(CAST(c.temperatura AS DECIMAL(10, 2))) AS avgTempProcessador, AVG(CAST(m.usoMemoria AS DECIMAL(10, 2))) AS avgUsoMemoria FROM CpuRegistro c INNER JOIN MemoriaRegistro m ON c.fkMaquina = m.fkMaquina WHERE DATEDIFF(SECOND, CAST(c.dtRegistro AS DATETIME), GETDATE()) < CAST(? as int) AND c.fkMaquina = ?;";
+        String sql = "SELECT AVG(TRY_CAST(REPLACE(REPLACE(c.usoPorcentagem, ',', '.'), '%', '') AS DECIMAL(10, 2))) as avgUsoProcessador, AVG(TRY_CAST(REPLACE(REPLACE(c.temperatura, ',', '.'), 'ºC', '') AS DECIMAL(10, 2))) as avgTempProcessador, AVG(TRY_CAST(REPLACE(REPLACE(m.usoMemoria, ',', '.'), '%', '') AS DECIMAL(10, 2))) as avgUsoMemoria FROM CpuRegistro c INNER JOIN MemoriaRegistro m ON c.fkMaquina = m.fkMaquina WHERE DATEDIFF(SECOND, c.dtRegistro, DATEADD(HOUR, -3, GETDATE())) < CAST(? AS INT) AND c.fkMaquina = ?;";
         if(Conexao.conn == null){
             Logging.AddLogInfo(Logging.fileHandler,"Parametros de alerta inacessíveis");
         }

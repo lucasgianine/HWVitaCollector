@@ -161,7 +161,7 @@ public class Alertas {
 
     public static boolean gerarOcorrencia(String fkMaquina,String dtOcorrencia,String categoria, String componente, String metrica, String descricao){
         if(!OcorrenciaDAO.hasOcorrenciaIgualRecente(fkMaquina,metrica)){
-            OcorrenciaDAO.inserirOcorrencia(fkMaquina, dtOcorrencia, categoria, componente, metrica, descricao);
+            OcorrenciaDAO.inserirOcorrencia(fkMaquina, dtOcorrencia, componente, categoria, metrica, descricao);
             return true;
         }
         return false;
