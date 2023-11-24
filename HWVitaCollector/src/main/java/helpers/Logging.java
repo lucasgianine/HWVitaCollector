@@ -1,5 +1,6 @@
 package helpers;
 
+import com.github.britooo.looca.api.group.sistema.Sistema;
 import oshi.SystemInfo;
 import oshi.hardware.HWDiskStore;
 
@@ -31,6 +32,10 @@ public class Logging {
             HWDiskStore disco = new SystemInfo().getHardware().getDiskStores().get(0);
             String caminhoDaPasta = disco.getPartitions().get(0).getMountPoint();
 
+            if(!new Sistema().getSistemaOperacional().toLowerCase().contains("windows")){
+                caminhoDaPasta = "/";
+            }
+
             String nomeDaPasta = "HWVitaCollectorLog";
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
             String dataHoraAtual = dateFormat.format(new Date());
@@ -38,6 +43,7 @@ public class Logging {
 
             File pasta = new File(caminhoDaPasta, nomeDaPasta);
             File arquivoLog = new File(pasta.getPath(), nomeArquivoLog);
+
 
             if (!pasta.exists() && pasta.mkdirs()) {
                 System.out.println("Pasta criada com sucesso.");
