@@ -32,21 +32,34 @@ public class Alertas {
         if (parametrosAlerta == null) {
             Logging.AddLogInfo(Logging.fileHandler, "Parametros nulos na classe Alertas");
             System.out.println("Parametros nulos na classe Alertas");
+            System.out.println("Fk Hospital: " + Login.fkHospitalStatic);
             return;
         }
+        //System.out.println("sout parametros " + parametrosAlerta);
         fkMaquinaStatic = fkMaquina;
         Integer tempoParaAlerta = Integer.parseInt(parametrosAlerta.getTempoParaAlertaSec());
         List<Double> mediaParametrosUltimosSegundos = ParametrosAlertaDAO.getAvgsByTime(fkMaquina, tempoParaAlerta);
 
-        assert mediaParametrosUltimosSegundos != null;
-        Double mediaUsoCpu = mediaParametrosUltimosSegundos.get(0);
-        Double mediaTempCpu = mediaParametrosUltimosSegundos.get(1);
-        Double mediaUsoMemoria = mediaParametrosUltimosSegundos.get(2);
+        Double mediaUsoCpu = null;
+        Double mediaTempCpu = null;
+        Double mediaUsoMemoria = null;
+        try{
+            mediaUsoCpu = mediaParametrosUltimosSegundos.get(0);
+            mediaTempCpu = mediaParametrosUltimosSegundos.get(1);
+            mediaUsoMemoria = mediaParametrosUltimosSegundos.get(2);
+        }catch (Exception e){
+            String stacktrace = Helper.getStackTraceAsString(e);
+            System.out.println("Exception gerando as médias");
+            Logging.AddLogInfo(Logging.fileHandler, "Exception gerando as médias" + stacktrace);
+        }
+        //System.out.println("Media uso coisas " + mediaUsoCpu + " " + mediaTempCpu + " " +mediaUsoMemoria);
+
 
         try {
 
         for (DiscoRegistro dc : discoRegistros) {
             verificarDisco(dc.getEspacoLivre());
+            //System.out.println("Espaço livre disco " + dc.getEspacoLivre());
         }
         verificarCPU(mediaTempCpu, mediaUsoCpu);
         verificarMemoria(mediaUsoMemoria);
@@ -93,7 +106,7 @@ public class Alertas {
             }
         }
 
-        if (porcentagem >= porcentagemParametro) {
+        if (porcentagem >= (porcentagemParametro - 90)) {
             String alerta = "[🚨] - Sua CPU (%.1f%%) está ficando supercarregada!".formatted(porcentagem);
             if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Cpu","usoPorcentagem",alerta)){
             System.out.println(alerta);

@@ -43,7 +43,7 @@ public class ConsoleLogin {
             System.out.println("╚════════════════════════════╝");
             System.exit(404);
         }
-
+        Login.fkHospitalStatic = funcionario.getFkHospital();
         HardwareExtractor.HardwareExtractorLoop(UUID);
     }
 }

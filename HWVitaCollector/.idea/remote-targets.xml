@@ -26,10 +26,10 @@
           </config>
         </ContributedStateBase>
       </target>
-      <target name="ubuntu@54.158.194.86:22" type="ssh/sftp" uuid="1092977d-e44e-4be7-a523-5ed2cbcf0a31">
+      <target name="VMSSH" type="ssh/sftp" uuid="1092977d-e44e-4be7-a523-5ed2cbcf0a31">
         <config>
           <option name="projectRootOnTarget" value="/home/ubuntu/HWVitaCollector" />
-          <option name="serverName" value="ubuntu@54.158.194.86:22 key" />
+          <option name="serverName" value="ubuntu@54.209.137.19:22 key" />
         </config>
         <ContributedStateBase type="JavaLanguageRuntime">
           <config>
@@ -82,18 +82,6 @@
         <ContributedStateBase type="JavaLanguageRuntime">
           <config>
             <option name="homePath" value="/lib/jvm/java-17-openjdk-amd64" />
-            <option name="javaVersionString" value="17.0.8" />
-          </config>
-        </ContributedStateBase>
-      </target>
-      <target name="ubuntu@52.91.120.73:22" type="ssh/sftp" uuid="2699b1b5-0b05-4898-9cbe-2fa6533da72f">
-        <config>
-          <option name="projectRootOnTarget" value="/home/ubuntu/HWVitaCollector" />
-          <option name="serverName" value="ubuntu@52.91.120.73:22 key" />
-        </config>
-        <ContributedStateBase type="JavaLanguageRuntime">
-          <config>
-            <option name="homePath" value="/usr/lib/jvm/java-17-openjdk-amd64" />
             <option name="javaVersionString" value="17.0.8" />
           </config>
         </ContributedStateBase>
