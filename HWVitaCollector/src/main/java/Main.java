@@ -1,4 +1,5 @@
 import DAO.*;
+import com.mysql.cj.log.Log;
 import conexoes.Conexao;
 import conexoes.ConexaoNuvem;
 import entidades.*;
@@ -44,6 +45,8 @@ public class Main {
             HardwareExtractor.HardwareExtractorLoop(UUID);
         }catch (Exception e) {
             hasInterface = false;
+            String stackTrace = Helper.getStackTraceAsString(e);
+            Logging.AddLogInfo(Logging.fileHandler,stackTrace);
         }
 
         if (!hasInterface) {

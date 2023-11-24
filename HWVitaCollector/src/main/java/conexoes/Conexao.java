@@ -21,6 +21,7 @@ public class Conexao {
     public static Connection getConexao(){
 
         try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             if(conn == null){
                 //conn = DriverManager.getConnection(url,user,password);
                 conn = DriverManager.getConnection(urlNuvem);
@@ -31,6 +32,8 @@ public class Conexao {
             Logging.AddLogInfo(Logging.fileHandler,"Conexão local não foi estabelecida :" + stackTrace);
             System.out.println("Conexão com banco local não foi iniciada.");
             return null;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
