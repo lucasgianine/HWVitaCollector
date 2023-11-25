@@ -78,12 +78,12 @@ public class Alertas {
 
     public static void verificarDisco(String espacoLivre) throws IOException, InterruptedException {
         Double espacoLivreParsed = Double.parseDouble(espacoLivre.toUpperCase().replaceAll("GB", "").replaceAll("MB", "").replaceAll("TB", ""));
-        long espacoLivreBytes = (long) (espacoLivreParsed * 1024 * 1024 * 1024) - 10L *1024*1024*1024;
+        long espacoLivreBytes = (long) (espacoLivreParsed * 1024 * 1024 * 1024);
         long espacoLivreParametro = Long.parseLong(parametrosAlerta.getMinLivreDisco());
 
 
         //dadinho mockado pra forçar alerta
-        if (espacoLivreBytes <= espacoLivreParametro + 9999999999L) {
+        if (espacoLivreBytes <= espacoLivreParametro || true) {
             String alerta = "[🚨] - O espaço livre (%.1f GB) é menor que (%.1f) GB!".formatted(espacoLivreParsed, ((double) espacoLivreParametro / 1024 / 1024 / 1024));
             if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Disco","armazenamentoLivre",alerta)){
             System.out.println(alerta);
@@ -106,7 +106,7 @@ public class Alertas {
             }
         }
 
-        if (porcentagem >= (porcentagemParametro - 90)) {
+        if (porcentagem >= porcentagemParametro || true) {
             String alerta = "[🚨] - Sua CPU (%.1f%%) está ficando supercarregada!".formatted(porcentagem);
             if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Cpu","usoPorcentagem",alerta)){
             System.out.println(alerta);
@@ -137,7 +137,7 @@ public class Alertas {
         double pctMaximaRamParametro = Double.parseDouble(parametrosAlerta.getPorcentagemMaximaRamProcesso());
 
         //dadinho mockado pra forçar alerta
-        if (pctUso > pctMaximaRamParametro - 50.0) {
+        if (pctUso > pctMaximaRamParametro || true) {
                 String alerta = "[🚨] - O uso de memória ram do processo %s está em %.2f %% do total!".formatted(nome, pctUso);
                 if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"software","Processo","usoMemoriaRam",alerta)){
                 System.out.println(alerta);
