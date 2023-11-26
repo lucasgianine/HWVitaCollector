@@ -23,8 +23,11 @@ import java.util.logging.FileHandler;
 public class Alertas {
     static JSONObject json = new JSONObject();
     public static ParametrosAlerta parametrosAlerta = ParametrosAlertaDAO.getParametros(Login.fkHospitalStatic);
-
     public static String fkMaquinaStatic;
+
+    public static Maquina maquina;
+
+    public static String local_responsavel;
 
 
     public static void VerificarMetricas(String fkMaquina, List<ProcessoRegistro> processoRegistros, List<DiscoRegistro> discoRegistros, CpuRegistro cpuRegistro, MemoriaRegistro memoriaRegistro, SistemaRegistro sistemaRegistro) throws IOException, InterruptedException {
@@ -36,6 +39,12 @@ public class Alertas {
             return;
         }
         //System.out.println("sout parametros " + parametrosAlerta);
+        try {
+            maquina = MaquinaDAO.getMaquinaByUUID(fkMaquina);
+            local_responsavel = String.format("\nResponsável: %s\nLocal: %s\n",maquina.getResponsavel(),maquina.getLocal()) ;
+        }catch (Exception e){
+            Logging.AddLogInfo(Logging.fileHandler,"Não foi possível pegar a máquina para gerar os Alertas");
+        }
         fkMaquinaStatic = fkMaquina;
         Integer tempoParaAlerta = Integer.parseInt(parametrosAlerta.getTempoParaAlertaSec());
         List<Double> mediaParametrosUltimosSegundos = ParametrosAlertaDAO.getAvgsByTime(fkMaquina, tempoParaAlerta);
@@ -53,7 +62,6 @@ public class Alertas {
             Logging.AddLogInfo(Logging.fileHandler, "Exception gerando as médias" + stacktrace);
         }
         //System.out.println("Media uso coisas " + mediaUsoCpu + " " + mediaTempCpu + " " +mediaUsoMemoria);
-
 
         try {
 
@@ -87,7 +95,7 @@ public class Alertas {
             String alerta = "[🚨] - O espaço livre (%.1f GB) é menor que (%.1f) GB!".formatted(espacoLivreParsed, ((double) espacoLivreParametro / 1024 / 1024 / 1024));
             if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Disco","armazenamentoLivre",alerta)){
             System.out.println(alerta);
-            json.put("text", alerta);
+            json.put("text", alerta + local_responsavel);
             Slack.sendMessage(json);
             }
         }
@@ -101,7 +109,7 @@ public class Alertas {
             String alerta = "[🚨] - A temperatura (%.1fº) da máquina passou de 75º!".formatted(temperatura);
             if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Cpu","temperatura",alerta)){
                 System.out.println(alerta);
-                json.put("text", alerta);
+                json.put("text", alerta + local_responsavel);
                 Slack.sendMessage(json);
             }
         }
@@ -110,7 +118,7 @@ public class Alertas {
             String alerta = "[🚨] - Sua CPU (%.1f%%) está ficando supercarregada!".formatted(porcentagem);
             if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Cpu","usoPorcentagem",alerta)){
             System.out.println(alerta);
-            json.put("text", alerta);
+            json.put("text", alerta + local_responsavel);
             Slack.sendMessage(json);
             }
 
@@ -125,7 +133,7 @@ public class Alertas {
             String alerta = "[🚨] - O uso da memória ram (%.1f %%) ultrapassou de %.1f %%!".formatted(usoMemoria, maxUsoMemoria);
             if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"hardware","Memoria","usoMemoria",alerta)){
             System.out.println(alerta);
-            json.put("text", alerta);
+            json.put("text", alerta + local_responsavel);
             Slack.sendMessage(json);
             }
         }
@@ -141,7 +149,7 @@ public class Alertas {
                 String alerta = "[🚨] - O uso de memória ram do processo %s está em %.2f %% do total!".formatted(nome, pctUso);
                 if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"software","Processo","usoMemoriaRam",alerta)){
                 System.out.println(alerta);
-                json.put("text", alerta);
+                json.put("text", alerta + local_responsavel);
                 Slack.sendMessage(json);
             }
         }
@@ -155,7 +163,7 @@ public class Alertas {
             String alerta = "[🚨] - O sistema está ativo a muito tempo (%s), pode haver perda de performance ".formatted(Conversor.formatarSegundosDecorridos(secUptimeParsed));
             if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"software","Sistema Operacional","tempoDeAtividadeSistema",alerta)){
                 System.out.println(alerta);
-                json.put("text", alerta);
+                json.put("text", alerta + local_responsavel);
                 Slack.sendMessage(json);
             }
 
@@ -165,7 +173,7 @@ public class Alertas {
             String alerta = "[🚨] - O não foram encontrados os dispositivos usb necessários";
             if(gerarOcorrencia(fkMaquinaStatic,Helper.getDataFormatada(),"software","Sistema Operacional","qtdDispositivosUsb",alerta)){
                 System.out.println(alerta);
-                json.put("text", alerta);
+                json.put("text", alerta + local_responsavel);
                 Slack.sendMessage(json);
             }
         }
