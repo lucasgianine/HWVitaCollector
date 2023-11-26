@@ -9,9 +9,7 @@ import java.sql.SQLException;
 
 public class Conexao {
 
-    private static  final String url = "jdbc:mysql://localhost:3306/vita";
-    private static  final String user = "root";
-    private static  final String password = "Odranoel@6969";
+
     //CONEXAO COM A MÁQUINA WINDOWS SERVER
     private static String urlNuvem= "jdbc:sqlserver://44.205.185.26:1433;databaseName=vita;user=sa;password=Odranoel@6969;encrypt=true;trustServerCertificate=true";
 
