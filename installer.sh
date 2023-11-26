@@ -154,8 +154,8 @@ then
 
 	sudo docker pull mysql:5.7
 	sudo docker run -d -p 3306:3306 --name VitaContainer -e "MYSQL_ROOT_PASSWORD=grupo06vitadb" mysql:5.7
-	sudo docker exec -i VitaContainer mysql -u root -pgrupo06vitadb < ./script.sql
-
+  	sudo docker exec -i VitaContainer mysql -u root -pgrupo06vitadb < script.sql
+	
 	sleep 2
 	echo -e "\n[Banco de dados criado com sucesso]"
 	sleep 5
