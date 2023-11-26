@@ -55,6 +55,10 @@ public class ParametrosAlertaDAO {
 
         //SELET SQLSERVER
         String sql = "SELECT AVG(TRY_CAST(REPLACE(REPLACE(c.usoPorcentagem, ',', '.'), '%', '') AS DECIMAL(10, 2))) as avgUsoProcessador, AVG(TRY_CAST(REPLACE(REPLACE(c.temperatura, ',', '.'), 'ºC', '') AS DECIMAL(10, 2))) as avgTempProcessador, AVG(TRY_CAST(REPLACE(REPLACE(m.usoMemoria, ',', '.'), '%', '') AS DECIMAL(10, 2))) as avgUsoMemoria FROM CpuRegistro c INNER JOIN MemoriaRegistro m ON c.fkMaquina = m.fkMaquina WHERE DATEDIFF(SECOND, c.dtRegistro, DATEADD(HOUR, -3, GETDATE())) < CAST(? AS INT) AND c.fkMaquina = ?;";
+        if(UUID.contains("ec2")){
+            sql = "SELECT AVG(TRY_CAST(REPLACE(REPLACE(c.usoPorcentagem, ',', '.'), '%', '') AS DECIMAL(10, 2))) as avgUsoProcessador, AVG(TRY_CAST(REPLACE(REPLACE(c.temperatura, ',', '.'), 'ºC', '') AS DECIMAL(10, 2))) as avgTempProcessador, AVG(TRY_CAST(REPLACE(REPLACE(m.usoMemoria, ',', '.'), '%', '') AS DECIMAL(10, 2))) as avgUsoMemoria FROM CpuRegistro c INNER JOIN MemoriaRegistro m ON c.fkMaquina = m.fkMaquina WHERE DATEDIFF(SECOND, c.dtRegistro, GETDATE()) < CAST(? AS INT) AND c.fkMaquina = ?;";
+        }
+
         if(Conexao.conn == null){
             Logging.AddLogInfo(Logging.fileHandler,"Parametros de alerta inacessíveis");
         }

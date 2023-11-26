@@ -39,8 +39,11 @@ public class OcorrenciaDAO {
         // MYSQL QUERY
         //String sql = "SELECT * FROM Ocorrencia o WHERE fkMaquina = ? and metrica = ? AND TIMESTAMPDIFF(second,o.dtOcorrencia,now()) < 60;";
 
-        //SQLSERVER QUERY
         String sql = "SELECT * FROM Ocorrencia o WHERE fkMaquina = ? AND metrica = ? AND DATEDIFF(SECOND, o.dtOcorrencia, DATEADD(HOUR, -3, GETDATE())) < 60;";
+        if(fkMaquina.contains("ec2")){
+            sql = "SELECT * FROM Ocorrencia o WHERE fkMaquina = ? AND metrica = ? AND DATEDIFF(SECOND, o.dtOcorrencia, GETDATE()) < 60;";
+        }
+        //SQLSERVER QUERY
         PreparedStatement ps;
 
 
