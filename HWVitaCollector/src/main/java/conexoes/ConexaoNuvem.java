@@ -13,7 +13,7 @@ public class ConexaoNuvem {
     private static  final String userNuvem = "root";
     private static  final String passwordNuvem = "grupovitadb";
 
-    private static  final String url = "jdbc:mysql://localhost:3306/vita";
+    private static  final String url = "jdbc:mysql://localhost:3306/vita?serverTimezone=UTC";
     private static  final String user = "root";
     private static  final String password = "grupo06vitadb";
 
@@ -26,7 +26,9 @@ public class ConexaoNuvem {
                 conn = DriverManager.getConnection(url,user,password);
             }
         }catch (SQLException e) {
-            System.out.println("Conexão com banco em nuvem não foi iniciada.");
+            System.out.println("Conexão com banco em nuvem não foi iniciada. " + e.getMessage());
+            e.printStackTrace();
+            e.fillInStackTrace();
             String stackTrace = Helper.getStackTraceAsString(e);
             Logging.AddLogInfo(Logging.fileHandler,"Erro na conexão com o banco em nuvem na classe ConexãoNuvem Código de erro: " + e.getSQLState() + stackTrace);
 
