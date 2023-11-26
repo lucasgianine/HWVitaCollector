@@ -13,7 +13,7 @@ public class ConexaoNuvem {
     private static  final String userNuvem = "root";
     private static  final String passwordNuvem = "grupovitadb";
 
-    private static  final String url = "jdbc:mysql://localhost:3306/vita";
+    private static  final String url = "jdbc:mysql://172.17.0.2:3306/vita";
     private static  final String user = "root";
     private static  final String password = "grupo06vitadb";
 
