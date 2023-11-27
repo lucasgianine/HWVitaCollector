@@ -174,7 +174,7 @@ then
       echo -e "\nIniciando o sistema...\n"
 
 		 chmod +x HWVitaCollector.jar # Dando permissão de execução para o arquivo .jar
-   		 sleep 2
+   		 sleep 15
 		 sudo java -jar HWVitaCollector.jar # Executando o arquivo .jar
 
 			sleep 5
